@@ -36,9 +36,9 @@ router.get('/place/:placeId', function(req, res, next) {
             throw err;
         }
         index.db.query("SELECT categoryId FROM PlaceCategory WHERE placeId=?", req.params.placeId, (err2, result2, fields2) => {
-            if (err) {
-                res.send({"success": false, "message": err.message});
-                throw err;
+            if (err2) {
+                res.send({"success": false, "message": err2.message});
+                throw err2;
             }
             result[0].categories = [];
             result2.forEach(row => {
