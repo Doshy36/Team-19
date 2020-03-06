@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Criteria;
@@ -97,8 +98,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public boolean onMarkerClick(final Marker marker){
-        String tag = (String) marker.getTag();
-        Toast.makeText(this,tag,Toast.LENGTH_LONG).show();
+        Intent newActivityIntent = new Intent(MainActivity.this,LocationInformation.class);
+        MainActivity.this.startActivity(newActivityIntent);
         return false;
     }
 
