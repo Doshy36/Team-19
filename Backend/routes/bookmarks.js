@@ -32,4 +32,19 @@ router.post('/bookmarks', function(req, res, next){
     });
 });
 
+// DELETE user bookmark
+router.post('/bookmarks', function(req, res, next){
+
+    var sql = "DELETE FROM t2022t19.UserBookmark WHERE userId=? AND placeId=?";
+    var par = [req.body.userId, req.body.placeId];
+
+    index.db.query(sql, par, (err, result, fields) => {
+        if(err){
+            res.send({"success": false, "message": err.message});
+            throw err;
+        }
+        res.send({"success": true, "message": result});
+    });
+});
+
 module.exports = router;
