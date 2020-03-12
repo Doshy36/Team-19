@@ -18,7 +18,7 @@ router.get('/bookmarks/:userId', function(req, res, next){
 });
 
 // POST bookmark specified by the user
-router.post('/bookmarks', function(req, res, next){
+router.post('/bookmarks/add', function(req, res, next){
 
     var sql = "INSERT INTO UserBookmark (userId, placeId) VALUES (?, ?)";
     var par = [req.body.userId, req.body.placeId];
@@ -33,7 +33,7 @@ router.post('/bookmarks', function(req, res, next){
 });
 
 // DELETE user bookmark
-router.post('/bookmarks', function(req, res, next){
+router.delete('/bookmarks/delete', function(req, res, next){
 
     var sql = "DELETE FROM t2022t19.UserBookmark WHERE userId=? AND placeId=?";
     var par = [req.body.userId, req.body.placeId];
@@ -43,6 +43,7 @@ router.post('/bookmarks', function(req, res, next){
             res.send({"success": false, "message": err.message});
             throw err;
         }
+        res.statusCode(204);
         res.send({"success": true, "message": result});
     });
 });
