@@ -9,22 +9,12 @@
     <LinearLayout
         android:layout_width="409dp"
         android:layout_height="729dp"
-        android:layout_marginBottom="1dp"
+        android:layout_marginTop="32dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#70AEB2"
-            android:elevation="4dp"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:title="Your Bookmarks" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -40,15 +30,15 @@
                     android:id="@+id/greysButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Grey's Monument"
-                    android:background="@drawable/custom_button"/>
+                    android:background="@drawable/custom_button"
+                    android:text="Grey's Monument" />
 
                 <Button
                     android:id="@+id/laingButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Laing Art Gallery"
-                    android:background="@drawable/custom_button"/>
+                    android:background="@drawable/custom_button"
+                    android:text="Laing Art Gallery" />
             </LinearLayout>
         </ScrollView>
 
