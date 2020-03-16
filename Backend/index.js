@@ -18,7 +18,7 @@ const config = {
   dstHost: 'db.cs.ncl.ac.uk',
   dstPort: 3306,
   localPort: 33306,
-  username: 'uni-username-here',
+  username: 'uni-username-herse',
   password: 'uni-password-here'
 }
 
