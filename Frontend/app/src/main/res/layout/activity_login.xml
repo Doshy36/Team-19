@@ -6,40 +6,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="249dp"
-        android:layout_height="48dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="81dp"
-        tools:layout_editor_absoluteY="463dp" />
-
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="378dp"
-        android:layout_height="525dp"
+        android:id="@+id/dnLogo"
+        android:layout_width="386dp"
+        android:layout_height="435dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_with_text"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="38dp" />
+        android:contentDescription="@string/todo" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/nameEnter"
         android:layout_width="249dp"
         android:layout_height="48dp"
+        android:layout_marginStart="81dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="81dp"
+        android:autofillHints=""
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Password"
-        tools:layout_editor_absoluteX="81dp"
-        tools:layout_editor_absoluteY="525dp" />
+        android:labelFor="@id/passwordEnter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dnLogo"
+        tools:text="Name" />
+
+    <EditText
+        android:id="@+id/passwordEnter"
+        android:layout_width="249dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="81dp"
+        android:layout_marginEnd="81dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:inputType="textPersonName|textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameEnter"
+        tools:text="Password" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonEnter"
         android:layout_width="135dp"
         android:layout_height="72dp"
-        android:text="Enter"
-        tools:layout_editor_absoluteX="138dp"
-        tools:layout_editor_absoluteY="625dp" />
+        android:layout_marginStart="138dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="138dp"
+        android:layout_marginBottom="120dp"
+        android:text="@string/enter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEnter" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
