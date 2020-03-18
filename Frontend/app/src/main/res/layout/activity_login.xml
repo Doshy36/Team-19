@@ -25,6 +25,7 @@
         android:layout_marginEnd="81dp"
         android:autofillHints=""
         android:ems="10"
+        android:hint='"Enter Password"'
         android:inputType="textPersonName"
         android:labelFor="@id/passwordEnter"
         app:layout_constraintEnd_toEndOf="parent"
