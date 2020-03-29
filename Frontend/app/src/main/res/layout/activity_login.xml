@@ -10,42 +10,38 @@
         android:id="@+id/dnLogo"
         android:layout_width="386dp"
         android:layout_height="435dp"
+        android:contentDescription="@string/todo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_with_text"
-        android:contentDescription="@string/todo" />
+        app:srcCompat="@drawable/logo_with_text" />
 
     <EditText
         android:id="@+id/nameEnter"
         android:layout_width="249dp"
         android:layout_height="48dp"
-        android:layout_marginStart="81dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="81dp"
         android:autofillHints=""
         android:ems="10"
-        android:hint='"Enter Password"'
+        android:hint="Username"
         android:inputType="textPersonName"
         android:labelFor="@id/passwordEnter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dnLogo"
-        tools:text="Name" />
+        app:layout_constraintTop_toBottomOf="@+id/dnLogo" />
 
     <EditText
         android:id="@+id/passwordEnter"
         android:layout_width="249dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="81dp"
-        android:layout_marginEnd="81dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:autofillHints=""
         android:ems="10"
+        android:hint="Password"
         android:inputType="textPersonName|textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameEnter"
-        tools:text="Password" />
+        app:layout_constraintTop_toBottomOf="@+id/nameEnter" />
 
     <Button
         android:id="@+id/buttonEnter"
@@ -59,6 +55,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEnter" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordEnter"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,6 @@ package com.example.discovernorthumberland;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
@@ -21,15 +20,20 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.Map;
+
 public class MainMenuActivity extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
+    private MapView mapView;
     private LocationManager locationManager;
     private LocationListener locationListener;
 
@@ -48,15 +52,15 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView =  inflater.inflate(R.layout.activity_main_menu, container, false);
 
-        return inflater.inflate(R.layout.activity_main_menu, container, false);
+        mapView = rootView.findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(this);
+
+        return rootView;
     }
 
-    /* Map initalisation code
-            MapFragment mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-     */
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -90,6 +94,24 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         mMap.setMyLocationEnabled(true);
         mMap.setOnMarkerClickListener(this);
 
+    }
+
+    @Override
+    public void onResume() {
+        mapView.onResume();
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
     }
 
     @Override
