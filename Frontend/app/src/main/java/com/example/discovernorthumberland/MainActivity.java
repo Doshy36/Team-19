@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void onNavBarButtonClick(View view){
         drawer.openDrawer(GravityCompat.START);
-
     }
 
 

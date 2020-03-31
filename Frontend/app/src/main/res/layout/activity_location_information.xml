@@ -6,30 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".LocationInformation">
 
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollView"
-        android:layout_width="409dp"
-        android:layout_height="280dp"
-        app:layout_constraintBottom_toTopOf="@id/textView2"
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/locationTitleTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/greysimage3" />
-
-        </LinearLayout>
-    </HorizontalScrollView>
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/greysimage3" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/locationTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
@@ -37,14 +24,13 @@
         android:text="Grey's Monument"
         android:textAlignment="center"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/horizontalScrollView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
-        android:id="@+id/scrollView3"
+        android:id="@+id/scrollView"
         android:layout_width="409dp"
         android:layout_height="400dp"
         android:layout_marginStart="2dp"
@@ -58,6 +44,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/mainBodyText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Grey's Monument is a Grade I listed monument to Charles Grey, 2nd Earl Grey built in 1838 in the centre of Newcastle upon Tyne, England. It was erected to acclaim Earl Grey for the passing of the Great Reform Act of 1832 and stands at the head of Grey Street. It consists of a statue of Lord Grey standing atop a 130-foot-high (40 m) column. The column was designed by local architects John and Benjamin Green, and the statue was created by the sculptor Edward Hodges Baily (creator of Nelson's statue in Trafalgar Square).[1] It was paid for by public subscription.[2]  In July 1941, during World War II, the head of the statue was knocked off by a bolt of lightning.[3] In 1947, sculptor Roger Hedley (the son of painter Ralph Hedley[4]) created a new head based on the preserved fragments of the original.[5]  The monument lends its name to Monument Metro station, a station on the Tyne and Wear Metro located directly underneath, and to the Monument Mall Shopping Centre. The surrounding area is simply known as Monument.  A spiral staircase leads to a viewing platform at the top of the monument, which is occasionally opened to the public.[6] Old photographs indicate that the monument was originally on a traffic island and was surrounded by railings.[7] These railings are no longer present, and the area around the monument is now pedestrianised and is home to many shops, some independent and some up-scale designer boutiques.  The wide base of the monument is a popular spot for people-watching, and often acts as a venue for buskers, religious speakers and political activists/protesters. The Maxïmo Park song By the Monument refers to Grey's Monument.  The Monument is in the Westgate electoral ward of the City of Newcastle upon Tyne, and the parliamentary constituency of Newcastle upon Tyne Central." />

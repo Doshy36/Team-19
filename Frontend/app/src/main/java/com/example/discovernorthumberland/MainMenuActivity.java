@@ -2,6 +2,7 @@ package com.example.discovernorthumberland;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
@@ -116,12 +117,8 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
-        /*
-        Intent newActivityIntent = new Intent(MainActivity.this, LocationInformation.class);
-        MainActivity.this.startActivity(newActivityIntent);
-        return false;
-
-         */
+        Intent newActivityIntent = new Intent(getActivity(), LocationInformation.class);
+        startActivity(newActivityIntent);
         return false;
     }
 }
