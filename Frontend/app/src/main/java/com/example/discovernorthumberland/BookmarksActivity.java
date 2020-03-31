@@ -3,9 +3,8 @@ package com.example.discovernorthumberland;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.widget.Toolbar;
 
-public class Bookmarks extends AppCompatActivity {
+public class BookmarksActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
