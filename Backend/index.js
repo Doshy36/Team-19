@@ -18,46 +18,29 @@ const config = {
   dstHost: 'db.cs.ncl.ac.uk',
   dstPort: 3306,
   localPort: 33306,
-  username: 'uni-username-herse',
-  password: 'uni-password-here'
+  username: 'username',
+  password: 'password'
 }
 
 tunnel(config, (error, server) => {
   if (error) {
     console.log("SSH Connection error: " + error);
   }
-
-  pool = mysql.createPool({
-    connectionLimit: 10,
-    host: '127.0.0.1',
-    user: 't2022t19',
-    password: 'SapsBred.Jab',
-    database: 't2022t19',
-    port: 33306
-  });
-
-  module.exports.connection = callback => {
-    pool.getConnection((err, connection) => {
-      if (err) {
-        connection.release();
-        throw err;
-      }
-      callback(connection);
-    });
-  };
-
-  module.exports.query = (sql, par, callback) => {
-    module.exports.connection(connection => {
-      connection.query(sql, par, callback);
-  
-      connection.release();
-    });
-  };
 });
 
+const pool = mysql.createPool({
+  connectionLimit: 10,
+  host: '127.0.0.1',
+  user: 't2022t19',
+  password: 'SapsBred.Jab',
+  database: 't2022t19',
+  port: 33306
+});
 
 app.use('/', mainRouter);
 app.use('/', bookmarkRouter);
 app.use('/', ratingRouter);
 
 app.listen(8080, () => console.log("Server started"));
+
+module.exports.pool = pool;
