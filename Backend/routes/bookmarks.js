@@ -8,7 +8,7 @@ router.get('/bookmarks/:userId', function(req, res, next){
     var sql = "SELECT * FROM UserBookmark WHERE userId=?";
     var par = req.params.userId;
 
-    index.query(sql, par, (err, result, fields) => {
+    index.pool.query(sql, par, (err, result, fields) => {
         if(err){
             res.send({"success": false, "message": err.message});
             throw err;
@@ -23,7 +23,7 @@ router.post('/bookmarks/add', function(req, res, next){
     var sql = "INSERT INTO UserBookmark (userId, placeId) VALUES (?, ?)";
     var par = [req.body.userId, req.body.placeId];
 
-    index.query(sql, par, (err, result, fields) => {
+    index.pool.query(sql, par, (err, result, fields) => {
         if(err){
             res.send({"success": false, "message": err.message});
             throw err;
@@ -38,7 +38,7 @@ router.delete('/bookmarks/delete', function(req, res, next){
     var sql = "DELETE FROM t2022t19.UserBookmark WHERE userId=? AND placeId=?";
     var par = [req.body.userId, req.body.placeId];
 
-    index.query(sql, par, (err, result, fields) => {
+    index.pool.query(sql, par, (err, result, fields) => {
         if(err){
             res.send({"success": false, "message": err.message});
             throw err;
