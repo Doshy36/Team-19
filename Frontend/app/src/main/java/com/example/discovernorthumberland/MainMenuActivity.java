@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -92,7 +94,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
 
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String url = "http://108.61.175.243/places";
+        String url = "https://jwhitehead.uk/places";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
@@ -119,6 +121,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(),"ERROR CONNECTION TO SERVER FAILURE",Toast.LENGTH_LONG).show();
                         Log.i("RESPONSE",error.toString());
                     }
                 });

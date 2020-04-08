@@ -39,22 +39,20 @@ public class LocationInformation extends AppCompatActivity {
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://108.61.175.243/places";
+
+
+        String url = "https://jwhitehead.uk/place/" + placeId;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray jsonArray = response.getJSONArray("message");
-                            for(int i = 0; i < jsonArray.length();i++){
-                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                if(jsonObject.getString("placeId").equals(placeId)){
-                                    titleTextView.setText(jsonObject.getString("name"));
-                                    mainBodyTextView.setText(jsonObject.getString("description"));
-                                    Picasso.get().load(jsonObject.getString("imageUrl")).into(locationImageView);
-                                }
-
-                            }
+                            Log.i("BAP", response.toString());
+                            JSONObject jsonObject = response.getJSONObject("message");
+                            Log.i("BAP2", jsonObject.toString());
+                            titleTextView.setText(jsonObject.getString("name"));
+                            mainBodyTextView.setText(jsonObject.getString("description"));
+                            Picasso.get().load(jsonObject.getString("imageUrl")).into(locationImageView);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -62,10 +60,9 @@ public class LocationInformation extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.i("RESPONSE",error.toString());
+                        Log.i("RESPONSE", error.toString());
                     }
                 });
-
         // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest);
 
