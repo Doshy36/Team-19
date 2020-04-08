@@ -108,7 +108,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                 Log.i("RESPONSE",error.toString());
             }
         });
-        // Add the request to the RequestQueue.
+        // Add the request to the RequestQueue. 2
         queue.add(stringRequest);
 
 
