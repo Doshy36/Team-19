@@ -34,8 +34,9 @@
             android:layout_height="24dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:backgroundTint="@android:color/transparent"
+
             android:onClick="onNavBarButtonClick"
+            android:background="?android:attr/selectableItemBackground"
             android:outlineProvider="none"
             android:scaleX="1.25"
             android:scaleY="1.25"

@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -34,12 +35,14 @@ public class LocationInformation extends AppCompatActivity {
         final String placeId = getIntent().getStringExtra("placeId");
 
         final TextView titleTextView = findViewById(R.id.locationTitleTextView);
-        titleTextView.setVisibility(View.GONE);
+        //titleTextView.setVisibility(View.GONE);
         final TextView mainBodyTextView = findViewById(R.id.mainBodyText);
-        mainBodyTextView.setVisibility(View.GONE);
+        //mainBodyTextView.setVisibility(View.GONE);
         final ImageView locationImageView = findViewById(R.id.imageView);
-        locationImageView.setVisibility(View.GONE);
+        //locationImageView.setVisibility(View.GONE);
 
+        final LinearLayout mainBodyLinearLayout = findViewById(R.id.mainBodyLinearLayout);
+        mainBodyLinearLayout.setVisibility(View.GONE);
         progressBar = findViewById(R.id.progressBar);
 
 
@@ -62,9 +65,13 @@ public class LocationInformation extends AppCompatActivity {
                                 public void onSuccess() {
                                     if (progressBar != null) {
                                         progressBar.setVisibility(View.GONE);
+                                        mainBodyLinearLayout.setVisibility(View.VISIBLE);
+                                        /*
                                         titleTextView.setVisibility(View.VISIBLE);
                                         mainBodyTextView.setVisibility(View.VISIBLE);
                                         locationImageView.setVisibility(View.VISIBLE);
+
+                                         */
                                     }
                                 }
 
