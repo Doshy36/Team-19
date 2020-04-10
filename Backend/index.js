@@ -19,7 +19,8 @@ const config = {
   dstPort: 3306,
   localPort: 33306,
   username: 'username',
-  password: 'password'
+  password: 'password',
+  keepAlive: true
 }
 
 tunnel(config, (error, server) => {
