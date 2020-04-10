@@ -12,12 +12,14 @@
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:clickable="true"
         android:contentDescription="Back Button"
         android:elevation="1dp"
         android:onClick="onBackButtonOnClick"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_chevron_left_black_24dp" />
+        app:srcCompat="@drawable/ic_chevron_left_black_24dp"
+        android:focusable="true" />
 
     <ImageView
         android:id="@+id/dnLogo"

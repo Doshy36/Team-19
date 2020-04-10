@@ -3,10 +3,12 @@ package com.example.discovernorthumberland;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -15,17 +17,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 public class LocationInformation extends AppCompatActivity {
+
+    private ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +34,13 @@ public class LocationInformation extends AppCompatActivity {
         final String placeId = getIntent().getStringExtra("placeId");
 
         final TextView titleTextView = findViewById(R.id.locationTitleTextView);
+        titleTextView.setVisibility(View.GONE);
         final TextView mainBodyTextView = findViewById(R.id.mainBodyText);
+        mainBodyTextView.setVisibility(View.GONE);
         final ImageView locationImageView = findViewById(R.id.imageView);
+        locationImageView.setVisibility(View.GONE);
+
+        progressBar = findViewById(R.id.progressBar);
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -52,7 +57,24 @@ public class LocationInformation extends AppCompatActivity {
                             Log.i("BAP2", jsonObject.toString());
                             titleTextView.setText(jsonObject.getString("name"));
                             mainBodyTextView.setText(jsonObject.getString("description"));
-                            Picasso.get().load(jsonObject.getString("imageUrl")).into(locationImageView);
+                            Picasso.get().load(jsonObject.getString("imageUrl")).into(locationImageView,new com.squareup.picasso.Callback(){
+                                @Override
+                                public void onSuccess() {
+                                    if (progressBar != null) {
+                                        progressBar.setVisibility(View.GONE);
+                                        titleTextView.setVisibility(View.VISIBLE);
+                                        mainBodyTextView.setVisibility(View.VISIBLE);
+                                        locationImageView.setVisibility(View.VISIBLE);
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+
+                                }
+
+                            });
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
