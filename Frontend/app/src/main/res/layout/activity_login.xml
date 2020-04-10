@@ -7,6 +7,19 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Back Button"
+        android:elevation="1dp"
+        android:onClick="onBackButtonOnClick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_chevron_left_black_24dp" />
+
+    <ImageView
         android:id="@+id/dnLogo"
         android:layout_width="386dp"
         android:layout_height="435dp"
