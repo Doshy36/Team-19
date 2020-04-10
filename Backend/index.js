@@ -38,10 +38,13 @@ const pool = mysql.createPool({
   port: 33306
 });
 
+pool.on('error', console.error.bind(console, 'MySQL connection error:'));
+
 app.use('/', mainRouter);
 app.use('/', bookmarkRouter);
 app.use('/', ratingRouter);
 
-app.listen(8080, () => console.log("Server started"));
+app.listen(8080, () => console.log("Server started"))
+  .on('error', console.error.bind(console, 'Error:'));
 
 module.exports.pool = pool;
