@@ -20,43 +20,49 @@
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="500dp" />
+            android:layout_height="450dp" />
 
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/colorMainMenuBG">
 
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="15dp"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/historyButton"
+                <ImageView
+                    android:id="@+id/heritageButtonImage"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:text="History"
-                    android:textSize="14sp" />
+                    android:layout_height="130dp"
+                    android:elevation="15dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_buttonimagevector2" />
 
-                <Button
-                    android:id="@+id/cultureButton"
+                <ImageView
+                    android:id="@+id/cultureButtonImage"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:text="Culture" />
+                    android:layout_height="130dp"
+                    android:elevation="15dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_buttonimagevector3" />
 
-                <Button
-                    android:id="@+id/sportButton"
+                <ImageView
+                    android:id="@+id/cuisineButtonImage"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:text="Sport" />
+                    android:layout_height="130dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_buttonimagevector4" />
 
-                <Button
-                    android:id="@+id/cuisineButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:text="Cuisine" />
+                <ImageView
+                    android:id="@+id/sportsButtonImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="130dp"
+                    android:src="@drawable/ic_buttonimagevector1" />
 
             </LinearLayout>
         </ScrollView>

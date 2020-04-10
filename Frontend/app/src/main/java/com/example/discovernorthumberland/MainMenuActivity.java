@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -24,6 +26,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -39,12 +42,13 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
 import java.util.Objects;
 
-public class MainMenuActivity extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class MainMenuActivity extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap;
     private MapView mapView;
@@ -88,28 +92,42 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
             Log.e("JASON File Catch", "Can't find style. Error: ", e);
         }
 
-        LatLng greysMonument = new LatLng(54.973814, -1.613169);
-        Marker greysMonumentMarker = mMap.addMarker(new MarkerOptions().position(greysMonument).title("Greys Monument"));
-        greysMonumentMarker.setTag("Greys Monument");
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String url = "https://108.61.175.243/places";
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
+        String url = "https://jwhitehead.uk/places";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        Log.i("RESPONSE", response);
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("message");
+                            for(int i = 0; i < jsonArray.length();i++){
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                Log.i("Response :" + i,jsonObject.getString("placeId"));
+                                Log.i("Response :" + i,jsonObject.getString("name"));
+                                Log.i("Response :" + i,jsonObject.getString("description"));
+                                Log.i("Response :" + i,jsonObject.getString("locationData"));
+                                Log.i("Response :" + i,jsonObject.getString("imageUrl"));
+
+                                String[] locationDataArray = jsonObject.getString("locationData").split(",");
+                                LatLng locationLatLng = new LatLng(Double.parseDouble(locationDataArray[0]),Double.parseDouble(locationDataArray[1]));
+                                Marker locationMarker = mMap.addMarker(new MarkerOptions().position(locationLatLng).title(jsonObject.getString("name")));
+                                locationMarker.setTag(jsonObject.getString("placeId"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i("RESPONSE",error.toString());
-            }
-        });
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(),"ERROR CONNECTION TO SERVER FAILURE",Toast.LENGTH_LONG).show();
+                        Log.i("RESPONSE",error.toString());
+                    }
+                });
+
         // Add the request to the RequestQueue.
-        queue.add(stringRequest);
+        queue.add(jsonObjectRequest);
 
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -122,12 +140,12 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
             LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
         } else {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(greysMonument, 16));
+           // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(greysMonument, 16));
         }
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
         mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.setMyLocationEnabled(true);
-        mMap.setOnMarkerClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
 
     }
 
@@ -149,11 +167,13 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         mapView.onLowMemory();
     }
 
+
+
     @Override
-    public boolean onMarkerClick(final Marker marker) {
+    public void onInfoWindowClick(Marker marker) {
         Intent newActivityIntent = new Intent(getActivity(), LocationInformation.class);
+        newActivityIntent.putExtra("placeId", Objects.requireNonNull(marker.getTag()).toString());
         startActivity(newActivityIntent);
-        return false;
     }
 }
 
