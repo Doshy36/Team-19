@@ -5,9 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Back Button"
+        android:elevation="1dp"
+        android:onClick="onBackButtonOnClick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_chevron_left_black_24dp" />
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/colorMainMenuBG"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,50 +39,46 @@
             android:textStyle="bold" />
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/layout"
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="15dp"
                 android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/imageButton"
+                <ImageView
+                    android:id="@+id/heritageButtonImage"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    app:srcCompat="@drawable/ic_buttonimagevector1" />
+                    android:layout_height="130dp"
+                    android:elevation="15dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_buttonimagevector2" />
 
-                <Space
+                <ImageView
+                    android:id="@+id/cultureButtonImage"
                     android:layout_width="match_parent"
-                    android:layout_height="15dp" />
+                    android:layout_height="130dp"
+                    android:elevation="15dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_buttonimagevector3" />
 
-                <ImageButton
-                    android:id="@+id/imageButton2"
+                <ImageView
+                    android:id="@+id/cuisineButtonImage"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    app:srcCompat="@drawable/ic_buttonimagevector2" />
+                    android:layout_height="130dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_buttonimagevector4" />
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="15dp" />
+                <ImageView
+                    android:id="@+id/sportsButtonImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="130dp"
+                    android:src="@drawable/ic_buttonimagevector1" />
 
-                <ImageButton
-                    android:id="@+id/imageButton3"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    app:srcCompat="@drawable/ic_buttonimagevector3" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="15dp" />
-
-                <ImageButton
-                    android:id="@+id/imageButton4"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    app:srcCompat="@drawable/ic_buttonimagevector4" />
             </LinearLayout>
         </ScrollView>
 
