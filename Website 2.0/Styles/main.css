@@ -1,3 +1,123 @@
 body {
-	background-color: red;
+  	margin: 0;
+  	padding: 0;
+  	width: 100%;
+	background-color: #F6FAF9;
+	color: #15343d;
+}
+
+a:hover {
+	color: #78e2cf;
+}
+
+a {
+	color: #50b1bb;
+}
+
+footer {
+	color: white;
+	background-color: #15343d;
+	border-top: 2px solid #78e2cf;
+}
+
+
+.container-fluid {
+	font-family: "ProductSans";
+	padding: 50px !important;
+}
+
+.display-2 {
+	text-align: center;
+}
+
+#slideshow {
+	background-image: url("../Assets/HadriansWall.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+
+
+/* --- EXPERIMENTAL TRIANGLE DESIGN --- */
+
+.triangle-small {
+	padding: 0;
+	background-size: 100% 20px;
+	background-repeat: no-repeat;
+}
+
+.triangle-medium {
+	padding: 0;
+	background-size: 100% 50px;
+	background-repeat: no-repeat;
+}
+
+.triangle-large {
+	padding: 0;
+	background-size: 100% 100px;
+	background-repeat: no-repeat;
+}
+
+.triangle-dark-top-right {
+	background-image: url("../Assets/TriangleDark-T-R.png");
+	background-position: top right;
+}
+
+.triangle-dark-bottom-left {
+	background-image: url("../Assets/TriangleDark-B-L.png");
+	background-position: bottom left;
+}
+
+.triangle-dark-top-left {
+	background-image: url("../Assets/TriangleDark-T-L.png");
+	background-position: top left;
+}
+
+.triangle-dark-bottom-right {
+	background-image: url("../Assets/TriangleDark-B-R.png");
+	background-position: bottom right;
+}
+
+.triangle-light-top-right {
+	background-image: url("../Assets/TriangleLight-T-R.png");
+	background-position: top right;
+}
+
+.triangle-light-bottom-left {
+	background-image: url("../Assets/TriangleLight-B-L.png");
+	background-position: bottom left;
+}
+
+.triangle-light-top-left {
+	background-image: url("../Assets/TriangleLight-T-L.png");
+	background-position: top left;
+}
+
+.triangle-light-bottom-right {
+	background-image: url("../Assets/TriangleLight-B-R.png");
+	background-position: bottom right;
+}
+
+.color-switch {
+	padding: 0px !important;
+	height: 20px;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+.color-switch-D-L {
+	background-image: url("../Assets/colorSwitch1.png");
+}
+
+.color-switch-L-D {
+	background-image: url("../Assets/colorSwitch2.png");
+}
+
+.color-switch-L-W {
+	background-image: url("../Assets/colorSwitch3.png");	
+}
+
+.color-switch-D-W {
+	background-image: url("../Assets/colorSwitch4.png");	
 }

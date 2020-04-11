@@ -1,3 +1,20 @@
-h1 {
-	color: white;
+.navbar {
+	background-color: #15343d;
+	border-top: 2px solid #78e2cf;
+	/*border-bottom: 2px solid #78e2cf;*/
+}
+
+.nav-item {
+	font-family: "ProductSans";
+	font-size: 20px;
+}
+
+.nav-link {
+	text-align: center;
+	width: 110px;
+	color: #50b1bb;
+}
+
+#nav-logo {
+	padding: 0;
 }
