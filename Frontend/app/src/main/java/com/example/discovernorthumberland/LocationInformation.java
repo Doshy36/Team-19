@@ -111,6 +111,8 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         });
     }
 
+// just so lyle can commit n push - ignore - delete if u see this lol
+
     @Override
     public void onInit(int status) {
         if (status == TextToSpeech.SUCCESS) {
