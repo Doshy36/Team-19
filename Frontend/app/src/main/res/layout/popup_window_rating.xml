@@ -9,7 +9,7 @@
     android:background="@drawable/layout_rounded_corners">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/popupRatingTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -29,7 +29,7 @@
         android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/popupRatingTitle">
 
         <ImageView
             android:id="@+id/starImageView1"
@@ -83,12 +83,12 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/tab_indicator_text"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/popupRatingButtonsLinearLayout"
         app:layout_constraintTop_toBottomOf="@+id/questionTextView"
         app:layout_constraintVertical_bias="1.0" />
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/popupRatingButtonsLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

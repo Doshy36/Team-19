@@ -227,5 +227,8 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
             }
         });
     }
+    public void onBackButtonOnClick(View view) {
+        this.finish();
+    }
 }
 
