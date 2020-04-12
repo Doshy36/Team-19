@@ -13,7 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:clickable="true"
-        android:contentDescription="Back Button"
+        android:contentDescription="@string/back_button"
         android:background="?android:attr/selectableItemBackground"
         android:elevation="1dp"
         android:onClick="onBackButtonOnClick"

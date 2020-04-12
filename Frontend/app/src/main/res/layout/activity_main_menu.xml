@@ -39,7 +39,10 @@
                     android:id="@+id/heritageButtonImage"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
                     android:elevation="15dp"
+                    android:focusable="true"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_buttonimagevector2" />
 
@@ -47,7 +50,10 @@
                     android:id="@+id/cultureButtonImage"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
                     android:elevation="15dp"
+                    android:focusable="true"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_buttonimagevector3" />
 
@@ -55,6 +61,9 @@
                     android:id="@+id/cuisineButtonImage"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_buttonimagevector4" />
 
@@ -62,6 +71,9 @@
                     android:id="@+id/sportsButtonImage"
                     android:layout_width="wrap_content"
                     android:layout_height="130dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:src="@drawable/ic_buttonimagevector1" />
 
             </LinearLayout>

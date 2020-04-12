@@ -24,6 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="400dp"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/image_of_location"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/scrollView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:fontFamily="serif"
-                android:text="Grey's Monument"
+                android:text="@string/lorem_ipsum"
                 android:textAlignment="center"
                 android:textSize="36sp"
                 android:textStyle="bold" />
@@ -76,7 +77,7 @@
                     android:clickable="true"
                     android:drawableTop="@drawable/ic_navigation_black_24dp"
                     android:focusable="true"
-                    android:text="Directions"
+                    android:text="@string/directions"
                     android:textAlignment="center" />
 
                 <TextView
@@ -90,7 +91,7 @@
                     android:clickable="true"
                     android:drawableTop="@drawable/ic_share_black_24dp"
                     android:focusable="true"
-                    android:text="Share"
+                    android:text="@string/share"
                     android:textAlignment="center" />
 
                 <TextView
@@ -104,7 +105,8 @@
                     android:clickable="true"
                     android:drawableTop="@drawable/ic_star_black_24dp"
                     android:focusable="true"
-                    android:text="TextView"
+                    android:onClick="ratingTextViewOnClick"
+                    android:text="@string/rate"
                     android:textAlignment="center" />
 
                 <TextView
@@ -118,7 +120,7 @@
                     android:clickable="true"
                     android:drawableTop="@drawable/ic_record_voice_over_black_24dp"
                     android:focusable="true"
-                    android:text="Listen"
+                    android:text="@string/listen"
                     android:textAlignment="center" />
 
             </LinearLayout>
@@ -127,7 +129,7 @@
                 android:id="@+id/mainBodyText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Grey's Monument is a Grade I listed monument to Charles Grey, 2nd Earl Grey built in 1838 in the centre of Newcastle upon Tyne, England. It was erected to acclaim Earl Grey for the passing of the Great Reform Act of 1832 and stands at the head of Grey Street. It consists of a statue of Lord Grey standing atop a 130-foot-high (40 m) column. The column was designed by local architects John and Benjamin Green, and the statue was created by the sculptor Edward Hodges Baily (creator of Nelson's statue in Trafalgar Square).[1] It was paid for by public subscription.[2]  In July 1941, during World War II, the head of the statue was knocked off by a bolt of lightning.[3] In 1947, sculptor Roger Hedley (the son of painter Ralph Hedley[4]) created a new head based on the preserved fragments of the original.[5]  The monument lends its name to Monument Metro station, a station on the Tyne and Wear Metro located directly underneath, and to the Monument Mall Shopping Centre. The surrounding area is simply known as Monument.  A spiral staircase leads to a viewing platform at the top of the monument, which is occasionally opened to the public.[6] Old photographs indicate that the monument was originally on a traffic island and was surrounded by railings.[7] These railings are no longer present, and the area around the monument is now pedestrianised and is home to many shops, some independent and some up-scale designer boutiques.  The wide base of the monument is a popular spot for people-watching, and often acts as a venue for buskers, religious speakers and political activists/protesters. The Maxïmo Park song By the Monument refers to Grey's Monument.  The Monument is in the Westgate electoral ward of the City of Newcastle upon Tyne, and the parliamentary constituency of Newcastle upon Tyne Central." />
+                android:text="@string/lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_cras_ac_consectetur_eros_sed_gravida_mauris_donec_consectetur_nibh_at_massa_vehicula_porttitor_donec_porttitor_diam_sit_amet_suscipit_blandit_nulla_neque_lobortis_erat_consequat_fringilla_nisi_ipsum_ut_tellus_nulla_et_dolor_at_purus_varius_aliquet_sed_a_ex_fusce_diam_elit_blandit_quis_posuere_a_maximus_vitae_nisl_integer_id_lorem_dignissim_vestibulum_dolor_non_tincidunt_libero_proin_congue_elit_id_nisi_rutrum_et_egestas_libero_egestas_vivamus_efficitur_magna_a_massa_placerat_euismod_quisque_placerat_varius_ipsum_pellentesque_tristique_elit_auctor_quis_quisque_luctus_at_lorem_vel_ullamcorper_mauris_nec_commodo_nisl_nam_consectetur_molestie_luctus" />
 
         </LinearLayout>
     </ScrollView>
