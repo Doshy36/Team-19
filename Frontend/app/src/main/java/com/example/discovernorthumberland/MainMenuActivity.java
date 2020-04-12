@@ -107,7 +107,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 JSONArray topicArray = jsonObject.getJSONArray("categories");
 
-                                // Logging all the data retrieved from the database for debugging purposes delete when done
+                                // Logging all the data retrieved from the database for debugging purposes delete when done yes yes 1 2
                                 Log.i("BAP TOPIC MAIN", topicArray.toString());
                                 for(int k =0;k<topicArray.length(); k++){
                                     Log.i("topic :" + k,topicArray.getString(k));
