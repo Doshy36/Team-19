@@ -102,8 +102,16 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray jsonArray = response.getJSONArray("message");
+                            Log.i("Bap",jsonArray.toString());
                             for(int i = 0; i < jsonArray.length();i++){
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                JSONArray topicArray = jsonObject.getJSONArray("categories");
+
+                                // Logging all the data retrieved from the database for debugging purposes delete when done
+                                Log.i("BAP TOPIC MAIN", topicArray.toString());
+                                for(int k =0;k<topicArray.length(); k++){
+                                    Log.i("topic :" + k,topicArray.getString(k));
+                                }
                                 Log.i("Response :" + i,jsonObject.getString("placeId"));
                                 Log.i("Response :" + i,jsonObject.getString("name"));
                                 Log.i("Response :" + i,jsonObject.getString("description"));

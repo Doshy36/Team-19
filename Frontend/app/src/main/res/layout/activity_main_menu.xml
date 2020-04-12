@@ -41,7 +41,7 @@
                     android:layout_height="130dp"
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
-                    android:elevation="15dp"
+                    android:elevation="20dp"
                     android:focusable="true"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_buttonimagevector2" />
@@ -52,7 +52,7 @@
                     android:layout_height="130dp"
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
-                    android:elevation="15dp"
+                    android:elevation="20dp"
                     android:focusable="true"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_buttonimagevector3" />
@@ -63,6 +63,7 @@
                     android:layout_height="130dp"
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
+                    android:elevation="20dp"
                     android:focusable="true"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_buttonimagevector4" />
@@ -73,6 +74,7 @@
                     android:layout_height="130dp"
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
+                    android:elevation="20dp"
                     android:focusable="true"
                     android:src="@drawable/ic_buttonimagevector1" />
 

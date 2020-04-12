@@ -6,13 +6,16 @@ import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -31,13 +34,18 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LocationInformation extends AppCompatActivity {
+import java.util.Locale;
 
+public class LocationInformation extends AppCompatActivity implements TextToSpeech.OnInitListener{
+    TextView listenBtn;
+    TextView title, mainBody;
+    TextToSpeech textToSpeech;
     private ProgressBar progressBar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_information);
         final String placeId = getIntent().getStringExtra("placeId");
@@ -88,6 +96,50 @@ public class LocationInformation extends AppCompatActivity {
                 });
         // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest);
+
+        // --- Text to Speech ---
+        title = (TextView) findViewById(R.id.locationTitleTextView);
+        mainBody = (TextView) findViewById(R.id.mainBodyText);
+        listenBtn = (TextView) findViewById(R.id.textToSpeechTextView);
+
+        textToSpeech = new TextToSpeech(this, this);
+        listenBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textToSpeak();
+            }
+        });
+    }
+
+// just so lyle can commit n push - ignore - delete if u see this lol
+
+    @Override
+    public void onInit(int status) {
+        if (status == TextToSpeech.SUCCESS) {
+            int result = textToSpeech.setLanguage(Locale.US);
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("error", "This Language is not supported");
+            }
+        } else {
+            Log.e("error", "Failed to Initialize");
+        }
+    }
+    @Override
+    public void onDestroy() {
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onDestroy();
+    }
+    private void textToSpeak() {
+        String text = title.getText().toString() + mainBody.getText().toString();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+        }
+        else {
+            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        }
     }
 
     public void ratingTextViewOnClick(View view) {
@@ -176,6 +228,9 @@ public class LocationInformation extends AppCompatActivity {
                 popupWindow.dismiss();
             }
         });
+    }
+    public void onBackButtonOnClick(View view) {
+        this.finish();
     }
 }
 
