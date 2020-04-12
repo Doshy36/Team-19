@@ -8,7 +8,7 @@
     tools:context=".MainMenuActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/mainMenuLinearLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -23,13 +23,13 @@
             android:layout_height="450dp" />
 
         <ScrollView
-            android:id="@+id/scrollView"
+            android:id="@+id/MainMenuButtonsScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorMainMenuBG">
 
             <LinearLayout
-                android:id="@+id/linearLayout"
+                android:id="@+id/MainMenuButtonsLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"

@@ -32,57 +32,27 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/bookmarksTitle"
+            android:id="@+id/topicTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_activity_bookmarks"
+            android:text="TOPIC"
             android:textAlignment="center"
             android:textColor="@color/common_google_signin_btn_text_light_pressed"
             android:textSize="48sp"
             android:textStyle="bold" />
 
         <ScrollView
-            android:id="@+id/BookmarksButtonsScrollView"
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/BookmarksButtonsLinearLayout"
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:orientation="vertical">
+                android:orientation="vertical"/>
 
-                <ImageView
-                    android:id="@+id/heritageButtonImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="130dp"
-                    android:elevation="15dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_buttonimagevector2" />
-
-                <ImageView
-                    android:id="@+id/cultureButtonImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="130dp"
-                    android:elevation="15dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_buttonimagevector3" />
-
-                <ImageView
-                    android:id="@+id/cuisineButtonImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="130dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_buttonimagevector4" />
-
-                <ImageView
-                    android:id="@+id/sportsButtonImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="130dp"
-                    android:src="@drawable/ic_buttonimagevector1" />
-
-            </LinearLayout>
         </ScrollView>
 
     </LinearLayout>

@@ -13,30 +13,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainer;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
@@ -46,10 +41,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Map;
 import java.util.Objects;
 
-public class MainMenuActivity extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+public class MainMenuActivity extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener{
 
     private GoogleMap mMap;
     private MapView mapView;
@@ -76,6 +70,44 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         mapView = rootView.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
+        ImageView heritageButton = rootView.findViewById(R.id.heritageButtonImage);
+        heritageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newActivityIntent = new Intent(getActivity(), TopicPageActivity.class);
+                newActivityIntent.putExtra("topicId", "Heritage");
+                startActivity(newActivityIntent);
+            }
+        });
+        ImageView cultureButton = rootView.findViewById(R.id.cultureButtonImage);
+        cultureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newActivityIntent = new Intent(getActivity(), TopicPageActivity.class);
+                newActivityIntent.putExtra("topicId", "Culture");
+                startActivity(newActivityIntent);
+            }
+        });
+        ImageView cuisineButton = rootView.findViewById(R.id.cuisineButtonImage);
+        cuisineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newActivityIntent = new Intent(getActivity(), TopicPageActivity.class);
+                newActivityIntent.putExtra("topicId", "Cuisine");
+                startActivity(newActivityIntent);
+
+            }
+        });
+        ImageView sportButton = rootView.findViewById(R.id.sportsButtonImage);
+        sportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newActivityIntent = new Intent(getActivity(), TopicPageActivity.class);
+                newActivityIntent.putExtra("topicId", "Sports");
+                startActivity(newActivityIntent);
+            }
+        });
 
         return rootView;
     }
@@ -155,8 +187,6 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.setMyLocationEnabled(true);
         mMap.setOnInfoWindowClickListener(this);
-
-
     }
 
     @Override
@@ -185,5 +215,8 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         newActivityIntent.putExtra("placeId", Objects.requireNonNull(marker.getTag()).toString());
         startActivity(newActivityIntent);
     }
+
+
+
 }
 
