@@ -13,11 +13,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -48,6 +52,11 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     private GoogleMap mMap;
     private MapView mapView;
     private LocationManager locationManager;
+    private ConstraintLayout progressBarConstraintLayout;
+    private ProgressBar progressBar;
+    private TextView errorTextView;
+    private Button retryButton;
+
     private LocationListener locationListener;
 
     @Override
@@ -109,6 +118,12 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
             }
         });
 
+        progressBarConstraintLayout = rootView.findViewById(R.id.progressBarConstraintLayout);
+        progressBar = rootView.findViewById(R.id.mainPageLoadingProgressBar);
+        errorTextView = rootView.findViewById(R.id.errorTextView);
+        retryButton = rootView.findViewById(R.id.retryButton);
+
+
         return rootView;
     }
 
@@ -154,7 +169,9 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                                 LatLng locationLatLng = new LatLng(Double.parseDouble(locationDataArray[0]),Double.parseDouble(locationDataArray[1]));
                                 Marker locationMarker = mMap.addMarker(new MarkerOptions().position(locationLatLng).title(jsonObject.getString("name")));
                                 locationMarker.setTag(jsonObject.getString("placeId"));
+
                             }
+                            progressBarConstraintLayout.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -162,7 +179,12 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+
                         Toast.makeText(getActivity(),"ERROR CONNECTION TO SERVER FAILURE",Toast.LENGTH_LONG).show();
+
+                        progressBar.setVisibility(View.GONE);
+                        errorTextView.setVisibility(View.VISIBLE);
+                        retryButton.setVisibility(View.VISIBLE);
                         Log.i("RESPONSE",error.toString());
                     }
                 });

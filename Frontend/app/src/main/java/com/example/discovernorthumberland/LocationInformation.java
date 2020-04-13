@@ -59,7 +59,6 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         progressBar = findViewById(R.id.progressBar);
 
         RequestQueue queue = Volley.newRequestQueue(this);
-
         String url = "https://jwhitehead.uk/place/" + placeId;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
