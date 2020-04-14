@@ -1,4 +1,4 @@
-until NODE_ENV=production node index.js; do
+until npm run start; do
     echo "Server 'myserver' crashed with exit code $?.  Respawning.." >&2
     sleep 1
 done
