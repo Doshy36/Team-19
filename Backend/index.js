@@ -30,9 +30,9 @@ const config = {
   host: 'cs-linux.ncl.ac.uk',
   dstHost: 'db.cs.ncl.ac.uk',
   dstPort: 3306,
-  localPort: 33306,
-  username: 'username',
-  password: 'password',
+  localPort: process.env.DB_PORT,
+  username: process.env.USER,
+  password: process.env.PASS,
   keepAlive: true
 }
 
@@ -44,11 +44,11 @@ tunnel(config, (error, server) => {
 
 const pool = mysql.createPool({
   connectionLimit: 50,
-  host: '127.0.0.1',
-  user: 't2022t19',
-  password: 'SapsBred.Jab',
-  database: 't2022t19',
-  port: 33306,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_DB,
+  port: process.env.DB_PORT,
   waitForConnections: true
 });
 
