@@ -10,7 +10,9 @@ body {
   	padding: 0;
   	width: 100%;
 	background-color: #F6FAF9;
+	background-size: cover;
 	color: #15343d;
+	color:white;
 	font-family: "ProductSans";
 }
 
@@ -191,8 +193,10 @@ footer img {
 
 #header{
 	position: relative;
-	margin-top: 2%;
+	margin-top: %;
 	padding: 2%;
+	background-color: #F6FAF9;
+	color: #15343d;
 }
 
 #left-side{
@@ -229,6 +233,8 @@ hr{
 
 .row{
 	margin: auto;
+	padding-top: 10%;
+	transform: skewY(-1deg);
 }
 
 /* Create three unequal columns that floats next to each other */
@@ -251,6 +257,7 @@ hr{
   /* Left and right column */
   .column.side {
 	width: 15%;
+	height: 20%;
 	padding: 0;
 	margin: 0;
   }
@@ -265,10 +272,18 @@ hr{
   .column.middle > h1{
 	  text-align: center;
 	  margin-top: 2%;
+	  font-size: 4.2em;
+	  padding-bottom: 3%;
+	  letter-spacing: 4px;
 	}
 
 	.column.middle > p{
-		margin-left: ;
+		text-align: center;
+		font-size: 1.5em;
+		letter-spacing: 2px;
+		word-spacing: 4px;
+		line-height: 35px;
+		padding-top: 2%;
 	}
   
   /* Clear floats after the columns */
@@ -279,12 +294,79 @@ hr{
   }
 
 
+  .row-2{
+	margin: auto;
+	transform: skewY(-1deg);
+}
 
+/* Create three unequal columns that floats next to each other */
+.column-2 {
+	float: left;
+	/*padding: 10px;*/
+	padding: 0;
+	margin: 0;
+	
+  }
+  
+  /* Left and right column */
+  .column-2.side-2 {
+	width: 40%;
+	padding: 0;
+	margin: 0;
+	padding-left: 2%;
+  }
+  
+  /* Middle column */
+  .column-2.middle-2 {
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+	
+  }
+  
+  /* Clear floats after the columns */
+  .row-2:after {
+	content: "";
+	display: table;
+	clear: both;
+  }
 
+  #dark-mode-pic{
+	  width: 60%;
+  }
 
+  .column-2.side-2 > h3, p{
+	  margin-left: 2%;
+  }
 
+  .column-2.middle-2 > p{
+	font-size: 1.2em;
+	margin-top: 2%;
+	padding-bottom: 2%;
+}
 
+#filter-info{
+	font-size: 1.2em;
+	margin-top: 5%;
+}
 
+#right-pic{
+	width: 25%;
+	float: right;
+	margin-right: 3%;
+	margin-top: 2%;
+}
 
-
+.main-container{
+	padding: 0;
+	margin: 0;
+	background-image: url("../Assets/PosterBackground.png");
+	/*background-attachment: fixed;*/
+	background-position: right;
+	background-size: cover;
+	background-clip: content-box;
+	transform: skewY(1deg);
+	width: 90%;
+	margin: auto;
+}
 
