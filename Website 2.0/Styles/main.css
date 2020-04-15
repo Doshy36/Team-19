@@ -1,3 +1,10 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	
+}
+
 body {
   	margin: 0;
   	padding: 0;
@@ -24,6 +31,7 @@ footer {
 	background-color: #15343d;
 	border-top: 2px solid #78e2cf;
 	text-align: center;
+	clear: both;
 }
 
 div {
@@ -179,3 +187,104 @@ footer img {
 .color-switch-D-W {
 	background-image: url("../Assets/colorSwitch4.png");	
 }
+
+
+#header{
+	position: relative;
+	margin-top: 2%;
+	padding: 2%;
+}
+
+#left-side{
+	margin: 0;
+	padding: 0;
+	margin-left: 10px;
+	width: fit-content;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+#left-heading{
+	margin: 0;
+	padding: 0;
+}
+
+h2.e{
+	float: right;
+	padding-left: 10px;
+}
+
+#right-side{
+	margin-right: 10px;
+	width: fit-content;
+	position: absolute;
+	right: 0;
+}
+
+hr{
+	margin-top: 65px;
+	padding-bottom: px;
+}
+
+.row{
+	margin: auto;
+}
+
+/* Create three unequal columns that floats next to each other */
+.column {
+	float: left;
+	/*padding: 10px;*/
+	padding: 0;
+	margin: 0;
+	
+  }
+
+  #left-side-pic{
+	margin-left: 2%;
+  }
+
+  #right-side-pic{
+    margin-right: 2%;
+  }
+  
+  /* Left and right column */
+  .column.side {
+	width: 15%;
+	padding: 0;
+	margin: 0;
+  }
+  
+  /* Middle column */
+  .column.middle {
+	width: 64%;
+	margin-left: auto;
+	margin-right: auto;
+  }
+
+  .column.middle > h1{
+	  text-align: center;
+	  margin-top: 2%;
+	}
+
+	.column.middle > p{
+		margin-left: ;
+	}
+  
+  /* Clear floats after the columns */
+  .row:after {
+	content: "";
+	display: table;
+	clear: both;
+  }
+
+
+
+
+
+
+
+
+
+
+

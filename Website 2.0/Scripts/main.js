@@ -3,14 +3,21 @@ var slideshow = document.getElementById("slideshow");
 const nextImageDelay = 3000;
 let currentImageCounter = 0;
 
-var images = ["url('./Assets/Alnwick_Castle.jpg')", "url('./Assets/HadriansWall.jpg')"];
+var images = ["url('./Assets/HadriansWall.jpg')", "url('./Assets/Alnwick_Castle.jpg')"];
+var greyBubbles = ["Assets/circleG1.png", "Assets/circleG2.png", "Assets/circleG3.png", "Assets/circleG4.png"];
+var blueBubbles = ["Assets/circleC1.png", "Assets/circleC2.png", "Assets/circleC3.png", "Assets/circleC4.png"];
+var bubbles = document.getElementsByClassName("bubble");
+var bubbleCounter = 0;
 
 
-setInterval(nextImage, nextImageDelay);
+setInterval(nextImage2, nextImageDelay);
 
-function nextImage() {
+function nextImage2() {
   currentImageCounter = (currentImageCounter+1) % images.length;
   slideshow.style.backgroundImage = images[currentImageCounter];
+  bubbles[bubbleCounter].setAttribute("src", greyBubbles[bubbleCounter]);
+  bubbleCounter = (bubbleCounter+1) % bubbles.length;
+  bubbles[bubbleCounter].setAttribute("src", blueBubbles[bubbleCounter]);
 }
 
 
