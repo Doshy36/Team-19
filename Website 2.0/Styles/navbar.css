@@ -1,18 +1,23 @@
 .navbar {
-	background-color: #15343d;
-	border-top: 2px solid #78e2cf;
+	background-color: #07223b;
+	/*border-top: 4px solid #ffffff;*/
 	margin-bottom: 2%;
+	opacity: 0.6;
+}
+
+.navbar:hover{
+	opacity: 0.7;
 }
 
 .nav-item {
 	font-family: "ProductSans";
-	font-size: 20px;
+	font-size: 22px;
 }
 
 .nav-link {
 	text-align: center;
 	width: 110px;
-	color: #50b1bb;
+	color: #ffffff;
 }
 
 #nav-logo {
