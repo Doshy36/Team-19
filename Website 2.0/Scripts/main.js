@@ -119,7 +119,9 @@ anchorList.forEach(link => {
             behavior: 'smooth' 
         }); 
     }
+
 }); 
+
 
 
 

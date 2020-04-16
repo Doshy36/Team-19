@@ -248,7 +248,7 @@ header > hr{
 	padding-top: 5vh;
 	padding-bottom: 5vh;
 	padding-top: 10%;
-	transform: skewY(-1deg);
+	/*transform: skewY(-1deg);*/
 }
 
 /* Create three unequal columns that floats next to each other */
@@ -311,7 +311,7 @@ header > hr{
 	margin: auto;
 	padding-top: 5vh;
 	padding-bottom: 5vh;
-	transform: skewY(-1deg);
+	/*transform: skewY(-1deg);*/
 }
 
 /* Create three unequal columns that floats next to each other */
@@ -379,19 +379,20 @@ header > hr{
 .main-container{
 	padding: 0;
 	margin: 0;
-	background-image: url("../Assets/PosterBackground.png");
+	background-color: rgba(0, 0, 0, 0.274);
+/*	background-image: url("../Assets/PosterBackground.png");*/
 	/*background-attachment: fixed;*/
-	background-position: right;
+/*	background-position: right;
 	background-size: cover;
 	background-clip: content-box;
-	transform: skewY(1deg);
+	transform: skewY(1deg);*/
 	width: 90%;
 	margin: auto;
 	padding-top: 5vh;
 	padding-bottom: 5vh;
-	opacity: 0.7;
- 
-
+	margin-top: 5vh;
+	opacity: 0.95;
+	z-index: 0;
 }
 
 
