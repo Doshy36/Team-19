@@ -41,8 +41,11 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
+        if(MainActivity.getUserLoggedIn()){
+            setContentView(R.layout.activity_loggedin);
+        }else {
+            setContentView(R.layout.activity_login);
+        }
     }
 
     public void onBackButtonOnClick(View view) {
@@ -71,8 +74,8 @@ public class LoginActivity extends AppCompatActivity {
                     String accessToken = response.getString("accessToken");
                     String userID = "";
                     Log.d("ACCESS TOKEN", accessToken);
-
-                    MainActivity.logUserIn(accessToken,userID);
+                    MainActivity.logUserIn(accessToken, userID);
+                    setContentView(R.layout.activity_loggedin);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -83,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 // error
                 Log.d("Error.Response", error.toString());
+                Toast.makeText(getBaseContext(), "Error, Please try again", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -111,8 +115,8 @@ public class LoginActivity extends AppCompatActivity {
                     String accessToken = response.getString("accessToken");
                     String userId = "";
                     Log.d("ACCESS TOKEN", accessToken);
-
-                    MainActivity.logUserIn(accessToken,userId);
+                    MainActivity.logUserIn(accessToken, userId);
+                    setContentView(R.layout.activity_loggedin);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -123,6 +127,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 // error
                 Log.d("Error.Response", error.toString());
+                if (error.toString().equalsIgnoreCase("com.android.volley.AuthFailureError")) {
+                    Toast.makeText(getBaseContext(), "Incorrect email or password, Please try again", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Connection Error, Please try again", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
