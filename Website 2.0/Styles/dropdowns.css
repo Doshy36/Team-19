@@ -1,0 +1,48 @@
+/* --- FAQ ----------------------------------------------------------- */
+#faq {
+	padding-left: 15vw;
+	padding-right: 15vw;
+	text-align: center;
+}
+
+#faq hr, #faq h3 {
+	margin: 0;
+}
+
+#faq h3{
+	font-size: 1.5vw;
+}
+
+#faq h2{
+	font-size: 3.2vw;
+}
+
+.question {
+	cursor: pointer;
+	padding: 2vw;
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	transition: 0.4s;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.active, .question:hover {
+  	background-color: rgba(0, 0, 0, 0.274);
+}
+
+.answer {
+	text-align: left;
+	padding: 0 2vw;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
+}
+
+.answer p {
+	padding: 2vw 0;
+	text-align: left;
+}

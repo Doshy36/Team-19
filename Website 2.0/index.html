@@ -16,34 +16,14 @@
     <link rel="stylesheet" type="text/css" href="Styles/main.css">
     <link rel="stylesheet" type="text/css" href="Styles/navbar.css">
 	<link rel="stylesheet" type="text/css" href="Styles/fonts.css">
-	<!--<link rel="stylesheet" type="text/css" href="Styles/slideshow.css">-->
+	<link rel="stylesheet" type="text/css" href="Styles/template.css">
+	<link rel="stylesheet" type="text/css" href="Styles/dropdowns.css">
 
 	<!-- JS -->
 	<script src="./Scripts/main.js" defer></script>
-	<!--<script src="./Scripts/slideshow.js" defer></script>-->
-
-
-
+	<script src="./Scripts/dropdowns.js" defer></script>
 </head>
 <body>
-<!--
-	<div id="slideshow" class="container-fluid">
-			<img id="slideshow-logo" src="Assets/DNLogoShadow.png" height="40%"/>
-			<h1 class="display-2">Discover Northumberland</h1>
-			
-			<div id="slideshow-img-bubbles">
-				<img class="bubble" src="Assets/circleC1.png"/>
-				<img class="bubble" src="Assets/circleG2.png"/>
-				<img class="bubble" src="Assets/circleG3.png"/>
-				<img class="bubble" src="Assets/circleG4.png"/>
-				
-			</div>
-
-			<div id="slideshow-down-arrow">
-				<a href="#navbar"><img id="slideshow-down-arrow-img" src="Assets/arrow_down.png" height="50vw"/></a>
-			</div>
-	</div>
--->
 
 <div id="body">
 <div class="intro">
@@ -65,18 +45,14 @@
 		
 	</div>
 	</div>
-
-	
 		<a id="slideshow-down-arrow" href="#navbar"><img id="slideshow-down-arrow-img" src="Assets/arrow_down.png" height=""/></a>
-	
 </div>
 </div>
-
 
 	<nav id="navbar" class="navbar navbar-expand-sm justify-content-center sticky-top">
 	  	<ul class="navbar-nav">
 		    <li class="nav-item">
-		      <a class="nav-link" href="#features">Features</a></li>
+		      <a class="nav-link" href="#features" id="active-link">Features</a></li>
 		    <li class="nav-item">
 		      <a class="nav-link" href="#faw">FAQ</a></li>
 		    <li class="nav-item">
@@ -150,39 +126,79 @@
 </div>
 
 
-
-
-<!--
-	<div class="body">
-	<div class="intro">
-		<div class="intro-slideshow">
-		  <img src="https://images.snaptrip.com/wp-content/uploads/2019/07/15152517/GNorthumberland.jpg">
-		  <img src="https://s19623.pcdn.co/wp-content/uploads/2016/03/best-castles-in-northumberland.jpg">
-		  <img src="https://assets.holidaycottages.co.uk/assets/images/Ruth/Northumberland%20coast(resize).jpg">
-		  <img src="https://lh3.googleusercontent.com/proxy/8qqhXzBICuF8imMO8RS5UgKN63IN_guofkFcdoYLZe_OevulF8i5kLDzSSzKOGADvBREzKccTffQ77NSlaUTfnJykv10_PEZwavygQBfEZianTBA3jovSMUTsRpS23XJQdI-GDREGg">
-		</div>
-		<div class="intro-header">
-		  <h1></h1>
-		  <p id="par">Discover for yourself the wonderful place that is Northumberland, with our simple and handy app</p>
-		</div>
-	</div>
-
--->
-
-	
-
-
-
+<div class="main-container">
 	<div id="faq">
-		
+		<h2>FAQ</h2>
+		<div class="question">
+			<h3>Will the app run on IOS or other devices?</h3>
+			<ion-icon name="chevron-down-outline"></ion-icon>
+		</div>
+		<div class="answer">
+		  <p>No. Unfortuently at the moment the app will only run on devices that use Android operating systems. Specifically Andriod ver.7 upwards.</p>
+		</div>
+		<hr>
+		<div class="question">
+			<h3>What versions of Android does the app work on?</h3>
+			<ion-icon name="chevron-down-outline"></ion-icon>
+		</div>
+		<div class="answer">
+		  <p> It will work on version 7 upwards. This includes:
+			  <br> - Android Nougat  (ver  7.0)
+			  <br> - Android Nougat  (ver  7.1)
+			  <br> - Android Oreo    (ver  8.0)
+			  <br> - Android Oreo    (ver  8.1)
+			  <br> - Android Pie     (ver  9.0)
+			  <br> - Android 10      (ver 10.0)
+			  <br> - Android 11      (ver 11.0)
+		  </p>
+		</div>
+		<hr>
+		<div class="question">
+			<h3>Question</h3>
+			<ion-icon name="chevron-down-outline"></ion-icon>
+		</div>
+		<div class="answer">
+		  <p> answer ....................</p>
+		</div>
+		<hr>
+		<div class="question">
+			<h3>Question</h3>
+			<ion-icon name="chevron-down-outline"></ion-icon>
+		</div>
+		<div class="answer">
+			<p> answer ....................</p>
+		</div>
+		<hr>
+		<div class="question">
+			<h3>Question</h3>
+			<ion-icon name="chevron-down-outline"></ion-icon>
+		</div>
+		<div class="answer">
+			<p> answer ....................</p>
+		</div>
+		<hr>
+		<div class="question">
+			<h3>Question</h3>
+			<ion-icon name="chevron-down-outline"></ion-icon>
+		</div>
+		<div class="answer">
+			<p> answer ....................</p>
+		</div>
+		<hr>
+		<div class="question">
+			<h3>Question</h3>
+			<ion-icon name="chevron-down-outline"></ion-icon>
+		</div>
+		<div class="answer">
+			<p> answer ....................</p>
+		</div>
+		<hr>
+
+		<br>
+		<h6>If you still have a question feel free to <a href="#contact">Contact us</a> and will be looking forward to help you</h6>
 	</div>
 
-
-
-
-
-
-
+	</div>
 
 
 	<footer id="contact">
