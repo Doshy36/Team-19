@@ -36,7 +36,7 @@ import org.json.JSONObject;
 
 import java.util.Locale;
 
-public class LocationInformation extends AppCompatActivity implements TextToSpeech.OnInitListener{
+public class LocationInformation extends AppCompatActivity implements TextToSpeech.OnInitListener {
     TextView listenBtn;
     TextView title, mainBody;
     TextToSpeech textToSpeech;
@@ -95,19 +95,57 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                 });
         // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest);
+        String url2 = "https://jwhitehead.uk/ratings/" + placeId;
+        JsonObjectRequest jsonObjectRatingRequest = new JsonObjectRequest
+                (Request.Method.GET, url2, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i("Rating BAP", response.toString());
+                        try {
+                            JSONObject responseJSONObject = response.getJSONObject("message");
+                            Log.i("Rating BAP2", responseJSONObject.toString());
+
+                            //TODO SORT OUT RATINGS RETRIVAL
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("RESPONSE", error.toString());
+                    }
+                });
+        // Add the request to the RequestQueue.
+        queue.add(jsonObjectRatingRequest);
+
 
         // --- Text to Speech ---
-        title = (TextView) findViewById(R.id.locationTitleTextView);
-        mainBody = (TextView) findViewById(R.id.mainBodyText);
-        listenBtn = (TextView) findViewById(R.id.textToSpeechTextView);
+        title = (TextView)
 
-        textToSpeech = new TextToSpeech(this, this);
+                findViewById(R.id.locationTitleTextView);
+
+        mainBody = (TextView)
+
+                findViewById(R.id.mainBodyText);
+
+        listenBtn = (TextView)
+
+                findViewById(R.id.textToSpeechTextView);
+
+        textToSpeech = new
+
+                TextToSpeech(this, this);
         listenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 textToSpeak();
             }
         });
+
+
     }
 
 // just so lyle can commit n push - ignore - delete if u see this lol
@@ -123,6 +161,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
             Log.e("error", "Failed to Initialize");
         }
     }
+
     @Override
     public void onDestroy() {
         if (textToSpeech != null) {
@@ -131,12 +170,12 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         }
         super.onDestroy();
     }
+
     private void textToSpeak() {
         String text = title.getText().toString() + mainBody.getText().toString();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
-        }
-        else {
+        } else {
             textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
@@ -213,7 +252,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
             }
         });
 
-        cancelButton.setOnClickListener(new View.OnClickListener(){
+        cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 popupWindow.dismiss();
@@ -224,10 +263,17 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                popupWindow.dismiss();
+                if (MainActivity.getUserLoggedIn()) {
+                    //TODO
+                    //CREATE VOLLEY POST COMMAND USING USERID AND PLACEID TO SEND TO SERVER
+
+                } else {
+                    popupWindow.dismiss();
+                }
             }
         });
     }
+
     public void onBackButtonOnClick(View view) {
         this.finish();
     }

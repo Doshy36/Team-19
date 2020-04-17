@@ -46,7 +46,10 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
+    private static String userId;
+    private static String accessToken;
     private DrawerLayout drawer;
+    private static boolean userLoggedIn = false;
 
 
     @Override
@@ -101,6 +104,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.openDrawer(GravityCompat.START);
     }
 
+    public static void logUserIn(String accessToken, String userId){
+        MainActivity.userId = userId;
+        MainActivity.accessToken = accessToken;
+        userLoggedIn = true;
+
+    }
+
+    public static String getUserID(){
+        return userId;
+    }
+
+    public static boolean getUserLoggedIn(){
+        return userLoggedIn;
+    }
+
+    public static void logOut(){
+        userLoggedIn = false;
+        userId = null;
+    }
 
 }
 

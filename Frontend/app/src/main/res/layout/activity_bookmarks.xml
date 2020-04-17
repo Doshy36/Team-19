@@ -51,38 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/heritageButtonImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="130dp"
-                    android:elevation="15dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_buttonimagevector2" />
-
-                <ImageView
-                    android:id="@+id/cultureButtonImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="130dp"
-                    android:elevation="15dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_buttonimagevector3" />
-
-                <ImageView
-                    android:id="@+id/cuisineButtonImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="130dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_buttonimagevector4" />
-
-                <ImageView
-                    android:id="@+id/sportsButtonImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="130dp"
-                    android:src="@drawable/ic_buttonimagevector1" />
-
-            </LinearLayout>
+                android:orientation="vertical"/>
         </ScrollView>
 
     </LinearLayout>

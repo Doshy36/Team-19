@@ -33,7 +33,7 @@
         app:srcCompat="@drawable/dn_logo_text" />
 
     <EditText
-        android:id="@+id/nameEnter"
+        android:id="@+id/emailEnter"
         android:layout_width="249dp"
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
@@ -57,21 +57,29 @@
         android:inputType="textPersonName|textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameEnter" />
+        app:layout_constraintTop_toBottomOf="@+id/emailEnter" />
 
-    <Button
-        android:id="@+id/buttonEnter"
-        android:layout_width="135dp"
-        android:layout_height="72dp"
-        android:layout_marginStart="138dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="138dp"
-        android:layout_marginBottom="120dp"
-        android:text="@string/enter"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEnter"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordEnter">
+
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="135dp"
+            android:layout_height="72dp"
+            android:onClick="registerButtonOnClick"
+            android:text="Register" />
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="135dp"
+            android:layout_height="72dp"
+            android:onClick="loginButtonOnClick"
+            android:text="Log In" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

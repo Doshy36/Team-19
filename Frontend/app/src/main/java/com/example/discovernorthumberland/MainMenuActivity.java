@@ -124,6 +124,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         retryButton = rootView.findViewById(R.id.retryButton);
 
 
+
         return rootView;
     }
 
