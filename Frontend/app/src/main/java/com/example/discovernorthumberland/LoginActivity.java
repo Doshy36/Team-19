@@ -52,6 +52,11 @@ public class LoginActivity extends AppCompatActivity {
         this.finish();
     }
 
+    public void logOutButtonOnClick(View view){
+        MainActivity.logOut();
+        this.finish();
+    }
+
     public void registerButtonOnClick(View view) {
 
         // Instantiate the RequestQueue.
@@ -72,9 +77,10 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("Response", response.toString());
                 try {
                     String accessToken = response.getString("accessToken");
-                    String userID = "";
+                    String userId = response.getString("userId");
                     Log.d("ACCESS TOKEN", accessToken);
-                    MainActivity.logUserIn(accessToken, userID);
+                    Log.d("USER ID", userId);
+                    MainActivity.logUserIn(accessToken, userId);
                     setContentView(R.layout.activity_loggedin);
 
                 } catch (JSONException e) {
@@ -113,8 +119,9 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("Response", response.toString());
                 try {
                     String accessToken = response.getString("accessToken");
-                    String userId = "";
+                    String userId = response.getString("userId");
                     Log.d("ACCESS TOKEN", accessToken);
+                    Log.d("USER ID", userId);
                     MainActivity.logUserIn(accessToken, userId);
                     setContentView(R.layout.activity_loggedin);
 

@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".TopicPageActivity"></activity>
+        <activity android:name=".TopicPageActivity"/>
         <activity
             android:name=".BookmarksActivity"
             android:parentActivityName=".MainActivity" />

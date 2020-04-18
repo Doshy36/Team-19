@@ -349,8 +349,6 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
             @Override
             public void onClick(View view) {
                 if (MainActivity.getUserLoggedIn()) {
-                    //TODO
-                    //CREATE VOLLEY POST COMMAND USING USERID AND PLACEID TO SEND TO SERVER
                     // Instantiate the RequestQueue.
                     RequestQueue queue = Volley.newRequestQueue(getBaseContext());
                     String url = "https://jwhitehead.uk/ratings/set";
@@ -365,7 +363,19 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            Log.d("Rating Response", response.toString());
+                            try {
+                                Log.d("Rating Response", response.toString());
+                                boolean ratingResponseBoolean = response.getBoolean("success");
+                                Log.d("Rating Response boolean", Boolean.toString(ratingResponseBoolean));
+                                if(ratingResponseBoolean) {
+                                    Toast.makeText(LocationInformation.this, "Successfully rated " + title.getText() + " :" + Integer.toString(userRating), Toast.LENGTH_LONG).show();
+                                }
+                                else{
+                                    Toast.makeText(LocationInformation.this, "Failure rating user may have already rated this location", Toast.LENGTH_LONG).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                         }
                     }, new Response.ErrorListener() {
@@ -380,6 +390,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     popupWindow.dismiss();
 
                 } else {
+                    Toast.makeText(LocationInformation.this, "Not Logged in please log in before rating the location", Toast.LENGTH_LONG).show();
                     popupWindow.dismiss();
                 }
             }
