@@ -1,11 +1,9 @@
 .navbar {
-	background-color: #07223bc0;
+	background-color: #07223bd8;
 	/*border-top: 4px solid #ffffff;*/
 	margin-bottom: 2%;
 	opacity: 1;
 	height: 67.8px;
-	margin-top: 2%;
-	
 }
 
 .nav-item {
@@ -21,12 +19,11 @@
 	text-align: center;
 	width: 110px;
 	color: #ffffff;
-	margin-left: 20px;
-	
 }
 
 #nav-logo {
 	padding: 0;
-	padding-left: 50px;
-	padding-right: 50px;
+	width: 46px;
+	margin-left: 50px;
+	margin-right: 50px;
 }

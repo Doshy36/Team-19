@@ -89,9 +89,14 @@
 
 #dark-mode-pic{
 	width: 60%;
+	padding-top: 3%;
 }
 
 .column-2.side-2 > h3, p{
+	margin-left: 2%;
+}
+
+.column-2.side-2 > p{
 	margin-left: 2%;
 }
 
@@ -107,9 +112,65 @@
 }
 
 #right-pic{
-	width: 28%;
+	width: 30.5%;
 	float: right;
-	margin-right: -15%;
+	margin-right: -14.5%;
 	margin-top: 2%;
 	margin-left: 10%;
 }
+
+@media only screen and (max-width: 1090px) {
+	.column.middle > h1{
+		text-align: center;
+		margin-top: 2%;
+		font-size: 4vw;
+		padding-bottom: 1vw;
+		letter-spacing: 4px;
+	}
+	
+	.column.middle > p{
+		text-align: center;
+		font-size: 1.15em;
+		letter-spacing: px;
+		word-spacing: 3px;
+		padding-top: 1%;
+	}
+
+	.column-2.side-2 > h3, p{
+		margin-left: 2%;
+	}
+	
+	.column-2.middle-2 > p{
+		font-size: 1.15em;
+		margin-top: 2%;
+		padding-bottom: 2%;
+	}
+	
+	#filter-info{
+		font-size: 1.15em;
+		margin-top: 5%;
+		margin-bottom: 5%;
+	}
+
+	.column-2.side-2 > h3{
+		font-size: 1.5em;
+	}
+
+	.column-2.middle-2 > p{
+		font-size: 1.15em;
+	}
+
+	.column-2.middle-2 > h3{
+		font-size: 1.5em;
+	}
+
+	.column-2.middle-2{
+		margin-left: 2%;
+	}
+
+	#right-pic{
+		width: 31%;
+		margin-right: -11%;
+	}
+
+  }
