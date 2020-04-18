@@ -55,6 +55,13 @@ body {
   background-color: rgba(0,0,0,0.5);
   margin-bottom: 15%;
   width: 80vw;
+
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+
 }
 .intro h1 {
   font-size: 5rem;
@@ -112,12 +119,8 @@ footer img {
 
 #slideshow-down-arrow {
 	position: absolute;
-    margin-right: auto;
-    margin-left: auto;
-    left: 0;
-    right : 0;
+    margin: auto;
     bottom: 0;
-	margin-bottom: 8vw;
 	opacity: 1;
 }
 
@@ -125,7 +128,6 @@ footer img {
 	text-align: center;
 	margin-left: auto;
   	margin-right: auto;
-  	margin-top: 10%;
 	padding-bottom: 1%;
 	opacity: 0.5;
 }
