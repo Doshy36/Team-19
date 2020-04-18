@@ -29,7 +29,7 @@ router.post('/register', [
 				maxAge: 30 * 24 * 60 * 60,
 				sameSite: true
 			});
-			res.status(201).json({"success": true, "message": "Successfully registered user", "accessToken": accessToken});
+			res.status(201).json({"success": true, "message": "Successfully registered user", "accessToken": accessToken, "userId": user});
 		} else {
 			res.status(401).json({"success": false, "message": info.message});
 		}
@@ -54,7 +54,7 @@ router.post('/login', [
 				maxAge: 30 * 24 * 60 * 60,
 				sameSite: true
 			});
-			res.status(200).json({"success": true, "message": "Successfully logged in", "accessToken": accessToken});
+			res.status(200).json({"success": true, "message": "Successfully logged in", "accessToken": accessToken, "userId": user});
 		} else {
 			res.status(401).json({"success": false, "message": info.message});
 		}
@@ -79,7 +79,7 @@ router.post('/token', async function(req, res, next) {
 			return res.status(403).json({"success": false, "message": "Forbidden"});
 		} else {
 			const accessToken = jwt.sign({ id: userId }, process.env.ACCESS_SECRET, { expiresIn: '15m'});
-			res.status(200).json({"success": true, "accessToken": accessToken});
+			res.status(200).json({"success": true, "accessToken": accessToken, "userId": user});
 		}
 	})
 });

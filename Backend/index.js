@@ -31,8 +31,8 @@ const config = {
   dstHost: 'db.cs.ncl.ac.uk',
   dstPort: 3306,
   localPort: process.env.DB_PORT,
-  username: process.env.USER,
-  password: process.env.PASS,
+  username: process.env.SSH_USER,
+  password: process.env.SSH_PASS,
   keepAlive: true
 }
 
@@ -40,7 +40,7 @@ tunnel(config, (error, server) => {
   if (error) {
     console.log("SSH Connection error: " + error);
   }
-});
+}).on('error', console.error.bind(console, 'SSH connection error:'));
 
 const pool = mysql.createPool({
   connectionLimit: 50,
