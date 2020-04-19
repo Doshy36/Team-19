@@ -87,9 +87,7 @@ function nextImage() {
 var down_arrow = document.getElementById("slideshow-down-arrow-img");
 
 down_arrow.addEventListener('mouseover', function(){
-  
-  down_arrow.src = "Assets/arrow_down_blue.png";
-  
+  down_arrow.src = "Assets/arrow_down_blue.png"; 
 })
 
 down_arrow.addEventListener('mouseout', function(){
@@ -98,9 +96,7 @@ down_arrow.addEventListener('mouseout', function(){
 
 down_arrow.onclick = function (e){
   e.preventDefault();
-
   document.getElementsByTagName("body")[0].style.overflow = "auto";
-  
 }
 
 /* --- SMOOTH SCROLLING --- */
@@ -111,7 +107,11 @@ var anchorList = document.querySelectorAll(anchorSelector);
 
 anchorList.forEach(link => { 
     link.onclick = function (e) { 
-        e.preventDefault(); 
+        e.preventDefault();
+
+        // CLOSES THE HAMBURGER MENU
+        var x = document.getElementById("myLinks");
+        x.style.display = "none"; 
    
         var destination = document.querySelector(this.hash); 
   
@@ -119,9 +119,5 @@ anchorList.forEach(link => {
             behavior: 'smooth' 
         }); 
     }
-
 }); 
-
-
-
 
