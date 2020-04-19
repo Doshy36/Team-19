@@ -121,15 +121,3 @@ anchorList.forEach(link => {
     }
 }); 
 
-/* --- HAMBURGER NAV BAR ---------------------------------------------------------------------------------- */
-
-function hamburgerNavbar() {
-  var x = document.getElementById("myLinks");
-  if (x.style.display === "block") {
-    x.style.display = "none";
-  } else {
-    x.style.display = "block";
-  }
-}
-
-
