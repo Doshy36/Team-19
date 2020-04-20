@@ -18,6 +18,16 @@ body {
 	/*overflow: hidden;*/
 }
 
+a {
+	color: #78e2cf;
+	text-decoration: none;
+}
+
+a:hover, ion-icon:hover {
+	color: #50b1bb;
+	text-decoration: none;
+}
+
 /*--------------------------------------------------------------------*/
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
@@ -284,6 +294,8 @@ header > hr{
 .holder {
 	background-color: #F6FAF9;
 	opacity: 0.95;
+
+	/*background-color: rgba(0, 0, 0, 0.356);*/
 	text-align: center;
 	padding: 3%;
 	margin: 3%;
@@ -350,4 +362,39 @@ header > hr{
 
 .title-decoration img {
 	width: 2%;
+}
+
+
+@media only screen and (max-width: 800px) {
+	.help-links {
+		display: block !important;
+	}
+
+	.help-links h5 {
+		display: block;
+		text-align: center;
+	}
+	#help-top img {
+		display: none;
+	}
+}
+
+#help-top {
+	text-align: center;
+}
+
+.help-links {
+	margin: auto;
+	width: 75%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#help-top img {
+	width: 2%;
+}
+
+#team19-quote-reference {
+	text-align: right;
 }
