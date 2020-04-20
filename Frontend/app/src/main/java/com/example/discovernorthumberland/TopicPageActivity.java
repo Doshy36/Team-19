@@ -127,8 +127,12 @@ public class TopicPageActivity extends AppCompatActivity {
 
                                 locationTextView.setText(place.getLocationName());
                                 locationTextView.setId(View.generateViewId());
-                                if(place.getLocationName().length()>20){
+                                if(place.getLocationName().length()>30) {
+                                    locationTextView.setTextSize(26);
+                                }else if(place.getLocationName().length()>22){
                                     locationTextView.setTextSize(30);
+                                }else if(place.getLocationName().length()>15){
+                                    locationTextView.setTextSize(33);
                                 }else {
                                     locationTextView.setTextSize(36);
                                 }
