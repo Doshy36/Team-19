@@ -24,6 +24,7 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -44,14 +45,13 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class LocationInformation extends AppCompatActivity implements TextToSpeech.OnInitListener {
-    TextView listenBtn;
+public class LocationInformation extends AppCompatActivity implements TextToSpeech.OnInitListener{
+    ToggleButton toggle;
     TextView title, mainBody;
     TextToSpeech textToSpeech;
     private ProgressBar progressBar;
     private String placeId;
     private int userRating;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,28 +210,22 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
 
         // --- Text to Speech ---
-        title = titleTextView;
+        title = (TextView) findViewById(R.id.locationTitleTextView);
+        mainBody = (TextView) findViewById(R.id.mainBodyText);
+        toggle = (ToggleButton) findViewById(R.id.textToSpeechToggle);
 
-        mainBody = mainBodyTextView;
-
-        listenBtn = (TextView)
-
-                findViewById(R.id.textToSpeechTextView);
-
-        textToSpeech = new
-
-                TextToSpeech(this, this);
-        listenBtn.setOnClickListener(new View.OnClickListener() {
+        textToSpeech = new TextToSpeech(this, this);
+        toggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textToSpeak();
+                if (toggle.isChecked()){
+                    textToSpeak();
+                } else {
+                    silence();
+                }
             }
         });
-
-
     }
-
-// just so lyle can commit n push - ignore - delete if u see this lol
 
     @Override
     public void onInit(int status) {
@@ -255,13 +249,14 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
     }
 
     private void textToSpeak() {
-        String text = title.getText().toString() + mainBody.getText().toString();
+        String text = title.getText().toString() + "." + mainBody.getText().toString();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
         } else {
             textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
+
 
     public void bookmarkTextViewOnClick(final View view) {
         if (MainActivity.getUserLoggedIn()) {
@@ -436,6 +431,17 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                 popupWindow.dismiss();
             }
         });
+    }
+
+
+
+    private void silence() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            textToSpeech.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
+        }
+        else {
+            textToSpeech.speak("", TextToSpeech.QUEUE_FLUSH, null);
+        }
     }
 
 
