@@ -191,7 +191,8 @@ header > hr{
 	margin: auto;
 	padding-top: 5vh;
 	padding-bottom: 5vh;
-	margin-top: 5vh;
+	margin-top: 2.5vh;
+	margin-bottom: 2.5vh;
 	opacity: 0.95;
 	z-index: 0;
 }
@@ -275,7 +276,7 @@ header > hr{
 	margin: auto;
 	justify-content: center;
 	display: inline-block;
-	padding-top: 0;
+	/*padding-top: 0;*/
 	color: #07223bd8;
 	font-family: "ProductSans";
 }
