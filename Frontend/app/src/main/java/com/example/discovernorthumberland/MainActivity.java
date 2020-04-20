@@ -31,6 +31,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -89,18 +90,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuActivity()).commit();
 
 
-
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch(menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.nav_login:
-                Intent loginIntent = new Intent(this,LoginActivity.class);
+                Intent loginIntent = new Intent(this, LoginActivity.class);
                 startActivity(loginIntent);
                 break;
             case R.id.nav_bookmarks:
-                Intent bookmarksIntent = new Intent(this,BookmarksActivity.class);
+                Intent bookmarksIntent = new Intent(this, BookmarksActivity.class);
                 startActivity(bookmarksIntent);
                 break;
         }
@@ -117,11 +117,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void onNavBarButtonClick(View view){
+    public void onNavBarButtonClick(View view) {
         drawer.openDrawer(GravityCompat.START);
     }
 
-    public static void logUserIn(String accessToken, String userId){
+    public static void logUserIn(final String accessToken, String userId) {
         MainActivity.userId = userId;
         MainActivity.accessToken = accessToken;
         userLoggedIn = true;
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String url = "https://jwhitehead.uk/auth/token";
 
                 // Initialize a new JsonArrayRequest instance
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,null, new Response.Listener<JSONObject>() {
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("ACCESS TOKEN UPDATE Response", response.toString());
@@ -156,7 +156,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         // error
                         Log.d("ACCESS TOKEN UPDATE. ERROR", error.toString());
                     }
-                });
+                }) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("Content-Type", "application/json; charset=UTF-8");
+                        params.put("accessToken", accessToken);
+
+                        return params;
+                    }
+                };
                 queue.add(jsonObjectRequest);
                 handler.postDelayed(this, INTERVAL);
             }
@@ -165,15 +174,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    public static String getUserID(){
+    public static String getUserID() {
         return userId;
     }
 
-    public static boolean getUserLoggedIn(){
+    public static boolean getUserLoggedIn() {
         return userLoggedIn;
     }
 
-    public static void logOut(){
+    public static void logOut() {
         userLoggedIn = false;
         userId = null;
         handler.removeCallbacks(null);
