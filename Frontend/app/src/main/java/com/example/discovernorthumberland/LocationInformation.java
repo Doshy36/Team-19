@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,6 +32,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -124,61 +128,61 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                                 final ImageView starImageButton3 = findViewById(R.id.previewStarRatingImageView3);
                                 final ImageView starImageButton4 = findViewById(R.id.previewStarRatingImageView4);
                                 final ImageView starImageButton5 = findViewById(R.id.previewStarRatingImageView5);
-                                if(ratingFloat>0 && ratingFloat < 0.75){
+                                if (ratingFloat > 0 && ratingFloat < 0.75) {
                                     starImageButton1.setImageDrawable(getDrawable(R.drawable.ic_star_half_gold_24dp));
                                     starImageButton2.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
                                     starImageButton3.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
                                     starImageButton4.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
                                     starImageButton5.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
-                                }else if(ratingFloat>0.75 && ratingFloat < 1.25){
+                                } else if (ratingFloat > 0.75 && ratingFloat < 1.25) {
                                     starImageButton1.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton2.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
                                     starImageButton3.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
                                     starImageButton4.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
                                     starImageButton5.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
-                                }else if(ratingFloat>1.25 && ratingFloat < 1.75){
+                                } else if (ratingFloat > 1.25 && ratingFloat < 1.75) {
                                     starImageButton1.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton2.setImageDrawable(getDrawable(R.drawable.ic_star_half_gold_24dp));
                                     starImageButton3.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
                                     starImageButton4.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
                                     starImageButton5.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
-                                }else if(ratingFloat>1.75 && ratingFloat < 2.25){
+                                } else if (ratingFloat > 1.75 && ratingFloat < 2.25) {
                                     starImageButton1.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton2.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton3.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
                                     starImageButton4.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
                                     starImageButton5.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
-                                }else if(ratingFloat>2.25 && ratingFloat < 2.75){
+                                } else if (ratingFloat > 2.25 && ratingFloat < 2.75) {
                                     starImageButton1.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton2.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton3.setImageDrawable(getDrawable(R.drawable.ic_star_half_gold_24dp));
                                     starImageButton4.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
                                     starImageButton5.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
-                                }else if(ratingFloat>2.75 && ratingFloat < 3.25){
+                                } else if (ratingFloat > 2.75 && ratingFloat < 3.25) {
                                     starImageButton1.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton2.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton3.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton4.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
                                     starImageButton5.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
-                                }else if(ratingFloat>3.25 && ratingFloat < 3.75){
+                                } else if (ratingFloat > 3.25 && ratingFloat < 3.75) {
                                     starImageButton1.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton2.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton3.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton4.setImageDrawable(getDrawable(R.drawable.ic_star_half_gold_24dp));
                                     starImageButton5.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
-                                }else if(ratingFloat>3.75 && ratingFloat < 4.25){
+                                } else if (ratingFloat > 3.75 && ratingFloat < 4.25) {
                                     starImageButton1.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton2.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton3.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton4.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton5.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
-                                }else if(ratingFloat>4.25 && ratingFloat < 4.75){
+                                } else if (ratingFloat > 4.25 && ratingFloat < 4.75) {
                                     starImageButton1.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton2.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton3.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton4.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton5.setImageDrawable(getDrawable(R.drawable.ic_star_half_gold_24dp));
-                                }else if(ratingFloat>4.75){
+                                } else if (ratingFloat > 4.75) {
                                     starImageButton1.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton2.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                     starImageButton3.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
@@ -253,6 +257,184 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         }
     }
 
+
+    public void bookmarkTextViewOnClick(final View view) {
+        if (MainActivity.getUserLoggedIn()) {
+
+
+            final RequestQueue queue = Volley.newRequestQueue(getBaseContext());
+
+            final boolean[] locationIsBookmarked = {false};
+
+            String url = "https://jwhitehead.uk/bookmarks/" + MainActivity.getUserID();
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                JSONArray jsonArray = response.getJSONArray("message");
+                                Log.i("Bookmark Check Bap", jsonArray.toString());
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                    Log.i("Bookmark Check Bap :" + i, jsonObject.toString());
+                                    if (jsonObject.getString("placeId").equalsIgnoreCase(placeId)) {
+                                        locationIsBookmarked[0] = true;
+                                    }
+                                }
+                                if (locationIsBookmarked[0]) {
+                                    runBookmarkPopupWindowDelete(view);
+                                } else {
+                                    runBookmarkPopupWindow(view);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            Toast.makeText(getBaseContext(), "ERROR CONNECTION TO SERVER FAILURE", Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+
+            // Add the request to the RequestQueue.
+            queue.add(jsonObjectRequest);
+
+        } else {
+            Toast.makeText(LocationInformation.this, "Not Logged in please log in before rating the location", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void runBookmarkPopupWindow(View view) {
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = layoutInflater.inflate(R.layout.popup_window_bookmark, null);
+
+        final PopupWindow popupWindow = new PopupWindow(popupView, 1000, 450, true);
+        popupWindow.setElevation(20);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        final Button cancelButton = popupView.findViewById(R.id.bookmarkCancelButton);
+        final Button bookmarkSubmitButton = popupView.findViewById(R.id.bookmarkSubmitButton);
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+            }
+        });
+
+        bookmarkSubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RequestQueue queue = Volley.newRequestQueue(getBaseContext());
+                // Instantiate the RequestQueue.
+                String url = "https://jwhitehead.uk/bookmarks/add";
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("userId", MainActivity.getUserID());
+                params.put("placeId", placeId);
+                JSONObject parameters = new JSONObject(params);
+
+                // Initialize a new JsonArrayRequest instance
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Log.d("Bookmark creation.Response", response.toString());
+                            boolean ratingResponseBoolean = response.getBoolean("success");
+                            Log.d("Bookmark Response boolean", Boolean.toString(ratingResponseBoolean));
+                            if (ratingResponseBoolean) {
+                                Toast.makeText(LocationInformation.this, "Successfully Bookmarked " + title.getText(), Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(LocationInformation.this, "Failure rating user may have already Bookmarked this location", Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Rating.Error.Response", error.toString());
+                    }
+                });
+
+                queue.add(jsonObjectRequest);
+                popupWindow.dismiss();
+            }
+        });
+
+    }
+
+    public void runBookmarkPopupWindowDelete(View view) {
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = layoutInflater.inflate(R.layout.popup_window_bookmark_delete, null);
+
+        final PopupWindow popupWindow = new PopupWindow(popupView, 1000, 450, true);
+        popupWindow.setElevation(20);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        final Button cancelButton = popupView.findViewById(R.id.bookmarkCancelButton);
+        final Button bookmarkDeleteButton = popupView.findViewById(R.id.deleteBookmarkButton);
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+            }
+        });
+
+        bookmarkDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RequestQueue queue = Volley.newRequestQueue(getBaseContext());
+                String url = "https://jwhitehead.uk/bookmarks/delete";
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("userId", MainActivity.getUserID());
+                params.put("placeId", placeId);
+                JSONObject parameters = new JSONObject(params);
+
+                // Initialize a new JsonArrayRequest instance
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url, parameters, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Log.d("Delete book mark Response", response.toString());
+                            boolean ratingResponseBoolean = response.getBoolean("success");
+                            Log.d("Delete Bookmark response boolean", Boolean.toString(ratingResponseBoolean));
+                            if (ratingResponseBoolean) {
+                                Toast.makeText(LocationInformation.this, "Successfully deleted bookmark " + title.getText(), Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(LocationInformation.this, "Failure", Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(LocationInformation.this, "Failure", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Rating.Error.Response", error.toString());
+                    }
+                });
+
+                queue.add(jsonObjectRequest);
+                popupWindow.dismiss();
+            }
+        });
+    }
+
+
+
     private void silence() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             textToSpeech.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
@@ -261,6 +443,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
             textToSpeech.speak("", TextToSpeech.QUEUE_FLUSH, null);
         }
     }
+
 
     public void ratingTextViewOnClick(View view) {
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -357,7 +540,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     String url = "https://jwhitehead.uk/ratings/set";
 
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("userId", "0fc1700a-57fd-4e73-bf4c-ffc8edeb60a9");
+                    params.put("userId", MainActivity.getUserID());
                     params.put("placeId", placeId);
                     params.put("rating", Integer.toString(userRating));
                     JSONObject parameters = new JSONObject(params);
@@ -370,10 +553,9 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                                 Log.d("Rating Response", response.toString());
                                 boolean ratingResponseBoolean = response.getBoolean("success");
                                 Log.d("Rating Response boolean", Boolean.toString(ratingResponseBoolean));
-                                if(ratingResponseBoolean) {
+                                if (ratingResponseBoolean) {
                                     Toast.makeText(LocationInformation.this, "Successfully rated " + title.getText() + " :" + Integer.toString(userRating), Toast.LENGTH_LONG).show();
-                                }
-                                else{
+                                } else {
                                     Toast.makeText(LocationInformation.this, "Failure rating user may have already rated this location", Toast.LENGTH_LONG).show();
                                 }
                             } catch (JSONException e) {

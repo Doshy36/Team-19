@@ -189,6 +189,7 @@
                     android:clickable="true"
                     android:drawableTop="@drawable/ic_bookmarksicon"
                     android:focusable="true"
+                    android:onClick="bookmarkTextViewOnClick"
                     android:text="Bookmark "
                     android:textAlignment="center" />
 
