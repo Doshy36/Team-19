@@ -268,7 +268,6 @@ public class BookmarksActivity extends AppCompatActivity {
 
             buttonLinearLayout.addView(constraintLayout);
 
-
         }
     }
 
