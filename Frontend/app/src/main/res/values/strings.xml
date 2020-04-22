@@ -14,5 +14,6 @@
     <string name="image_of_location">Image of location</string>
     <string name="rate">Rate</string>
     <string name="back_button">Back Button</string>
+    <string name="title_activity_navigation">Map</string>
 
 </resources>

@@ -145,6 +145,7 @@
                     android:clickable="true"
                     android:drawableTop="@drawable/ic_navigation_black_24dp"
                     android:focusable="true"
+                    android:onClick="onNavigationButtonClick"
                     android:text="@string/directions"
                     android:textAlignment="center" />
 

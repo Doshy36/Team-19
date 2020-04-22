@@ -3,6 +3,7 @@ package com.example.discovernorthumberland;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -44,6 +45,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class LocationInformation extends AppCompatActivity implements TextToSpeech.OnInitListener{
     ToggleButton toggle;
@@ -51,6 +53,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
     TextToSpeech textToSpeech;
     private ProgressBar progressBar;
     private String placeId;
+    private LatLng locationLatLng;
     private int userRating;
 
     @Override
@@ -81,6 +84,10 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                             Log.i("BAP2", jsonObject.toString());
                             titleTextView.setText(jsonObject.getString("name"));
                             mainBodyTextView.setText(jsonObject.getString("description"));
+
+                            String[] locationDataArray = jsonObject.getString("locationData").split(",");
+                            locationLatLng = new LatLng(Double.parseDouble(locationDataArray[0]),Double.parseDouble(locationDataArray[1]));
+
                             Picasso.get().load(jsonObject.getString("imageUrl")).into(locationImageView, new com.squareup.picasso.Callback() {
                                 @Override
                                 public void onSuccess() {
@@ -580,6 +587,14 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                 }
             }
         });
+    }
+
+    public void onNavigationButtonClick(View view){
+        Intent newActivityIntent = new Intent(getBaseContext(), NavigationActivity.class);
+        newActivityIntent.putExtra("placeId", placeId);
+        newActivityIntent.putExtra("lat",locationLatLng.latitude);
+        newActivityIntent.putExtra("lng",locationLatLng.longitude);
+        startActivity(newActivityIntent);
     }
 
     public void onBackButtonOnClick(View view) {
