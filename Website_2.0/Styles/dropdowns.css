@@ -1,11 +1,11 @@
 /* --- FAQ ----------------------------------------------------------- */
-#faq {
+#faq, .instructions {
 	padding-left: 15vw;
 	padding-right: 15vw;
 	text-align: center;
 }
 
-#faq hr, #faq h3 {
+#faq hr, #faq h3, .instructions hr, .instructions h3 {
 	margin: 0;
 }
 

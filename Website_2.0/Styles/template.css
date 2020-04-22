@@ -14,8 +14,12 @@ body {
 	background-size: cover;
 	color: #15343d;
 	color:white;
-	font-family: "ProductSans";
+	font-family: "ProductSans", "Tahoma", "Geneva", "sans-serif";
 	/*overflow: hidden;*/
+}
+
+strong {
+	color: #0066ff;
 }
 
 a {
@@ -110,7 +114,7 @@ footer div {
 	padding-bottom: 5vh;
 }
 
-#faq{
+#faq, .instructions{
 	padding-top: 10vh;
 	padding-bottom: 5vh;
 }
@@ -120,7 +124,7 @@ footer img {
 }
 
 .container-fluid {
-	font-family: "ProductSansBold" !important;
+	font-family: "ProductSans";
 	padding-left: 5vw !important;
 	padding-right: 5vw !important;
 	padding-top: 5vh;
