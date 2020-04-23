@@ -143,6 +143,7 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
                                         polylineOptions.add(pointsList.get(i));
                                     }
                                     Polyline polyline = mMap.addPolyline(polylineOptions);
+                                    //Ya
 
                                 } else {
                                     Toast.makeText(getBaseContext(), "ERROR", Toast.LENGTH_LONG).show();
