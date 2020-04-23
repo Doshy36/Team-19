@@ -118,6 +118,10 @@
     vertical-align: middle;
   }
 
+  .navbar-mobile i:hover {
+    color: rgba(255, 255, 255, 0.349);
+  }
+
   .navbar-mobile a:hover {
     color: #78e2cf;
   }

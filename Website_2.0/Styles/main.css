@@ -46,24 +46,36 @@
 	}
 }
 
-
-#help-top {
-	height: 100vh;
+#features {
 	text-align: center;
-	padding-top: 20vh;
 }
 
-.help-links {
-	margin: auto;
-	width: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+.content-feature img {
+	max-height: 400px ;
+	padding: 1vw;
 }
 
-#help-top img {
-	width: 2%;
+.content-feature {
+	padding: 1vw;
+	padding-bottom: 0;
+	width: 30%;
+	display: inline-block;
+	vertical-align: top;
 }
+
+@media only screen and (max-width: 900px) {
+	.content-feature {
+		padding: 1vw;
+		/*padding-bottom: 0;*/
+		width: 70%;
+		text-align: center;
+		margin: auto;
+		display: block;
+		vertical-align: top;
+	}
+}
+
+
 
 
 
