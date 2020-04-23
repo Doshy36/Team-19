@@ -1,39 +1,7 @@
-/*.navbar {
-	background-color: #07223bd8;
-	margin-bottom: 2%;
-	opacity: 1;
-	height: 67.8px;
-	
-}
-
-.nav-item {
-	font-family: "ProductSans";
-	font-size: 22px;
-}
-
-.nav-link:hover{
-	color: rgba(255, 255, 255, 0.349);
-}
-
-.nav-link {
-	text-align: center;
-	width: 110px;
-	color: #ffffff;
-}
-
-#nav-logo {
-	padding: 0;
-	width: 46px;
-	margin-left: 50px;
-	margin-right: 50px;
-}*/
-
-
-/*--------------------------*/
-
+/*DESKTOP VERSION*/
 .navbar {
 	background-color: #07223bd8;
-	font-family: "ProductSans";
+	font-family: "ProductSans", "Tahoma", "Geneva", "sans-serif";
 }
 
 .nav-item {
@@ -43,9 +11,9 @@
 .nav-link {
 	text-align: center;
 	width: 11vw;
-  	min-width: 105px;
+  min-width: 105px;
 	color: #ffffff;
-  	vertical-align: text-top;
+  vertical-align: text-top;
 }
 
 .nav-link:hover{
