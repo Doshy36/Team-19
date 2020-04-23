@@ -592,6 +592,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
     public void onNavigationButtonClick(View view){
         Intent newActivityIntent = new Intent(getBaseContext(), NavigationActivity.class);
         newActivityIntent.putExtra("placeId", placeId);
+        newActivityIntent.putExtra("name", title.getText());
         newActivityIntent.putExtra("lat",locationLatLng.latitude);
         newActivityIntent.putExtra("lng",locationLatLng.longitude);
         startActivity(newActivityIntent);

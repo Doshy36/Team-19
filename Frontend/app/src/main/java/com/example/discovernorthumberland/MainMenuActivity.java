@@ -40,7 +40,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.ClusterManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,7 +49,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class MainMenuActivity extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener{
+public class MainMenuActivity extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap;
     private MapView mapView;
@@ -58,6 +58,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     private ProgressBar progressBar;
     private TextView errorTextView;
     private Button retryButton;
+    private ClusterManager<Place> mClusterManager;
 
     private LocationListener locationListener = new LocationListener() {
         @Override
@@ -96,7 +97,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView =  inflater.inflate(R.layout.activity_main_menu, container, false);
+        View rootView = inflater.inflate(R.layout.activity_main_menu, container, false);
 
         mapView = rootView.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -145,6 +146,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         errorTextView = rootView.findViewById(R.id.errorTextView);
         retryButton = rootView.findViewById(R.id.retryButton);
 
+
         return rootView;
     }
 
@@ -170,27 +172,46 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray jsonArray = response.getJSONArray("message");
-                            Log.i("Bap",jsonArray.toString());
-                            for(int i = 0; i < jsonArray.length();i++){
+                            int counter = 0;
+                            ArrayList<Place> placeArrayList = new ArrayList<>();
+                            Log.i("Bap", jsonArray.toString());
+
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                JSONArray topicArray = jsonObject.getJSONArray("categories");
+                                counter++;
+                                String[] imageUrlArray = jsonObject.getString("imageUrl").split(","); //String Array of each image url from server
+                                //Create ArrayList of categories of location retrieved from server & transfer to String
 
-                                // Logging all the data retrieved from the database for debugging purposes delete when done yes yes 1 2
-                                Log.i("BAP TOPIC MAIN", topicArray.toString());
-                                for(int k =0;k<topicArray.length(); k++){
-                                    Log.i("topic :" + k,topicArray.getString(k));
+                                ArrayList<String> categoriesArrayList = new ArrayList<>();
+                                JSONArray jsonTopicArray = jsonObject.getJSONArray("categories");
+                                for (int k = 0; k < jsonTopicArray.length(); k++) {
+                                    categoriesArrayList.add(jsonTopicArray.getString(k));
                                 }
-                                Log.i("Response :" + i,jsonObject.getString("placeId"));
-                                Log.i("Response :" + i,jsonObject.getString("name"));
-                                Log.i("Response :" + i,jsonObject.getString("description"));
-                                Log.i("Response :" + i,jsonObject.getString("locationData"));
-                                Log.i("Response :" + i,jsonObject.getString("imageUrl"));
+                                String[] categoriesArray = categoriesArrayList.toArray(new String[0]);
 
-                                String[] locationDataArray = jsonObject.getString("locationData").split(",");
-                                LatLng locationLatLng = new LatLng(Double.parseDouble(locationDataArray[0]),Double.parseDouble(locationDataArray[1]));
-                                Marker locationMarker = mMap.addMarker(new MarkerOptions().position(locationLatLng).title(jsonObject.getString("name")));
-                                locationMarker.setTag(jsonObject.getString("placeId"));
+                                //Taker users location to send to Place Constructor
+                                locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+                                @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                                LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
 
+                                Place place = new Place(jsonObject.getString("placeId"), jsonObject.getString("name"), jsonObject.getString("description"), jsonObject.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
+                                Log.i("place." + place.getLocationName(), place.toString());
+
+                                placeArrayList.add(place);
+
+
+                                /*
+                                Marker locationMarker = mMap.addMarker(new MarkerOptions().position(place.getPosition()).title(place.getLocationName()));
+                                locationMarker.setTag(place.getPlaceId());
+                                markerArrayList.add(locationMarker);
+
+                                 */
+
+
+                            }
+                            if (counter == jsonArray.length()) {
+                                setUpClusterer(placeArrayList);
                             }
                             progressBarConstraintLayout.setVisibility(View.GONE);
                         } catch (JSONException e) {
@@ -201,12 +222,12 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        Toast.makeText(getActivity(),"ERROR CONNECTION TO SERVER FAILURE",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "ERROR CONNECTION TO SERVER FAILURE", Toast.LENGTH_LONG).show();
 
                         progressBar.setVisibility(View.GONE);
                         errorTextView.setVisibility(View.VISIBLE);
                         retryButton.setVisibility(View.VISIBLE);
-                        Log.i("RESPONSE",error.toString());
+                        Log.i("RESPONSE", error.toString());
                     }
                 });
 
@@ -224,7 +245,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
             LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
         } else {
-           // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(greysMonument, 16));
+            // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(greysMonument, 16));
         }
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
         mMap.getUiSettings().setMapToolbarEnabled(false);
@@ -250,6 +271,24 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         mapView.onLowMemory();
     }
 
+
+    public void setUpClusterer(ArrayList<Place> placeArrayList) {
+
+        mClusterManager = new ClusterManager<Place>(requireActivity(), mMap);
+        mMap.setOnCameraIdleListener(mClusterManager);
+        mMap.setOnMarkerClickListener(mClusterManager);
+        mMap.setOnInfoWindowClickListener(mClusterManager);
+        mClusterManager.addItems(placeArrayList);
+        mClusterManager.setOnClusterItemInfoWindowClickListener(new ClusterManager.OnClusterItemInfoWindowClickListener<Place>() {
+            @Override
+            public void onClusterItemInfoWindowClick(Place item) {
+                Intent newActivityIntent = new Intent(getActivity(), LocationInformation.class);
+                newActivityIntent.putExtra("placeId", item.getPlaceId());
+                startActivity(newActivityIntent);
+            }
+        });
+
+    }
 
 
     @Override

@@ -12,7 +12,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,12 +24,11 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -39,7 +38,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NavigationActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -47,22 +45,24 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
     private String placeId;
     private LatLng latLng;
     private GoogleMap mMap;
+    private MapView mapView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
+
         Bundle bundle = getIntent().getExtras();
         assert bundle != null;
         placeId = bundle.getString(placeId);
         double lat = bundle.getDouble("lat");
         double lng = bundle.getDouble("lng");
         latLng = new LatLng(lat, lng);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        assert mapFragment != null;
-        mapFragment.getMapAsync(this);
+
+        mapView = findViewById(R.id.mapViewNav);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(this);
+
     }
 
 
@@ -99,7 +99,7 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
             builder.include(userLocation);
             builder.include(latLng);
             LatLngBounds bounds = builder.build();
-            int padding = 30;
+            int padding = 150;
             CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
             mMap.animateCamera(cu);
 
@@ -137,13 +137,21 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
                                     Log.i("Overview Polyline Encoded", overviewPolylineEncodedPolyline);
 
                                     List<LatLng> pointsList = PolyUtil.decode(overviewPolylineEncodedPolyline);
-                                    Log.i("Points List",pointsList.toString());
+                                    Log.i("Points List", pointsList.toString());
                                     PolylineOptions polylineOptions = new PolylineOptions();
-                                    for(int i = 0;i<pointsList.size();i++){
+                                    for (int i = 0; i < pointsList.size(); i++) {
                                         polylineOptions.add(pointsList.get(i));
                                     }
                                     Polyline polyline = mMap.addPolyline(polylineOptions);
-                                    //Ya
+
+                                    TextView nameTextView = findViewById(R.id.locationNameTextView);
+                                    TextView etaTextView = findViewById(R.id.etaTextView);
+                                    TextView distanceTextView = findViewById(R.id.distanceTextView);
+
+                                    nameTextView.setText(getIntent().getStringExtra("name"));
+                                    etaTextView.setText("ETA :" + duration);
+                                    distanceTextView.setText("Distance :" + distance);
+
 
                                 } else {
                                     Toast.makeText(getBaseContext(), "ERROR", Toast.LENGTH_LONG).show();
@@ -167,6 +175,24 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
         }
 
 
+    }
+
+    @Override
+    public void onResume() {
+        mapView.onResume();
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
     }
 
 }
