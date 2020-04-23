@@ -1,6 +1,7 @@
 package com.example.discovernorthumberland;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -45,6 +46,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainMenuActivity extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener{
@@ -57,7 +59,27 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     private TextView errorTextView;
     private Button retryButton;
 
-    private LocationListener locationListener;
+    private LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+
+        }
+    };
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -122,8 +144,6 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         progressBar = rootView.findViewById(R.id.mainPageLoadingProgressBar);
         errorTextView = rootView.findViewById(R.id.errorTextView);
         retryButton = rootView.findViewById(R.id.retryButton);
-
-
 
         return rootView;
     }
@@ -238,7 +258,6 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         newActivityIntent.putExtra("placeId", Objects.requireNonNull(marker.getTag()).toString());
         startActivity(newActivityIntent);
     }
-
 
 
 }

@@ -12,7 +12,15 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,7 +29,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.android.PolyUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NavigationActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -81,10 +100,73 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
             builder.include(latLng);
             LatLngBounds bounds = builder.build();
             int padding = 30;
-            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,padding);
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
             mMap.animateCamera(cu);
+
+            String apiKey = getResources().getString(R.string.google_maps_key);
+            String directionsURL = "https://maps.googleapis.com/maps/api/directions/json?" +
+                    "origin=" + userLocation.latitude + "," + userLocation.longitude +
+                    "&destination=" + latLng.latitude + "," + latLng.longitude +
+                    "&key=" + apiKey;
+            Log.i("Directions URL", directionsURL);
+            RequestQueue queue = Volley.newRequestQueue(getBaseContext());
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                    (Request.Method.GET, directionsURL, null, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Log.i("Directions Response", response.toString());
+                                String responseStatus = response.getString("status");
+                                Log.i("Directions Status", responseStatus);
+                                if (responseStatus.equalsIgnoreCase("OK")) {
+                                    JSONArray routesJSONArray = response.getJSONArray("routes");
+                                    Log.i("Directions routes", routesJSONArray.toString());
+                                    JSONObject routeJSONObject = routesJSONArray.getJSONObject(0);
+                                    Log.i("Directions route 1", routeJSONObject.toString());
+                                    JSONArray legsJSONArray = routeJSONObject.getJSONArray("legs");
+                                    JSONObject legJSONObject = legsJSONArray.getJSONObject(0);
+                                    JSONObject distanceJSONObject = legJSONObject.getJSONObject("distance");
+                                    JSONObject durationJSONObject = legJSONObject.getJSONObject("duration");
+                                    String distance = distanceJSONObject.getString("text");
+                                    Log.i("Directions distance:", distance);
+                                    String duration = durationJSONObject.getString("text");
+                                    Log.i("Directions duration:", duration);
+
+                                    JSONObject overviewPolyLineJSONObject = routeJSONObject.getJSONObject("overview_polyline");
+                                    String overviewPolylineEncodedPolyline = overviewPolyLineJSONObject.getString("points");
+                                    Log.i("Overview Polyline Encoded", overviewPolylineEncodedPolyline);
+
+                                    List<LatLng> pointsList = PolyUtil.decode(overviewPolylineEncodedPolyline);
+                                    Log.i("Points List",pointsList.toString());
+                                    PolylineOptions polylineOptions = new PolylineOptions();
+                                    for(int i = 0;i<pointsList.size();i++){
+                                        polylineOptions.add(pointsList.get(i));
+                                    }
+                                    Polyline polyline = mMap.addPolyline(polylineOptions);
+
+                                } else {
+                                    Toast.makeText(getBaseContext(), "ERROR", Toast.LENGTH_LONG).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getBaseContext(), "ERROR CONNECTION TO SERVER FAILURE", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+            // Add the request to the RequestQueue.
+            queue.add(jsonObjectRequest);
+
         } else {
             // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(greysMonument, 16));
         }
+
+
     }
+
 }
+
