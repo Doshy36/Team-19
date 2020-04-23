@@ -40,7 +40,7 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         getArray();
     }
-
+//
     public ArrayList<Place> getArray(){
         final ArrayList<Place> LISTOFPLACES = new ArrayList<>();
         final int[] LISTCOUNTER = {0};
