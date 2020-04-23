@@ -2,20 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/bookmarkParentConstraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/errorUserNotLoggedInConstraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    android:layout_height="match_parent"
+    tools:context=".SearchActivity">
 
     <ImageView
         android:id="@+id/backButton"
@@ -25,7 +14,7 @@
         android:layout_marginTop="8dp"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
-        android:contentDescription="Back Button"
+        android:contentDescription="@string/back_button"
         android:elevation="1dp"
         android:focusable="true"
         android:onClick="onBackButtonOnClick"
@@ -47,24 +36,21 @@
             android:id="@+id/searchTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_activity_bookmarks"
+            android:text="@string/title_activity_search"
             android:textAlignment="center"
             android:textColor="@color/common_google_signin_btn_text_light_pressed"
             android:textSize="48sp"
             android:textStyle="bold" />
 
-        <ScrollView
-            android:id="@+id/BookmarksButtonsScrollView"
+        <SearchView
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="50dp" />
 
-            <LinearLayout
-                android:id="@+id/bookmarksButtonsLinearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:orientation="vertical" />
-        </ScrollView>
-
+        <ListView
+            android:id="@+id/listOfLocations"
+            android:layout_width="409dp"
+            android:layout_height="729dp" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
