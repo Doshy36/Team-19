@@ -21,6 +21,7 @@ app.use(compression());
 app.use(helmet());
 app.use(passport.initialize());
 
+
 var mainRouter = require('./routes/main');
 var bookmarkRouter = require('./routes/bookmarks');
 var ratingRouter = require('./routes/ratings');
@@ -55,7 +56,7 @@ const pool = mysql.createPool({
 pool.on('error', console.error.bind(console, 'MySQL connection error:'));
 
 app.use('/', mainRouter);
-app.use('/', bookmarkRouter);
+app.use('/bookmarks', passport.authenticate('jwt', {session: false}), bookmarkRouter);
 app.use('/', ratingRouter);
 app.use('/auth', authRouter);
 
