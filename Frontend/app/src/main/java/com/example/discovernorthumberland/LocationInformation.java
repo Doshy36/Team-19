@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -48,7 +49,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-public class LocationInformation extends AppCompatActivity implements TextToSpeech.OnInitListener{
+public class LocationInformation extends AppCompatActivity implements TextToSpeech.OnInitListener {
     ToggleButton toggle;
     TextView title, mainBody;
     TextToSpeech textToSpeech;
@@ -87,7 +88,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                             mainBodyTextView.setText(jsonObject.getString("description"));
 
                             String[] locationDataArray = jsonObject.getString("locationData").split(",");
-                            locationLatLng = new LatLng(Double.parseDouble(locationDataArray[0]),Double.parseDouble(locationDataArray[1]));
+                            locationLatLng = new LatLng(Double.parseDouble(locationDataArray[0]), Double.parseDouble(locationDataArray[1]));
 
                             Picasso.get().load(jsonObject.getString("imageUrl")).into(locationImageView, new com.squareup.picasso.Callback() {
                                 @Override
@@ -226,7 +227,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         toggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (toggle.isChecked()){
+                if (toggle.isChecked()) {
                     textToSpeak();
                 } else {
                     silence();
@@ -274,13 +275,14 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
             final boolean[] locationIsBookmarked = {false};
 
-            String url = "https://jwhitehead.uk/bookmarks/" + MainActivity.getUserID();
+            String url = "https://jwhitehead.uk/bookmarks";
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
+                                int counter = 0;
                                 JSONArray jsonArray = response.getJSONArray("message");
                                 Log.i("Bookmark Check Bap", jsonArray.toString());
                                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -306,7 +308,15 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                             Toast.makeText(getBaseContext(), "ERROR CONNECTION TO SERVER FAILURE", Toast.LENGTH_LONG).show();
 
                         }
-                    });
+                    }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
+                    Log.i("Header toString", headers.toString());
+                    return headers;
+                }
+            };
 
             // Add the request to the RequestQueue.
             queue.add(jsonObjectRequest);
@@ -370,7 +380,15 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                         // error
                         Log.d("Rating.Error.Response", error.toString());
                     }
-                });
+                }) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<>();
+                        headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
+                        Log.i("Header toString", headers.toString());
+                        return headers;
+                    }
+                };
 
                 queue.add(jsonObjectRequest);
                 popupWindow.dismiss();
@@ -401,15 +419,11 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
             @Override
             public void onClick(View view) {
                 RequestQueue queue = Volley.newRequestQueue(getBaseContext());
-                String url = "https://jwhitehead.uk/bookmarks/delete/"+ placeId;
+                String url = "https://jwhitehead.uk/bookmarks/delete/" + placeId;
 
-
-                //Map<String, String> params = new HashMap<String, String>();
-
-                //TODO IMPLEMENT DELETE BOOKMARK
 
                 // Initialize a new JsonArrayRequest instance
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url,null, new Response.Listener<JSONObject>() {
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -431,9 +445,17 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Log.d("Rating.Error.Response", error.toString());
+                        Log.d("BookmarkDelete.Error.Response", error.toString());
                     }
-                });
+                }) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<>();
+                        headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
+                        Log.i("Header toString", headers.toString());
+                        return headers;
+                    }
+                };
 
 
                 queue.add(jsonObjectRequest);
@@ -443,12 +465,10 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
     }
 
 
-
     private void silence() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             textToSpeech.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
-        }
-        else {
+        } else {
             textToSpeech.speak("", TextToSpeech.QUEUE_FLUSH, null);
         }
     }
@@ -591,12 +611,12 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         });
     }
 
-    public void onNavigationButtonClick(View view){
+    public void onNavigationButtonClick(View view) {
         Intent newActivityIntent = new Intent(getBaseContext(), NavigationActivity.class);
         newActivityIntent.putExtra("placeId", placeId);
         newActivityIntent.putExtra("name", title.getText());
-        newActivityIntent.putExtra("lat",locationLatLng.latitude);
-        newActivityIntent.putExtra("lng",locationLatLng.longitude);
+        newActivityIntent.putExtra("lat", locationLatLng.latitude);
+        newActivityIntent.putExtra("lng", locationLatLng.longitude);
         startActivity(newActivityIntent);
     }
 

@@ -53,7 +53,7 @@ public class BookmarksActivity extends AppCompatActivity {
         if (MainActivity.getUserLoggedIn()) {
 
             final RequestQueue queue = Volley.newRequestQueue(this);
-            final String url = "https://jwhitehead.uk/bookmarks/" + MainActivity.getUserID();
+            final String url = "https://jwhitehead.uk/bookmarks";
             final int[] responseLength = {0};
 
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -86,7 +86,15 @@ public class BookmarksActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "ERROR CONNECTION TO SERVER FAILURE", Toast.LENGTH_LONG).show();
                             Log.i("RESPONSE", error.toString());
                         }
-                    });
+                    }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
+                    Log.i("Header toString", headers.toString());
+                    return headers;
+                }
+            };
             // Add the request to the RequestQueue.
             queue.add(jsonObjectRequest);
         } else {
@@ -124,58 +132,6 @@ public class BookmarksActivity extends AppCompatActivity {
         final int[] locationCounter = {0};
         for (int i = 0; i < placeIdArrayList.size(); i++) {
             Log.w("Bookmark :" + i, placeIdArrayList.get(i));
-            RequestQueue queue = Volley.newRequestQueue(this);
-            String url = "https://jwhitehead.uk/bookmarks";
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                Log.i("Bookmark response", response.toString());
-                                JSONObject bookmarkLocationJsonObject = response.getJSONObject("message");
-                                Log.i("Bookmark response.Message", bookmarkLocationJsonObject.toString());
-
-                                locationCounter[0]++;
-
-                                String[] imageUrlArray = bookmarkLocationJsonObject.getString("imageUrl").split(","); //String Array of each image url from server
-
-                                //Create ArrayList of categories of location retrieved from server & transfer to String
-                                ArrayList<String> categoriesArrayList = new ArrayList<>();
-                                JSONArray jsonTopicArray = bookmarkLocationJsonObject.getJSONArray("categories");
-                                for (int k = 0; k < jsonTopicArray.length(); k++) {
-                                    categoriesArrayList.add(jsonTopicArray.getString(k));
-                                }
-                                String[] categoriesArray = categoriesArrayList.toArray(new String[0]);
-
-                                //Taker users location to send to Place Constructor
-                                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                                @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                                LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                                Place place = new Place(bookmarkLocationJsonObject.getString("placeId"), bookmarkLocationJsonObject.getString("name"), bookmarkLocationJsonObject.getString("description"), bookmarkLocationJsonObject.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
-                                sortedArrayOfLocations.add(place);
-                                if (locationCounter[0] == placeIdArrayList.size()) {
-                                    drawBookmarkButtons();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.i("RESPONSE", error.toString());
-                        }
-                    }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
-                    headers.put("userId", MainActivity.getUserID());
-                    Log.i("Header toString",headers.toString());
-                    return headers;
-                }
-            };
-            /*
             RequestQueue queue = Volley.newRequestQueue(this);
             String url = "https://jwhitehead.uk/place/" + placeIdArrayList.get(i);
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -219,7 +175,6 @@ public class BookmarksActivity extends AppCompatActivity {
                         }
                     });
 
-             */
             // Add the request to the RequestQueue.
             queue.add(jsonObjectRequest);
         }
