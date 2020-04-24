@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -37,10 +39,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.Cluster;
+import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
+import com.google.maps.android.clustering.algo.AbstractAlgorithm;
+import com.google.maps.android.clustering.view.ClusterRenderer;
+import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +58,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Set;
 
 public class MainMenuActivity extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
@@ -97,8 +108,8 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_main_menu, container, false);
 
+        View rootView = inflater.inflate(R.layout.activity_main_menu, container, false);
         mapView = rootView.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -201,17 +212,10 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                                 placeArrayList.add(place);
 
 
-                                /*
-                                Marker locationMarker = mMap.addMarker(new MarkerOptions().position(place.getPosition()).title(place.getLocationName()));
-                                locationMarker.setTag(place.getPlaceId());
-                                markerArrayList.add(locationMarker);
-
-                                 */
-
 
                             }
                             if (counter == jsonArray.length()) {
-                                setUpClusterer(placeArrayList);
+                                setUpCluster(placeArrayList);
                             }
                             progressBarConstraintLayout.setVisibility(View.GONE);
                         } catch (JSONException e) {
@@ -272,7 +276,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     }
 
 
-    public void setUpClusterer(ArrayList<Place> placeArrayList) {
+    public void setUpCluster(ArrayList<Place> placeArrayList) {
 
         mClusterManager = new ClusterManager<Place>(requireActivity(), mMap);
         mMap.setOnCameraIdleListener(mClusterManager);
@@ -287,7 +291,6 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                 startActivity(newActivityIntent);
             }
         });
-
     }
 
 

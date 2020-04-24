@@ -32,6 +32,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -402,11 +403,11 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                 RequestQueue queue = Volley.newRequestQueue(getBaseContext());
                 String url = "https://jwhitehead.uk/bookmarks/delete";
 
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("userId", MainActivity.getUserID());
-                params.put("placeId", placeId);
-                JSONObject parameters = new JSONObject(params);
 
+                Map<String, String> params = new HashMap<String, String>();
+
+                //TODO IMPLEMENT DELETE BOOKMARK
+                /*
                 // Initialize a new JsonArrayRequest instance
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url, parameters, new Response.Listener<JSONObject>() {
                     @Override
@@ -434,7 +435,9 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     }
                 });
 
-                queue.add(jsonObjectRequest);
+                 */
+
+                //queue.add(jsonObjectRequest);
                 popupWindow.dismiss();
             }
         });
