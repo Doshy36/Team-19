@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MainActivity.accessToken = accessToken;
         userLoggedIn = true;
 
+        /*
         //final int INTERVAL = 1000 * 60 * 2; //2 minutes
         final int INTERVAL = 1000 * 15; //2 minutes
 
@@ -170,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 handler.postDelayed(this, INTERVAL);
             }
         }, INTERVAL);
+        **/
 
     }
 
@@ -180,6 +182,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public static boolean getUserLoggedIn() {
         return userLoggedIn;
+    }
+
+    public static String getAccessToken(){
+        return accessToken;
     }
 
     public static void logOut() {

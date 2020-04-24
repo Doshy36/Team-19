@@ -401,15 +401,15 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
             @Override
             public void onClick(View view) {
                 RequestQueue queue = Volley.newRequestQueue(getBaseContext());
-                String url = "https://jwhitehead.uk/bookmarks/delete";
+                String url = "https://jwhitehead.uk/bookmarks/delete/"+ placeId;
 
 
-                Map<String, String> params = new HashMap<String, String>();
+                //Map<String, String> params = new HashMap<String, String>();
 
                 //TODO IMPLEMENT DELETE BOOKMARK
-                /*
+
                 // Initialize a new JsonArrayRequest instance
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url, parameters, new Response.Listener<JSONObject>() {
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url,null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -435,9 +435,8 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     }
                 });
 
-                 */
 
-                //queue.add(jsonObjectRequest);
+                queue.add(jsonObjectRequest);
                 popupWindow.dismiss();
             }
         });
