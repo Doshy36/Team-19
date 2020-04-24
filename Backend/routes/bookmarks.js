@@ -43,8 +43,7 @@ router.delete('/delete/:placeId', function(req, res, next) {
             res.send({"success": false, "message": err.message});
             throw err;
         }
-        res.statusCode(204);
-        res.send({"success": true, "message": result});
+        res.status(204).json({"success": true, "message": result});
     });
 });
 
