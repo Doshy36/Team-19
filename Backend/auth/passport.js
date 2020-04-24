@@ -75,8 +75,6 @@ passport.use('jwt', new JwtStrategy(
     }, 
     async function(token, done) {
         try {
-            console.log("UE")
-            console.log(token);
             index.pool.query('SELECT 1 FROM `User` WHERE userId=?', token.id, async (err, results) => {
                 if (err) {
                     done(null, false, {message: err});
