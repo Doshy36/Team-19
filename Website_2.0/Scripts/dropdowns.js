@@ -1,4 +1,4 @@
-/* --- DROP DOWN ARROWS FOR FAQ ---------------------------------------------------------------------------------- */
+/* --- DROP DOWN ARROWS FOR FAQ/HELP PAGE ---------------------------------------------------------------------------------- */
 
 var q = document.getElementsByClassName("question");
 

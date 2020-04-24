@@ -1,0 +1,429 @@
+/* --- GENERAL ---------------------------------------------------------- */
+
+body {
+	font-family: "ProductSans", "Tahoma", "Geneva", "sans-serif";
+	background-color: #F6FAF9;
+	color: #15343d;
+}
+
+hr {
+	border-top: 2px solid #78e2cf;
+}
+
+div {
+	margin: 0;
+	padding: 0;
+	overflow-wrap: break-word;
+}
+
+.container-fluid {
+	padding: 15vh 5vw 0 5vw;
+}
+
+p {
+	margin: 0px;
+}
+
+/* --- LINKS ---------------------------------------------------------- */
+
+a {
+	color: #50b1bb;
+	text-decoration: none;
+}
+
+a:hover, ion-icon:hover {
+	color: #78e2cf;
+	text-decoration: none;
+}
+
+/* --- FOOTER --------------------------------------------------------- */
+
+footer {
+	background-color: #15343d;
+	color: #F6FAF9;
+	text-align: center;
+}
+
+footer div {
+	display: inline-block;
+	height: 100%;
+	padding-top: 5vh;
+	padding-bottom: 5vh;
+}
+
+footer img {
+	width: 6vh;
+}
+
+/* --- TITLES ---------------------------------------------------------- */
+
+.display-2 {
+	text-align: center;
+	font-size: 7vw;
+	color: #F6FAF9;
+	font-family: 'ProductSans';
+}
+
+.title-decoration {
+	width: 100%;
+	margin: auto;
+	text-align: center;
+}
+
+.title-decoration img {
+	width: 1.5vw;
+}
+
+h1, h2, h3, h4 ,h5, h6, p {
+	text-align: center;
+}
+
+/* --- BACKGROUND ----------------------------------------------------- */
+
+.background {
+	position: relative;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+}
+
+.background-image {
+	position: absolute;
+	opacity: 0.4;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	z-index: -1;
+}
+
+#background-bottom {
+	padding-bottom: 15vh;
+}
+
+#background-bottom > img {
+    left: 0;
+    bottom: 0;
+}
+
+/* --- SLIDESHOW ----------------------------------------------------- */
+
+#slideshow {
+	height: 100vh;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	letter-spacing: 0.1rem;
+	width: 100%;
+	padding: 5vw;
+}
+
+.slide {
+	position: absolute;
+  	top: 0;
+  	left: 0;
+  	width: 100%;
+  	height: 100%;
+  	object-fit: cover;
+  	z-index: -1;
+  	opacity: 0;
+  	transition: opacity 0.75s ease-in-out;
+}
+
+#slideshow .slideshow-content-text {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  	
+	margin: auto;
+  	border-radius: 0.5rem;
+  	padding: 2rem 2.5rem;
+  	background-color: rgba(21,52,61,0.5);
+  	width: 80vw;
+}
+
+#slideshow-down-arrow {
+	margin: auto;
+	position: absolute;
+	bottom: 0;
+}
+
+.slideshow-bubbles img {
+	width: 2vw;
+}
+
+/* --- INTRO --------------------------------------------------------- */
+
+#intro {
+	padding: 0;
+	text-align: center;
+}
+
+#intro-icons {
+	text-align: center;
+	width: 100%;
+	padding: 0;
+}
+
+#intro-icons div {
+	text-align: center;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#intro i, #intro ion-icon {
+	padding: 0 3vw;
+	text-align: center;
+	margin: auto;
+	font-size: 5vw;
+}
+
+#app-main-image {
+	width: 55vw;
+}
+
+@media only screen and (max-width: 800px) {
+
+	#intro-icons div {
+		text-align: center;
+		display: block;
+		vertical-align: middle;
+	}
+
+	#app-main-image {
+		width: 100%;
+	}
+
+	#intro i, #intro ion-icon {
+		padding: 0 3vw;
+		text-align: center;
+		margin: auto;
+		font-size: 10vw;
+	}
+}
+
+/* --- OUR APP ------------------------------------------------------ */
+
+#our-app {
+	text-align: center;
+}
+
+.content-feature img {
+	max-height: 400px ;
+	padding: 1vw;
+}
+
+.content-feature {
+	padding: 1vw;
+	padding-bottom: 0;
+	width: 30%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+@media only screen and (max-width: 850px) {
+	.content-feature {
+		padding: 1vw;
+		/*padding-bottom: 0;*/
+		width: 70%;
+		text-align: center;
+		margin: auto;
+		display: block;
+		vertical-align: top;
+	}
+}
+
+/* --- FAQ ----------------------------------------------------------- */
+
+.drop-down {
+	padding-left: 15vw;
+	padding-right: 15vw;
+	text-align: center;
+}
+
+.drop-down hr, .drop-down h4 {
+	text-align: left;
+	margin: 0;
+}
+
+.drop-down hr {
+	border-top: 1px solid #78e2cf;
+}
+
+.question {
+	cursor: pointer;
+	padding: 2vw;
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	transition: 0.4s;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.active, .question:hover {
+	text-align: left;
+  	background-color: #78e2cf;
+}
+
+.answer {
+	text-align: left;
+	padding: 0 2vw;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
+}
+
+.answer p {
+	padding: 2vw 0;
+	text-align: left;
+}
+
+/* --- TEAM ----------------------------------------------------------- */
+
+@media only screen and (max-width: 800px) {
+
+	.person-row .person {
+		text-align: center;
+		width: 100%;
+		display: block;
+	}
+
+	.person-row .person img {
+		width: 50%;
+	}
+}
+
+#our-team h5 {
+	margin: 0;
+}
+
+.person-row, .person-council {
+	text-align: center;
+}
+
+.person-row div {
+	vertical-align: text-top;
+	width: 20%;
+	display: inline-block;
+	padding: 2vh 0;
+}
+
+.person img {
+	width: 75%;
+}
+
+.person-council div {
+	width: 100%;
+	padding: 2vh 0;
+}
+
+.person-council img {
+	height: 40vh;
+}
+
+
+/* --- GALLERY ----------------------------------------------------------- */
+
+.gallery {
+	text-align: center;
+	margin: auto;
+	justify-content: center;
+	display: inline-block;
+	padding-top: 0;
+}
+
+.holder {
+	background-color: #F6FAF9;
+	text-align: center;
+	padding: 3%;
+	margin: 3%;
+	display: inline-block;
+	box-shadow: 5px 10px 18px #888888;
+	position: relative;
+	vertical-align: top;
+}
+
+.wide {
+	width: 300px;
+	height: 300px;
+}
+
+.long {
+	width: 300px;
+	height: 400px;
+}
+
+.holder img {
+	width: 100%;
+}
+
+.holder h4 {
+	margin-top: 30px;
+}
+
+.holder a {
+	margin: auto;
+	left: 96.5px;
+	position: absolute;
+	bottom: 25px;
+}
+
+@media only screen and (max-width: 800px) {
+
+	.gallery {
+		text-align: center;
+		margin: auto;
+		justify-content: center;
+	}
+
+	.holder {
+		width: 75%;
+		min-height: 300px;
+		background-color: #F6FAF9;
+		text-align: center;
+		padding: 3%;
+		margin: 3% auto;
+		display: block;
+		box-shadow: 5px 10px 18px #888888;
+	}
+}
+
+/* --- HELP ----------------------------------------------------------- */
+
+@media only screen and (max-width: 800px) {
+	.help-links {
+		display: block !important;
+	}
+
+	.help-links h5 {
+		display: block;
+		text-align: center;
+	}
+	#help-top img {
+		display: none;
+	}
+}
+
+#help-top {
+	text-align: center;
+	padding-top: 10vh;
+	padding-bottom: 15vh;
+}
+
+.help-links {
+	margin: auto;
+	width: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#help-top img {
+	width: 2%;
+}
+
