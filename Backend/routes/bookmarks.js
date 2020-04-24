@@ -40,7 +40,7 @@ router.delete('/delete/:placeId', function(req, res, next) {
 
     index.pool.query(sql, par, (err, result, fields) => {
         if(err) {
-            res.send({"success": false, "message": err.message});
+            res.json({"success": false, "message": err.message});
             throw err;
         }
         res.status(204).json({"success": true});
