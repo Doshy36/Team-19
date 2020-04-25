@@ -1,17 +1,29 @@
 package com.example.discovernorthumberland;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,11 +39,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import android.app.SearchManager;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
+
 public class SearchActivity extends AppCompatActivity {
-    private ListView listView;
+    private RecyclerView recyclerView;
+    private SearchView searchView;
     private LocationManager locationManager;
 
     @Override
@@ -82,6 +100,7 @@ public class SearchActivity extends AppCompatActivity {
                             if(LISTCOUNTER[0] == jsonArray.length()){
                                 ArrayList<String> placeList = new ArrayList<String>();
                                 //dynamic list to store ALL location names into
+
                                 for(int i = 0; i < jsonArray.length();i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                                     JSONArray topicArray = jsonObject.getJSONArray("categories");
@@ -101,24 +120,30 @@ public class SearchActivity extends AppCompatActivity {
                                     placeList.add(place.getLocationName());
                                     //adds all the names of locations to an array
 
-                                    listView = findViewById(R.id.listOfLocations);
-                                    final ArrayAdapter adapter = new ArrayAdapter<String> (SearchActivity.this, android.R.layout.simple_list_item_1, placeList);
 
-                                    listView.setAdapter(adapter);
-                                    SearchView searchView = findViewById(R.id.searchView);
-                                    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                                        @Override
-                                        public boolean onQueryTextSubmit(String query) {
-                                            return false;
-                                        }
-
-                                        @Override
-                                        public boolean onQueryTextChange(String s) {
-                                            adapter.getFilter().filter(s);
-                                            return false;
-                                        }
-                                    });
                                 }
+
+                                recyclerView = findViewById(R.id.recyclerListOfLocations);
+                                final RecyclerViewAdapter adapter = new RecyclerViewAdapter(SearchActivity.this, placeList, LISTOFPLACES);
+
+
+                                recyclerView.setAdapter(adapter);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
+
+                                searchView = findViewById(R.id.searchView);
+                                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                    @Override
+                                    public boolean onQueryTextSubmit(String query) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onQueryTextChange(String newText) {
+
+                                        adapter.getFilter().filter(newText);
+                                        return false;
+                                    }
+                                });
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -139,4 +164,5 @@ public class SearchActivity extends AppCompatActivity {
     public void onBackButtonOnClick(View view) {
         this.finish();
     }
+
 }
