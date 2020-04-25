@@ -139,7 +139,6 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                 Intent newActivityIntent = new Intent(getActivity(), TopicPageActivity.class);
                 newActivityIntent.putExtra("topicId", "Cuisine");
                 startActivity(newActivityIntent);
-
             }
         });
         ImageView sportButton = rootView.findViewById(R.id.sportsButtonImage);
@@ -148,6 +147,14 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
             public void onClick(View view) {
                 Intent newActivityIntent = new Intent(getActivity(), TopicPageActivity.class);
                 newActivityIntent.putExtra("topicId", "Sports");
+                startActivity(newActivityIntent);
+            }
+        });
+        ImageView searchButton = rootView.findViewById(R.id.searchButtonImage);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newActivityIntent = new Intent(getActivity(), SearchActivity.class);
                 startActivity(newActivityIntent);
             }
         });

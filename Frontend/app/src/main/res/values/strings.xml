@@ -15,5 +15,6 @@
     <string name="rate">Rate</string>
     <string name="back_button">Back Button</string>
     <string name="title_activity_navigation">Map</string>
+    <string name="title_activity_search">Search</string>
 
 </resources>
