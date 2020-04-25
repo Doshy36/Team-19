@@ -42,15 +42,31 @@
             android:textSize="48sp"
             android:textStyle="bold" />
 
-        <SearchView
-            android:id="@+id/searchView"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/listOfLocations"
-            android:layout_width="409dp"
-            android:layout_height="729dp" />
+            <LinearLayout
+                android:id="@+id/linearLayoutToFill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <SearchView
+                    android:id="@+id/searchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                </SearchView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerListOfLocations"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </ScrollView>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
