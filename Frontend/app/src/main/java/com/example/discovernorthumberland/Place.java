@@ -3,6 +3,7 @@ package com.example.discovernorthumberland;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 public class Place implements Comparable<Place>, ClusterItem {
