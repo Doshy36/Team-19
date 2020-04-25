@@ -1,6 +1,7 @@
 package com.example.discovernorthumberland;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,6 +26,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -64,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static String userId;
     private static String accessToken;
     private DrawerLayout drawer;
-    private static Context context;
     final static Handler handler = new Handler();
     private static boolean userLoggedIn = false;
 
@@ -73,8 +75,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        context = this.getApplicationContext();
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -97,11 +97,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()) {
             case R.id.nav_login:
                 Intent loginIntent = new Intent(this, LoginActivity.class);
-                startActivity(loginIntent);
+                startActivityForResult(loginIntent,1);
                 break;
             case R.id.nav_bookmarks:
                 Intent bookmarksIntent = new Intent(this, BookmarksActivity.class);
-                startActivity(bookmarksIntent);
+                startActivityForResult(bookmarksIntent,1);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
@@ -117,6 +117,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1){
+            if(resultCode == RESULT_OK){
+                assert data != null;
+                String logStatus = data.getStringExtra("Log Status");
+                if(logStatus.equalsIgnoreCase("LoggedIn")){
+
+                    NavigationView navigationView = findViewById(R.id.nav_view);
+                    Menu menu = navigationView.getMenu();
+                    MenuItem menuItem = menu.findItem(R.id.nav_login);
+                    menuItem.setTitle("Log Out");
+
+                }else if(logStatus.equalsIgnoreCase("LoggedOut")){
+
+                    NavigationView navigationView = findViewById(R.id.nav_view);
+                    Menu menu = navigationView.getMenu();
+                    MenuItem menuItem = menu.findItem(R.id.nav_login);
+                    menuItem.setTitle("Log In");
+
+                }
+            }
+        }
+    }
+
     public void onNavBarButtonClick(View view) {
         drawer.openDrawer(GravityCompat.START);
     }
@@ -125,53 +151,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MainActivity.userId = userId;
         MainActivity.accessToken = accessToken;
         userLoggedIn = true;
-
-        /*
-        //final int INTERVAL = 1000 * 60 * 2; //2 minutes
-        final int INTERVAL = 1000 * 15; //2 minutes
-
-
-        handler.postDelayed(new Runnable() {
-            public void run() {
-
-                // Instantiate the RequestQueue.
-                RequestQueue queue = Volley.newRequestQueue(context.getApplicationContext());
-                String url = "https://jwhitehead.uk/auth/token";
-
-                // Initialize a new JsonArrayRequest instance
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("ACCESS TOKEN UPDATE Response", response.toString());
-                        try {
-                            String accessToken = response.getString("accessToken");
-                            Log.d("ACCESS TOKEN UPDATE", accessToken);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error
-                        Log.d("ACCESS TOKEN UPDATE. ERROR", error.toString());
-                    }
-                }) {
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("Content-Type", "application/json; charset=UTF-8");
-                        params.put("accessToken", accessToken);
-
-                        return params;
-                    }
-                };
-                queue.add(jsonObjectRequest);
-                handler.postDelayed(this, INTERVAL);
-            }
-        }, INTERVAL);
-        **/
 
     }
 

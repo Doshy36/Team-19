@@ -7,8 +7,7 @@ import java.util.Arrays;
 
 public class Place implements Comparable<Place>, ClusterItem {
 
-    private double latitude;
-    private double longitude;
+
     private LatLng mPosition;
     private float[] distanceFromUser = new float[3];
     private String placeId;
@@ -24,20 +23,10 @@ public class Place implements Comparable<Place>, ClusterItem {
         this.imageUrlStringArray = imageUrlStringArray;
         this.categories = categories;
         String[] latLngStringArray = latLngString.split(",");
-        latitude = Double.parseDouble(latLngStringArray[0]);
-        longitude = Double.parseDouble(latLngStringArray[1]);
-        mPosition = new LatLng(latitude, longitude);
-        setDistanceFromUser(userLocation);
+        mPosition = new LatLng(Double.parseDouble(latLngStringArray[0]), Double.parseDouble(latLngStringArray[1]));
+        android.location.Location.distanceBetween(userLocation.latitude, userLocation.longitude, mPosition.latitude, mPosition.longitude, distanceFromUser);
     }
 
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
 
     public String getPlaceId() {
         return placeId;
@@ -59,10 +48,6 @@ public class Place implements Comparable<Place>, ClusterItem {
         return categories;
     }
 
-    public void setDistanceFromUser(LatLng userLocation) {
-        android.location.Location.distanceBetween(userLocation.latitude, userLocation.longitude, this.latitude, this.longitude, distanceFromUser);
-    }
-
     public float[] getDistanceFromUser() {
         return distanceFromUser;
     }
@@ -75,7 +60,7 @@ public class Place implements Comparable<Place>, ClusterItem {
 
     @Override
     public String toString() {
-        return placeId + " : " + locationName + "\n" + description + "\n" + latitude + ", " + longitude + "\n" + distanceFromUser[0] + "m away from User" + "\n" + "Categories :" + Arrays.toString(categories) + "\n" + Arrays.toString(imageUrlStringArray);
+        return placeId + " : " + locationName + "\n" + description + "\n" + mPosition.latitude + ", " + mPosition.longitude + "\n" + distanceFromUser[0] + "m away from User" + "\n" + "Categories :" + Arrays.toString(categories) + "\n" + Arrays.toString(imageUrlStringArray);
     }
 
     @Override
