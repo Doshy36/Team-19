@@ -11,6 +11,7 @@ import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -20,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,6 +36,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BookmarksActivity extends AppCompatActivity {
 
@@ -49,7 +53,7 @@ public class BookmarksActivity extends AppCompatActivity {
         if (MainActivity.getUserLoggedIn()) {
 
             final RequestQueue queue = Volley.newRequestQueue(this);
-            final String url = "https://jwhitehead.uk/bookmarks/" + MainActivity.getUserID();
+            final String url = "https://jwhitehead.uk/bookmarks";
             final int[] responseLength = {0};
 
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -82,7 +86,15 @@ public class BookmarksActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "ERROR CONNECTION TO SERVER FAILURE", Toast.LENGTH_LONG).show();
                             Log.i("RESPONSE", error.toString());
                         }
-                    });
+                    }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
+                    Log.i("Header toString", headers.toString());
+                    return headers;
+                }
+            };
             // Add the request to the RequestQueue.
             queue.add(jsonObjectRequest);
         } else {
@@ -120,7 +132,6 @@ public class BookmarksActivity extends AppCompatActivity {
         final int[] locationCounter = {0};
         for (int i = 0; i < placeIdArrayList.size(); i++) {
             Log.w("Bookmark :" + i, placeIdArrayList.get(i));
-
             RequestQueue queue = Volley.newRequestQueue(this);
             String url = "https://jwhitehead.uk/place/" + placeIdArrayList.get(i);
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -163,6 +174,7 @@ public class BookmarksActivity extends AppCompatActivity {
                             Log.i("RESPONSE", error.toString());
                         }
                     });
+
             // Add the request to the RequestQueue.
             queue.add(jsonObjectRequest);
         }
@@ -173,7 +185,7 @@ public class BookmarksActivity extends AppCompatActivity {
         int locationCounter = 0;
         Collections.sort(sortedArrayOfLocations);
         for (int i = 0; i < sortedArrayOfLocations.size(); i++) {
-            Log.i("Bookmark Sorted :"+ i, sortedArrayOfLocations.get(i).toString());
+            Log.i("Bookmark Sorted :" + i, sortedArrayOfLocations.get(i).toString());
             final Place place = sortedArrayOfLocations.get(i);
 
             locationCounter++;

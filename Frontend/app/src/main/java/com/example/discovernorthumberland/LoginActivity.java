@@ -1,23 +1,36 @@
 package com.example.discovernorthumberland;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,9 +40,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(MainActivity.getUserLoggedIn()){
+        if (MainActivity.getUserLoggedIn()) {
             setContentView(R.layout.activity_loggedin);
-        }else {
+        } else {
             setContentView(R.layout.activity_login);
         }
     }
@@ -38,9 +51,21 @@ public class LoginActivity extends AppCompatActivity {
         this.finish();
     }
 
-    public void logOutButtonOnClick(View view){
+    public void logOutButtonOnClick(View view) {
+
         MainActivity.logOut();
-        this.finish();
+        Intent intent = new Intent();
+        intent.putExtra("Log Status", "LoggedOut");
+        setResult(RESULT_OK, intent);
+        finish();
+
+    }
+
+    public void onOkButtonOnClick(View view){
+        Intent intent = new Intent();
+        intent.putExtra("Log Status", "LoggedIn");
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     public void registerButtonOnClick(View view) {
@@ -66,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                     String userId = response.getString("userId");
                     Log.d("ACCESS TOKEN", accessToken);
                     Log.d("USER ID", userId);
+
                     MainActivity.logUserIn(accessToken, userId);
                     setContentView(R.layout.activity_loggedin);
 
