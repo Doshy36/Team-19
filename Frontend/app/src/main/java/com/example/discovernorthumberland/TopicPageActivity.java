@@ -60,7 +60,7 @@ public class TopicPageActivity extends AppCompatActivity {
                 topic = "historical";
                 break;
         }
-        final String finalTopic = topic;
+        final String FINAL_TOPIC = topic;
 
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://jwhitehead.uk/places";
@@ -97,7 +97,7 @@ public class TopicPageActivity extends AppCompatActivity {
                                 Place place = new Place(jsonObjectOfLocation.getString("placeId"), jsonObjectOfLocation.getString("name"), jsonObjectOfLocation.getString("description"), jsonObjectOfLocation.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
                                 for (String s : place.getCategories()) {
                                     //If place is in the category which the user has selected add to array
-                                    if (s.equalsIgnoreCase(finalTopic)) {
+                                    if (s.equalsIgnoreCase(FINAL_TOPIC)) {
                                         sortedArrayOfLocations.add(place);
                                     }
                                 }

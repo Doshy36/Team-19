@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static String userId;
     private static String accessToken;
     private DrawerLayout drawer;
-    final static Handler handler = new Handler();
+    final static Handler HANDLER = new Handler();
     private static boolean userLoggedIn = false;
 
 
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static void logOut() {
         userLoggedIn = false;
         userId = null;
-        handler.removeCallbacks(null);
+        HANDLER.removeCallbacks(null);
     }
 
 }

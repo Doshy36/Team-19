@@ -54,7 +54,7 @@ public class SearchActivity extends AppCompatActivity {
 
     public void getArray() {
         placeArrayList = new ArrayList<>();
-        final int[] LISTCOUNTER = {0};
+        final int[] LIST_COUNTER = {0};
         RequestQueue queue = Volley.newRequestQueue(SearchActivity.this);
         String url = "https://jwhitehead.uk/places";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -65,7 +65,7 @@ public class SearchActivity extends AppCompatActivity {
                             JSONArray jsonArray = response.getJSONArray("message");
                             Log.i("Bap", jsonArray.toString());
                             for (int i = 0; i < jsonArray.length(); i++) {
-                                LISTCOUNTER[0]++;
+                                LIST_COUNTER[0]++;
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 JSONArray topicArray = jsonObject.getJSONArray("categories");
 
@@ -90,7 +90,7 @@ public class SearchActivity extends AppCompatActivity {
                                 Log.i("Array List Test", place.toString());
                                 placeArrayList.add(place);
                             }
-                            if (LISTCOUNTER[0] == jsonArray.length()) {
+                            if (LIST_COUNTER[0] == jsonArray.length()) {
                                 setUpSearch();
                             }
                         } catch (JSONException e) {
