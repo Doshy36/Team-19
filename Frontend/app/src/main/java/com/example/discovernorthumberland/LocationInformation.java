@@ -58,7 +58,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
     private ProgressBar progressBar;
     private String placeId;
     private LatLng locationLatLng;
-    private int userRating;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,16 +158,15 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                             JSONArray responseJSONArray = response.getJSONArray("message");
                             Log.i("Rating BAP2", responseJSONArray.toString());
                             JSONObject responseJSONObject = responseJSONArray.getJSONObject(0);
-                            Log.i("Rating of location", responseJSONObject.getString("SUM(rating)"));
-                            //float rating = Float.parseFloat(responseJSONObject.getString("SUM(rating)"));
+                            Log.i("Rating of location", responseJSONObject.getString("AVG(rating)"));
                             TextView ratingTextView = findViewById(R.id.previewRatingAverageTextView);
 
                             //If there exists a rating for the location
-                            if (!responseJSONObject.getString("SUM(rating)").equalsIgnoreCase("null")) {
+                            if (!responseJSONObject.getString("AVG(rating)").equalsIgnoreCase("null")) {
                                 //Retrieves rating and displays it to the user
-                                ratingTextView.setText(responseJSONObject.getString("SUM(rating)"));
+                                ratingTextView.setText(responseJSONObject.getString("AVG(rating)"));
                                 //Stores the rating in a variable, used to show rating in star format
-                                float ratingFloat = Float.parseFloat(responseJSONObject.getString("SUM(rating)"));
+                                float ratingFloat = Float.parseFloat(responseJSONObject.getString("AVG(rating)"));
                                 Log.i("Rating of location as Float", Float.toString(ratingFloat));
 
                                 //Creating the Image Views of all the stars for rating purposes
@@ -402,13 +401,14 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                 RequestQueue queue = Volley.newRequestQueue(getBaseContext());
                 String url = "https://jwhitehead.uk/bookmarks/add";
 
+
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("userId", MainActivity.getUserID());
                 params.put("placeId", placeId);
                 JSONObject parameters = new JSONObject(params);
 
                 // Initialise a new JsonObjectRequest instance
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>() {
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,parameters, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -524,6 +524,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         popupWindow.setElevation(20);
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
+        final int[] USER_RATING = new int[1];
         final ImageView starImageButton1 = popupView.findViewById(R.id.starImageView1);
         final ImageView starImageButton2 = popupView.findViewById(R.id.starImageView2);
         final ImageView starImageButton3 = popupView.findViewById(R.id.starImageView3);
@@ -536,7 +537,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         starImageButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userRating = 1;
+                USER_RATING[0] = 1;
                 starImageButton1.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                 starImageButton2.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
                 starImageButton3.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
@@ -549,7 +550,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         starImageButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userRating = 2;
+                USER_RATING[0] = 2;
                 starImageButton1.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                 starImageButton2.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                 starImageButton3.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
@@ -561,7 +562,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         starImageButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userRating = 3;
+                USER_RATING[0] = 3;
                 starImageButton1.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                 starImageButton2.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                 starImageButton3.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
@@ -573,7 +574,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         starImageButton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userRating = 4;
+                USER_RATING[0] = 4;
                 starImageButton1.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                 starImageButton2.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                 starImageButton3.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
@@ -585,7 +586,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         starImageButton5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userRating = 5;
+                USER_RATING[0] = 5;
                 starImageButton1.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                 starImageButton2.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                 starImageButton3.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
@@ -610,10 +611,10 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     RequestQueue queue = Volley.newRequestQueue(getBaseContext());
                     String url = "https://jwhitehead.uk/ratings/set";
 
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("userId", MainActivity.getUserID());
+                    Map<String, Object> params = new HashMap<>();
+                    //params.put("userId", MainActivity.getUserID());
                     params.put("placeId", placeId);
-                    params.put("rating", Integer.toString(userRating));
+                    params.put("rating", USER_RATING[0]);
                     JSONObject parameters = new JSONObject(params);
 
                     // Initialise a new JsonObjectRequest instance
@@ -625,7 +626,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                                 boolean ratingResponseBoolean = response.getBoolean("success");
                                 Log.d("Rating Response boolean", Boolean.toString(ratingResponseBoolean));
                                 if (ratingResponseBoolean) {
-                                    Toast.makeText(LocationInformation.this, "Successfully rated " + title.getText() + " :" + Integer.toString(userRating), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LocationInformation.this, "Successfully rated " + title.getText() + " :" + Integer.toString(USER_RATING[0]), Toast.LENGTH_LONG).show();
                                 } else {
                                     Toast.makeText(LocationInformation.this, "Failure rating user may have already rated this location", Toast.LENGTH_LONG).show();
                                 }
@@ -649,10 +650,8 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                             return headers;
                         }
                     };
-
                     queue.add(jsonObjectRequest);
                     popupWindow.dismiss();
-
                 } else {
                     Toast.makeText(LocationInformation.this, "Not Logged in please log in before rating the location", Toast.LENGTH_LONG).show();
                     popupWindow.dismiss();
