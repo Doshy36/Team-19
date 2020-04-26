@@ -10,10 +10,10 @@ router.get('/', function(req, res, next){
 
     index.pool.query(sql, par, (err, result, fields) => {
         if(err){
-            res.send({"success": false, "message": err.message});
+            res.json({"success": false, "message": err.message});
             throw err;
         }
-        res.send({"success": true, "message": result});
+        res.json({"success": true, "message": result});
     });
 });
 
@@ -25,10 +25,10 @@ router.post('/add', function(req, res, next){
 
     index.pool.query(sql, par, (err, result, fields) => {
         if(err){
-            res.send({"success": false, "message": err.message});
+            res.json({"success": false, "message": err.message});
             throw err;
         }
-        res.send({"success": true, "message": result});
+        res.json({"success": true, "message": result});
     });
 });
 
@@ -40,11 +40,10 @@ router.delete('/delete/:placeId', function(req, res, next) {
 
     index.pool.query(sql, par, (err, result, fields) => {
         if(err) {
-            res.send({"success": false, "message": err.message});
+            res.json({"success": false, "message": err.message});
             throw err;
         }
-        res.statusCode(204);
-        res.send({"success": true, "message": result});
+        res.status(204).json({"success": true});
     });
 });
 
