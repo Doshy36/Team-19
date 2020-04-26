@@ -1,12 +1,11 @@
 package com.example.discovernorthumberland;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
@@ -20,7 +19,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.app.ActivityCompat;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -86,7 +89,7 @@ public class BookmarksActivity extends AppCompatActivity {
                         }
                     }) {
                 @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
+                public Map<String, String> getHeaders() {
                     //Pass through Authorization through the HTTP header
                     HashMap<String, String> headers = new HashMap<>();
                     headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
@@ -159,8 +162,22 @@ public class BookmarksActivity extends AppCompatActivity {
 
                                 //Taker users location to send to Place Constructor
                                 LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                                @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                                LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                if (ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                    ActivityCompat.requestPermissions((Activity) getBaseContext(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                                    return;
+                                }
+                                LatLng userLatLng;
+                                if(locationManager != null) {
+                                    Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                                    if (location != null) {
+                                        userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                    } else {
+                                        userLatLng = null;
+                                    }
+                                }
+                                else {
+                                    userLatLng= null;
+                                }
                                 Place place = new Place(bookmarkLocationJsonObject.getString("placeId"), bookmarkLocationJsonObject.getString("name"), bookmarkLocationJsonObject.getString("description"), bookmarkLocationJsonObject.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
                                 SORTED_ARRAY_OF_LOCATIONS.add(place);
                                 if (LOCATION_COUNTER[0] == PLACE_ID_ARRAY_LIST.size()) {
@@ -205,7 +222,12 @@ public class BookmarksActivity extends AppCompatActivity {
             //Calculating distance from the user
             float[] distanceFromUser = PLACE.getDistanceFromUser();
             String distanceFromUserString = Integer.toString(Math.round(distanceFromUser[0]));
-            String locationDistanceFromUserTextViewString = distanceFromUserString + "m away";
+            String locationDistanceFromUserTextViewString;
+            if(distanceFromUserString.equalsIgnoreCase("0")){
+                locationDistanceFromUserTextViewString= "";
+            }else {
+                locationDistanceFromUserTextViewString = distanceFromUserString + "m away";
+            }
 
             //Setting name text in the Text View for the location
             locationTextView.setText(PLACE.getLocationName());
