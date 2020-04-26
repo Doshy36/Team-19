@@ -59,7 +59,8 @@ public class BookmarksActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                int responseLength = 0; // response Length is used to check once the array of place Ids is completed
+                                //responseLength used to check once the array of place Ids is completed
+                                int responseLength = 0;
                                 //Take array of JSON OBJECT OF ALL LOCATIONS
                                 JSONArray jsonArrayOfLocations = response.getJSONArray("message");
                                 Log.i("Bookmark Main Message", jsonArrayOfLocations.toString());
@@ -122,6 +123,7 @@ public class BookmarksActivity extends AppCompatActivity {
             constraintSet.connect(notLoggedInErrorTextView.getId(), ConstraintSet.BOTTOM, constraintLayout.getId(), ConstraintSet.BOTTOM, 0);
 
             constraintSet.applyTo(constraintLayout);
+
             //reload Constraint Layout
             parentConstraintLayout.removeView(constraintLayout);
             parentConstraintLayout.addView(constraintLayout);
@@ -181,26 +183,31 @@ public class BookmarksActivity extends AppCompatActivity {
     }
 
     public void drawBookmarkButtons() {
-
+        //Used to give each bookmark a different button background
         int locationCounter = 0;
         Collections.sort(SORTED_ARRAY_OF_LOCATIONS);
+
+        //Creates a button for each bookmark
         for (int i = 0; i < SORTED_ARRAY_OF_LOCATIONS.size(); i++) {
             Log.i("Bookmark Sorted :" + i, SORTED_ARRAY_OF_LOCATIONS.get(i).toString());
             final Place PLACE = SORTED_ARRAY_OF_LOCATIONS.get(i);
 
             locationCounter++;
 
+            //Create new Linear and Constraint layouts for bookmarks
             LinearLayout buttonLinearLayout = findViewById(R.id.bookmarksButtonsLinearLayout);
-
             ConstraintLayout constraintLayout = new ConstraintLayout(getBaseContext());
 
+            //Create Text Views presenting the name of the location and distance from user
             TextView locationTextView = new TextView(getBaseContext());
             TextView locationDistanceFromUserTextView = new TextView(getBaseContext());
 
+            //Calculating distance from the user
             float[] distanceFromUser = PLACE.getDistanceFromUser();
             String distanceFromUserString = Integer.toString(Math.round(distanceFromUser[0]));
             String locationDistanceFromUserTextViewString = distanceFromUserString + "m away";
 
+            //Setting name text in the Text View for the location
             locationTextView.setText(PLACE.getLocationName());
             locationTextView.setId(View.generateViewId());
             if (PLACE.getLocationName().length() > 30) {
@@ -215,16 +222,19 @@ public class BookmarksActivity extends AppCompatActivity {
             locationTextView.setTypeface(Typeface.SERIF);
             locationTextView.setGravity(Gravity.CENTER);
 
+            //Setting distance text in Text View
             locationDistanceFromUserTextView.setText(locationDistanceFromUserTextViewString);
             locationDistanceFromUserTextView.setId(View.generateViewId());
             locationDistanceFromUserTextView.setTextSize(12);
             locationDistanceFromUserTextView.setTypeface(Typeface.SERIF);
             locationDistanceFromUserTextView.setGravity(Gravity.CENTER);
 
-
+            //Creating background button for the location Text Views
             ImageView locationButton = new ImageView(getBaseContext());
             float factor = getBaseContext().getResources().getDisplayMetrics().density;
             locationButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, (int) (130 * factor)));
+
+            //Setting background button image for each bookmark, ensuring each image is different
             switch (locationCounter % 4) {
                 case 0:
                     locationButton.setImageDrawable(getDrawable(R.drawable.ic_buttonimagevector1));
@@ -240,6 +250,7 @@ public class BookmarksActivity extends AppCompatActivity {
                     break;
             }
 
+            //Setting bookmark's onClick to open the location information for that location
             TypedValue outValue = new TypedValue();
             getBaseContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
             locationButton.setBackgroundResource(outValue.resourceId);
@@ -255,10 +266,12 @@ public class BookmarksActivity extends AppCompatActivity {
             });
             locationButton.setId(View.generateViewId());
 
+            //Add bookmark button to the Constraint layout
             constraintLayout.addView(locationButton);
             constraintLayout.addView(locationTextView);
             constraintLayout.addView(locationDistanceFromUserTextView);
 
+            //Set Constraint to properly present views to user
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(constraintLayout);
 
@@ -278,6 +291,7 @@ public class BookmarksActivity extends AppCompatActivity {
 
             constraintSet.applyTo(constraintLayout);
 
+            //Add complete Constraint Layout for current bookmark onto Linear Layout
             buttonLinearLayout.addView(constraintLayout);
 
         }
