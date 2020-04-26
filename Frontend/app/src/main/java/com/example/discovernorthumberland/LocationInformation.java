@@ -640,7 +640,15 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                             // error
                             Log.d("Rating.Error.Response", error.toString());
                         }
-                    });
+                    }) {
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            HashMap<String, String> headers = new HashMap<>();
+                            headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
+                            Log.i("Header toString", headers.toString());
+                            return headers;
+                        }
+                    };
 
                     queue.add(jsonObjectRequest);
                     popupWindow.dismiss();
