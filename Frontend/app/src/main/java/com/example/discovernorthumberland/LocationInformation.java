@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -50,9 +51,9 @@ import java.util.Map;
 import java.util.Objects;
 
 public class LocationInformation extends AppCompatActivity implements TextToSpeech.OnInitListener {
-    ToggleButton toggle;
-    TextView title, mainBody;
-    TextToSpeech textToSpeech;
+    private ToggleButton toggle;
+    private TextView title, mainBody;
+    private TextToSpeech textToSpeech;
     private ProgressBar progressBar;
     private String placeId;
     private LatLng locationLatLng;
@@ -60,15 +61,12 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_information);
         placeId = getIntent().getStringExtra("placeId");
 
         final TextView titleTextView = findViewById(R.id.locationTitleTextView);
         final TextView mainBodyTextView = findViewById(R.id.mainBodyText);
-        final ImageView locationImageView = findViewById(R.id.imageView);
 
         final LinearLayout mainBodyLinearLayout = findViewById(R.id.mainBodyLinearLayout);
         mainBodyLinearLayout.setVisibility(View.GONE);
@@ -90,19 +88,38 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                             String[] locationDataArray = jsonObject.getString("locationData").split(",");
                             locationLatLng = new LatLng(Double.parseDouble(locationDataArray[0]), Double.parseDouble(locationDataArray[1]));
 
-                            Picasso.get().load(jsonObject.getString("imageUrl")).into(locationImageView, new com.squareup.picasso.Callback() {
-                                @Override
-                                public void onSuccess() {
-                                    if (progressBar != null) {
-                                        progressBar.setVisibility(View.GONE);
-                                        mainBodyLinearLayout.setVisibility(View.VISIBLE);
-                                    }
-                                }
+                            String[] imageArray = jsonObject.getString("imageUrl").split(",");
 
-                                @Override
-                                public void onError(Exception e) {
+                            for(int i = 0;i<imageArray.length;i++){
+                                ImageView imageView = new ImageView(getBaseContext());
+                                LinearLayout imageLinearLayout = findViewById(R.id.imageLinearLayout);
+                                if(i!=0){
+                                    View view = new View(getBaseContext());
+                                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+                                    layoutParams.setMargins(5,0,5,0);
+                                    view.setLayoutParams(layoutParams);
+                                    imageLinearLayout.addView(view);
+
                                 }
-                            });
+                                imageLinearLayout.addView(imageView);
+                                imageView.setScaleType(ImageView.ScaleType.CENTER);
+                                imageView.setAdjustViewBounds(true);
+                                imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.MATCH_PARENT));
+                                Picasso.get().load(imageArray[i]).into(imageView, new com.squareup.picasso.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        if (progressBar != null) {
+                                            progressBar.setVisibility(View.GONE);
+                                            mainBodyLinearLayout.setVisibility(View.VISIBLE);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(Exception e) {
+                                    }
+                                });
+                            }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

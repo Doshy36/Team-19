@@ -16,5 +16,12 @@
     <string name="back_button">Back Button</string>
     <string name="title_activity_navigation">Map</string>
     <string name="title_activity_search">Search</string>
+    <string name="_4_3">4.3</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="star_5">Star 5</string>
+    <string name="star_4">Star 4</string>
+    <string name="star_3">Star 3</string>
+    <string name="star_2">Star 2</string>
+    <string name="star_1">Star 1</string>
 
 </resources>

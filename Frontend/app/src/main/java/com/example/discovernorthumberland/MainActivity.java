@@ -97,13 +97,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
+            case R.id.nav_search:
+                Intent intent = new Intent(this,SearchActivity.class);
+                startActivity(intent);
+                break;
             case R.id.nav_login:
                 Intent loginIntent = new Intent(this, LoginActivity.class);
-                startActivityForResult(loginIntent,1);
+                startActivity(loginIntent);
                 break;
             case R.id.nav_bookmarks:
                 Intent bookmarksIntent = new Intent(this, BookmarksActivity.class);
-                startActivityForResult(bookmarksIntent,1);
+                startActivity(bookmarksIntent);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

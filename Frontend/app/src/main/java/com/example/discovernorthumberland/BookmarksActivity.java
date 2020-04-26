@@ -11,7 +11,6 @@ import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -41,8 +40,8 @@ import java.util.Map;
 
 public class BookmarksActivity extends AppCompatActivity {
 
-    final ArrayList<String> placeIdArrayList = new ArrayList<>();
-    final ArrayList<Place> sortedArrayOfLocations = new ArrayList<>();
+    final ArrayList<String> PLACE_ID_ARRAY_LIST = new ArrayList<>();
+    final ArrayList<Place> SORTED_ARRAY_OF_LOCATIONS = new ArrayList<>();
 
 
     @Override
@@ -50,29 +49,27 @@ public class BookmarksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookmarks);
 
+        //Check if user is logged in before sending request
         if (MainActivity.getUserLoggedIn()) {
-
-            final RequestQueue queue = Volley.newRequestQueue(this);
-            final String url = "https://jwhitehead.uk/bookmarks";
-            final int[] responseLength = {0};
-
+            RequestQueue queue = Volley.newRequestQueue(this);
+            String url = "https://jwhitehead.uk/bookmarks";
+            //Send JSON Request to server to get a list of PlaceId's relating to the UserID logged in
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
+                                int responseLength = 0; // response Length is used to check once the array of place Ids is completed
                                 //Take array of JSON OBJECT OF ALL LOCATIONS
                                 JSONArray jsonArrayOfLocations = response.getJSONArray("message");
                                 Log.i("Bookmark Main Message", jsonArrayOfLocations.toString());
-                                //ArrayList stores locations
-                                final ArrayList<Place> sortedArrayOfLocations = new ArrayList<>();
                                 //Loop through arrayList
                                 for (int i = 0; i < jsonArrayOfLocations.length(); i++) {
-                                    final JSONObject jsonObjectOfBookmark = jsonArrayOfLocations.getJSONObject(i); //Create JSONObject for each JSONObject in JSONArray retrieved from Server
-                                    placeIdArrayList.add(jsonObjectOfBookmark.getString("placeId"));
-                                    responseLength[0]++;
+                                    JSONObject jsonObjectOfBookmark = jsonArrayOfLocations.getJSONObject(i); //Create JSONObject for each JSONObject in JSONArray retrieved from Server
+                                    PLACE_ID_ARRAY_LIST.add(jsonObjectOfBookmark.getString("placeId")); // Add placeId String to Array List
+                                    responseLength++;
                                 }
-                                if (responseLength[0] == jsonArrayOfLocations.length()) {
+                                if (responseLength == jsonArrayOfLocations.length()) {
                                     createListOfBookmarks();
                                 }
                             } catch (JSONException e) {
@@ -89,6 +86,7 @@ public class BookmarksActivity extends AppCompatActivity {
                     }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
+                    //Pass through Authorization through the HTTP header
                     HashMap<String, String> headers = new HashMap<>();
                     headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
                     Log.i("Header toString", headers.toString());
@@ -98,11 +96,13 @@ public class BookmarksActivity extends AppCompatActivity {
             // Add the request to the RequestQueue.
             queue.add(jsonObjectRequest);
         } else {
+            //Create new Constraint Layout for Button
             ConstraintLayout parentConstraintLayout = findViewById(R.id.bookmarkParentConstraintLayout);
             parentConstraintLayout.setId(View.generateViewId());
 
             ConstraintLayout constraintLayout = findViewById(R.id.errorUserNotLoggedInConstraintLayout);
 
+            //Create Text View notifying user that they are not logged in and cannot view bookmarks
             TextView notLoggedInErrorTextView = new TextView(getBaseContext());
             String text = "Not Logged In Please Log in before viewing bookmarks.";
             notLoggedInErrorTextView.setText(text);
@@ -112,7 +112,7 @@ public class BookmarksActivity extends AppCompatActivity {
 
             constraintLayout.addView(notLoggedInErrorTextView);
 
-
+            //Set Constraint to properly present views to user
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(constraintLayout);
 
@@ -122,6 +122,7 @@ public class BookmarksActivity extends AppCompatActivity {
             constraintSet.connect(notLoggedInErrorTextView.getId(), ConstraintSet.BOTTOM, constraintLayout.getId(), ConstraintSet.BOTTOM, 0);
 
             constraintSet.applyTo(constraintLayout);
+            //reload Constraint Layout
             parentConstraintLayout.removeView(constraintLayout);
             parentConstraintLayout.addView(constraintLayout);
 
@@ -129,11 +130,12 @@ public class BookmarksActivity extends AppCompatActivity {
     }
 
     public void createListOfBookmarks() {
-        final int[] locationCounter = {0};
-        for (int i = 0; i < placeIdArrayList.size(); i++) {
-            Log.w("Bookmark :" + i, placeIdArrayList.get(i));
+        final int[] LOCATION_COUNTER = {0};
+        //For each in Place Id bookmark array List retrieve Place data from Server
+        for (int i = 0; i < PLACE_ID_ARRAY_LIST.size(); i++) {
+            Log.w("Bookmark :" + i, PLACE_ID_ARRAY_LIST.get(i));
             RequestQueue queue = Volley.newRequestQueue(this);
-            String url = "https://jwhitehead.uk/place/" + placeIdArrayList.get(i);
+            String url = "https://jwhitehead.uk/place/" + PLACE_ID_ARRAY_LIST.get(i);
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                         @Override
@@ -142,9 +144,7 @@ public class BookmarksActivity extends AppCompatActivity {
                                 Log.i("Bookmark response", response.toString());
                                 JSONObject bookmarkLocationJsonObject = response.getJSONObject("message");
                                 Log.i("Bookmark response.Message", bookmarkLocationJsonObject.toString());
-
-                                locationCounter[0]++;
-
+                                LOCATION_COUNTER[0]++;
                                 String[] imageUrlArray = bookmarkLocationJsonObject.getString("imageUrl").split(","); //String Array of each image url from server
 
                                 //Create ArrayList of categories of location retrieved from server & transfer to String
@@ -160,8 +160,8 @@ public class BookmarksActivity extends AppCompatActivity {
                                 @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                                 LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                                 Place place = new Place(bookmarkLocationJsonObject.getString("placeId"), bookmarkLocationJsonObject.getString("name"), bookmarkLocationJsonObject.getString("description"), bookmarkLocationJsonObject.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
-                                sortedArrayOfLocations.add(place);
-                                if (locationCounter[0] == placeIdArrayList.size()) {
+                                SORTED_ARRAY_OF_LOCATIONS.add(place);
+                                if (LOCATION_COUNTER[0] == PLACE_ID_ARRAY_LIST.size()) {
                                     drawBookmarkButtons();
                                 }
                             } catch (JSONException e) {
@@ -183,10 +183,10 @@ public class BookmarksActivity extends AppCompatActivity {
     public void drawBookmarkButtons() {
 
         int locationCounter = 0;
-        Collections.sort(sortedArrayOfLocations);
-        for (int i = 0; i < sortedArrayOfLocations.size(); i++) {
-            Log.i("Bookmark Sorted :" + i, sortedArrayOfLocations.get(i).toString());
-            final Place place = sortedArrayOfLocations.get(i);
+        Collections.sort(SORTED_ARRAY_OF_LOCATIONS);
+        for (int i = 0; i < SORTED_ARRAY_OF_LOCATIONS.size(); i++) {
+            Log.i("Bookmark Sorted :" + i, SORTED_ARRAY_OF_LOCATIONS.get(i).toString());
+            final Place PLACE = SORTED_ARRAY_OF_LOCATIONS.get(i);
 
             locationCounter++;
 
@@ -197,17 +197,17 @@ public class BookmarksActivity extends AppCompatActivity {
             TextView locationTextView = new TextView(getBaseContext());
             TextView locationDistanceFromUserTextView = new TextView(getBaseContext());
 
-            float[] distanceFromUser = place.getDistanceFromUser();
+            float[] distanceFromUser = PLACE.getDistanceFromUser();
             String distanceFromUserString = Integer.toString(Math.round(distanceFromUser[0]));
             String locationDistanceFromUserTextViewString = distanceFromUserString + "m away";
 
-            locationTextView.setText(place.getLocationName());
+            locationTextView.setText(PLACE.getLocationName());
             locationTextView.setId(View.generateViewId());
-            if (place.getLocationName().length() > 30) {
+            if (PLACE.getLocationName().length() > 30) {
                 locationTextView.setTextSize(26);
-            } else if (place.getLocationName().length() > 22) {
+            } else if (PLACE.getLocationName().length() > 22) {
                 locationTextView.setTextSize(30);
-            } else if (place.getLocationName().length() > 15) {
+            } else if (PLACE.getLocationName().length() > 15) {
                 locationTextView.setTextSize(33);
             } else {
                 locationTextView.setTextSize(36);
@@ -249,7 +249,7 @@ public class BookmarksActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent newActivityIntent = new Intent(getBaseContext(), LocationInformation.class);
-                    newActivityIntent.putExtra("placeId", place.getPlaceId());
+                    newActivityIntent.putExtra("placeId", PLACE.getPlaceId());
                     startActivity(newActivityIntent);
                 }
             });

@@ -2,6 +2,7 @@ package com.example.discovernorthumberland;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,14 +12,20 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +35,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -69,7 +78,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     private ProgressBar progressBar;
     private TextView errorTextView;
     private Button retryButton;
-    private ClusterManager<Place> mClusterManager;
+    ArrayList<Place> placeArrayList;
 
     private LocationListener locationListener = new LocationListener() {
         @Override
@@ -109,7 +118,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.activity_main_menu, container, false);
+        final View rootView = inflater.inflate(R.layout.activity_main_menu, container, false);
         mapView = rootView.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -150,19 +159,18 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                 startActivity(newActivityIntent);
             }
         });
-        ImageView searchButton = rootView.findViewById(R.id.searchButtonImage);
-        searchButton.setOnClickListener(new View.OnClickListener() {
+        retryButton = rootView.findViewById(R.id.retryButton);
+        retryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent newActivityIntent = new Intent(getActivity(), SearchActivity.class);
-                startActivity(newActivityIntent);
+                setMap();
             }
         });
+
 
         progressBarConstraintLayout = rootView.findViewById(R.id.progressBarConstraintLayout);
         progressBar = rootView.findViewById(R.id.mainPageLoadingProgressBar);
         errorTextView = rootView.findViewById(R.id.errorTextView);
-        retryButton = rootView.findViewById(R.id.retryButton);
 
 
         return rootView;
@@ -180,8 +188,27 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         } catch (Resources.NotFoundException e) {
             Log.e("JASON File Catch", "Can't find style. Error: ", e);
         }
+        setMap();
 
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (lastKnownLocation != null) {
+            LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
+        } else {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(55.237914, -2.015241), 8.5f));
+        }
+        mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
+        mMap.getUiSettings().setMapToolbarEnabled(false);
+        mMap.setMyLocationEnabled(true);
+        mMap.setOnInfoWindowClickListener(this);
+    }
 
+    private void setMap(){
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         String url = "https://jwhitehead.uk/places";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -191,7 +218,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                         try {
                             JSONArray jsonArray = response.getJSONArray("message");
                             int counter = 0;
-                            ArrayList<Place> placeArrayList = new ArrayList<>();
+                            placeArrayList = new ArrayList<>();
                             Log.i("Bap", jsonArray.toString());
 
 
@@ -211,20 +238,22 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                                 //Taker users location to send to Place Constructor
                                 locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
                                 @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                                LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-
+                                LatLng userLatLng;
+                                if(location != null) {
+                                    userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                }
+                                else{
+                                    userLatLng = null;
+                                }
                                 Place place = new Place(jsonObject.getString("placeId"), jsonObject.getString("name"), jsonObject.getString("description"), jsonObject.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
                                 Log.i("place." + place.getLocationName(), place.toString());
-
                                 placeArrayList.add(place);
-
-
 
                             }
                             if (counter == jsonArray.length()) {
                                 setUpCluster(placeArrayList);
+                                progressBarConstraintLayout.setVisibility(View.GONE);
                             }
-                            progressBarConstraintLayout.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -244,24 +273,6 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
 
         // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest);
-
-
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            return;
-        }
-        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (lastKnownLocation != null) {
-            LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
-        } else {
-            // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(greysMonument, 16));
-        }
-        mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
-        mMap.getUiSettings().setMapToolbarEnabled(false);
-        mMap.setMyLocationEnabled(true);
-        mMap.setOnInfoWindowClickListener(this);
     }
 
     @Override
@@ -283,9 +294,9 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     }
 
 
-    public void setUpCluster(ArrayList<Place> placeArrayList) {
+    private void setUpCluster(ArrayList<Place> placeArrayList) {
 
-        mClusterManager = new ClusterManager<Place>(requireActivity(), mMap);
+        ClusterManager<Place> mClusterManager = new ClusterManager<Place>(requireActivity(), mMap);
         mMap.setOnCameraIdleListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
         mMap.setOnInfoWindowClickListener(mClusterManager);
