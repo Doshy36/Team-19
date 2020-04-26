@@ -95,7 +95,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                             String[] locationDataArray = jsonObject.getString("locationData").split(",");
                             locationLatLng = new LatLng(Double.parseDouble(locationDataArray[0]), Double.parseDouble(locationDataArray[1]));
 
-                            //Retrieves images from the location and places in an array
+                            //String Array of each image url from server
                             String[] imageArray = jsonObject.getString("imageUrl").split(",");
 
                             //Going through each image in the imageArray
@@ -147,6 +147,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         queue.add(jsonObjectRequest);
 
         String url2 = "https://jwhitehead.uk/ratings/" + placeId;
+        // Initialise a new JsonObjectRequest instance
         JsonObjectRequest jsonObjectRatingRequest = new JsonObjectRequest
                 (Request.Method.GET, url2, null, new Response.Listener<JSONObject>() {
                     @Override
@@ -326,6 +327,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
             String url = "https://jwhitehead.uk/bookmarks";
 
+            // Initialise a new JsonObjectRequest instance
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                         @Override
@@ -408,7 +410,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                 params.put("placeId", placeId);
                 JSONObject parameters = new JSONObject(params);
 
-                // Initialize a new JsonArrayRequest instance
+                // Initialise a new JsonObjectRequest instance
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -474,7 +476,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                 String url = "https://jwhitehead.uk/bookmarks/delete/" + placeId;
 
 
-                // Initialize a new JsonArrayRequest instance
+                // Initialise a new JsonObjectRequest instance
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -617,7 +619,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     params.put("rating", Integer.toString(userRating));
                     JSONObject parameters = new JSONObject(params);
 
-                    // Initialize a new JsonArrayRequest instance
+                    // Initialise a new JsonObjectRequest instance
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {

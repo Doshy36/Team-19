@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        //Sets action depending on which navigation item is selected
         switch (menuItem.getItemId()) {
             case R.id.nav_search:
                 Intent intent = new Intent(this,SearchActivity.class);
