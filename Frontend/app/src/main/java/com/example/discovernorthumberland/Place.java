@@ -25,7 +25,9 @@ public class Place implements Comparable<Place>, ClusterItem {
         this.categories = categories;
         String[] latLngStringArray = latLngString.split(",");
         mPosition = new LatLng(Double.parseDouble(latLngStringArray[0]), Double.parseDouble(latLngStringArray[1]));
-        android.location.Location.distanceBetween(userLocation.latitude, userLocation.longitude, mPosition.latitude, mPosition.longitude, distanceFromUser);
+        if (userLocation != null) {
+            android.location.Location.distanceBetween(userLocation.latitude, userLocation.longitude, mPosition.latitude, mPosition.longitude, distanceFromUser);
+        }
     }
 
 

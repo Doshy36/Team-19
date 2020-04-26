@@ -159,12 +159,18 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                 startActivity(newActivityIntent);
             }
         });
+        retryButton = rootView.findViewById(R.id.retryButton);
+        retryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setMap();
+            }
+        });
 
 
         progressBarConstraintLayout = rootView.findViewById(R.id.progressBarConstraintLayout);
         progressBar = rootView.findViewById(R.id.mainPageLoadingProgressBar);
         errorTextView = rootView.findViewById(R.id.errorTextView);
-        retryButton = rootView.findViewById(R.id.retryButton);
 
 
         return rootView;
@@ -182,8 +188,27 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         } catch (Resources.NotFoundException e) {
             Log.e("JASON File Catch", "Can't find style. Error: ", e);
         }
+        setMap();
 
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (lastKnownLocation != null) {
+            LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
+        } else {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(55.237914, -2.015241), 8.5f));
+        }
+        mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
+        mMap.getUiSettings().setMapToolbarEnabled(false);
+        mMap.setMyLocationEnabled(true);
+        mMap.setOnInfoWindowClickListener(this);
+    }
 
+    private void setMap(){
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         String url = "https://jwhitehead.uk/places";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -213,20 +238,22 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                                 //Taker users location to send to Place Constructor
                                 locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
                                 @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                                LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-
+                                LatLng userLatLng;
+                                if(location != null) {
+                                    userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                }
+                                else{
+                                    userLatLng = null;
+                                }
                                 Place place = new Place(jsonObject.getString("placeId"), jsonObject.getString("name"), jsonObject.getString("description"), jsonObject.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
                                 Log.i("place." + place.getLocationName(), place.toString());
-
                                 placeArrayList.add(place);
-
-
 
                             }
                             if (counter == jsonArray.length()) {
                                 setUpCluster(placeArrayList);
+                                progressBarConstraintLayout.setVisibility(View.GONE);
                             }
-                            progressBarConstraintLayout.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -246,24 +273,6 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
 
         // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest);
-
-
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            return;
-        }
-        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (lastKnownLocation != null) {
-            LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
-        } else {
-            // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(greysMonument, 16));
-        }
-        mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
-        mMap.getUiSettings().setMapToolbarEnabled(false);
-        mMap.setMyLocationEnabled(true);
-        mMap.setOnInfoWindowClickListener(this);
     }
 
     @Override
@@ -285,7 +294,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     }
 
 
-    public void setUpCluster(ArrayList<Place> placeArrayList) {
+    private void setUpCluster(ArrayList<Place> placeArrayList) {
 
         ClusterManager<Place> mClusterManager = new ClusterManager<Place>(requireActivity(), mMap);
         mMap.setOnCameraIdleListener(mClusterManager);

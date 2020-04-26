@@ -35,17 +35,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="400dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/image_of_location"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView"
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/imageLinearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            android:orientation="horizontal"/>
+    </HorizontalScrollView>
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -55,7 +58,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
 
         <LinearLayout
             android:id="@+id/mainBodyLinearLayout"
@@ -78,13 +81,14 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
-                    android:text="4.3" />
+                    android:text="@string/_4_3" />
 
                 <ImageView
                     android:id="@+id/previewStarRatingImageView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="@string/star_1"
                     app:srcCompat="@drawable/ic_star_border_grey_24dp" />
 
                 <ImageView
@@ -92,6 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="@string/star_2"
                     app:srcCompat="@drawable/ic_star_border_grey_24dp" />
 
                 <ImageView
@@ -99,6 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="@string/star_3"
                     app:srcCompat="@drawable/ic_star_border_grey_24dp" />
 
                 <ImageView
@@ -106,6 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="@string/star_4"
                     app:srcCompat="@drawable/ic_star_border_grey_24dp" />
 
                 <ImageView
@@ -113,6 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="@string/star_5"
                     app:srcCompat="@drawable/ic_star_border_grey_24dp" />
 
             </LinearLayout>
@@ -190,7 +198,7 @@
                     android:drawableTop="@drawable/ic_bookmarksicon"
                     android:focusable="true"
                     android:onClick="bookmarkTextViewOnClick"
-                    android:text="Bookmark "
+                    android:text="@string/bookmark"
                     android:textAlignment="center" />
 
                 <ToggleButton
