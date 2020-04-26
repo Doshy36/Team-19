@@ -42,12 +42,12 @@ public class TopicPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_page);
 
+        //Retrieves topic chosen into a String variable
         String topic = getIntent().getStringExtra("topicId");
 
-
         TextView topicTitleTextView = findViewById(R.id.topicTitle);
+        //Sets text on top of the screen to show the current topic chosen
         topicTitleTextView.setText(topic);
-
 
         switch (topic) {
             case "Culture":
@@ -60,11 +60,14 @@ public class TopicPageActivity extends AppCompatActivity {
                 topic = "historical";
                 break;
         }
-        final String finalTopic = topic;
 
+        //Sets variable to be final for later use
+        final String FINAL_TOPIC = topic;
+
+        // Instantiate the RequestQueue
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://jwhitehead.uk/places";
-
+        // Initialise a new JsonObjectRequest instance
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
@@ -78,9 +81,11 @@ public class TopicPageActivity extends AppCompatActivity {
 
                             //Loop through arrayList
                             for (int i = 0; i < jsonArrayOfLocations.length(); i++) {
-                                JSONObject jsonObjectOfLocation = jsonArrayOfLocations.getJSONObject(i); //Create JSONObject for each JSONObject in JSONArray retrieved from Server
+                                //Create JSONObject for each JSONObject in JSONArray retrieved from Server
+                                JSONObject jsonObjectOfLocation = jsonArrayOfLocations.getJSONObject(i);
 
-                                String[] imageUrlArray = jsonObjectOfLocation.getString("imageUrl").split(","); //String Array of each image url from server
+                                //String Array of each image url from server
+                                String[] imageUrlArray = jsonObjectOfLocation.getString("imageUrl").split(",");
 
                                 //Create ArrayList of categories of location retrieved from server & transfer to String
                                 ArrayList<String> categoriesArrayList = new ArrayList<>();
@@ -97,17 +102,18 @@ public class TopicPageActivity extends AppCompatActivity {
                                 Place place = new Place(jsonObjectOfLocation.getString("placeId"), jsonObjectOfLocation.getString("name"), jsonObjectOfLocation.getString("description"), jsonObjectOfLocation.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
                                 for (String s : place.getCategories()) {
                                     //If place is in the category which the user has selected add to array
-                                    if (s.equalsIgnoreCase(finalTopic)) {
+                                    if (s.equalsIgnoreCase(FINAL_TOPIC)) {
                                         sortedArrayOfLocations.add(place);
                                     }
                                 }
-
+                                //Sorts array of all locations in ascending order
                                 Collections.sort(sortedArrayOfLocations);
                                 for (Place p : sortedArrayOfLocations) {
                                     Log.i("PLACE", place.toString());
                                 }
                             }
 
+                            //Counter to keep track of how many locations are under this topic
                             int locationCounter = 0;
                             for (int i = 0; i < sortedArrayOfLocations.size(); i++) {
                                 final Place place = sortedArrayOfLocations.get(i);
@@ -116,15 +122,19 @@ public class TopicPageActivity extends AppCompatActivity {
 
                                 LinearLayout buttonLinearLayout = findViewById(R.id.locationByTopicButtonsLinearLayout);
 
+                                //Create new Constraint layouts for topic buttons
                                 ConstraintLayout constraintLayout = new ConstraintLayout(getBaseContext());
 
+                                //Sets Text Views presenting the name of the location and distance from the user
                                 TextView locationTextView = new TextView(getBaseContext());
                                 TextView locationDistanceFromUserTextView = new TextView(getBaseContext());
 
+                                //Calculating distance from the user
                                 float[] distanceFromUser = place.getDistanceFromUser();
                                 String distanceFromUserString = Integer.toString(Math.round(distanceFromUser[0]));
                                 String locationDistanceFromUserTextViewString = distanceFromUserString + "m away";
 
+                                //Setting name text in the Text View for the location
                                 locationTextView.setText(place.getLocationName());
                                 locationTextView.setId(View.generateViewId());
                                 if(place.getLocationName().length()>30) {
@@ -139,16 +149,19 @@ public class TopicPageActivity extends AppCompatActivity {
                                 locationTextView.setTypeface(Typeface.SERIF);
                                 locationTextView.setGravity(Gravity.CENTER);
 
+                                //Setting distance text in Text View
                                 locationDistanceFromUserTextView.setText(locationDistanceFromUserTextViewString);
                                 locationDistanceFromUserTextView.setId(View.generateViewId());
                                 locationDistanceFromUserTextView.setTextSize(12);
                                 locationDistanceFromUserTextView.setTypeface(Typeface.SERIF);
                                 locationDistanceFromUserTextView.setGravity(Gravity.CENTER);
 
-
+                                //Creating background button for the location Text Views
                                 ImageView locationButton = new ImageView(getBaseContext());
                                 float factor = getBaseContext().getResources().getDisplayMetrics().density;
                                 locationButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, (int) (130 * factor)));
+
+                                //Setting background button image for each location, ensuring each image is different
                                 switch (locationCounter % 4) {
                                     case 0:
                                         locationButton.setImageDrawable(getDrawable(R.drawable.ic_buttonimagevector1));
@@ -164,6 +177,7 @@ public class TopicPageActivity extends AppCompatActivity {
                                         break;
                                 }
 
+                                //Setting location's onClick to open the location information for that location
                                 TypedValue outValue = new TypedValue();
                                 getBaseContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
                                 locationButton.setBackgroundResource(outValue.resourceId);
@@ -179,10 +193,12 @@ public class TopicPageActivity extends AppCompatActivity {
                                 });
                                 locationButton.setId(View.generateViewId());
 
+                                //Adds each location button to the Constraint layout
                                 constraintLayout.addView(locationButton);
                                 constraintLayout.addView(locationTextView);
                                 constraintLayout.addView(locationDistanceFromUserTextView);
 
+                                //Set Constraint to properly present views to user
                                 ConstraintSet constraintSet = new ConstraintSet();
                                 constraintSet.clone(constraintLayout);
 
@@ -202,12 +218,9 @@ public class TopicPageActivity extends AppCompatActivity {
 
                                 constraintSet.applyTo(constraintLayout);
 
+                                //Add complete Constraint Layout for current bookmark onto Linear Layout
                                 buttonLinearLayout.addView(constraintLayout);
-
-
                             }
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -220,7 +233,6 @@ public class TopicPageActivity extends AppCompatActivity {
                         Log.i("RESPONSE", error.toString());
                     }
                 });
-
         // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest);
 
