@@ -28,7 +28,7 @@ router.post('/add', function(req, res, next){
             res.status(500).json({"success": false, "message": err.message});
             return;
         }
-        if (result.length > 0) {
+        if (result.length > 0) { // Place exists
             pool.query(sql, par, (err, result, fields) => {
                 if(err){
                     res.status(400).json({"success": false, "message": err.message});
@@ -53,7 +53,7 @@ router.delete('/delete/:placeId', function(req, res, next) {
             res.status(500).json({"success": false, "message": err.message});
             return;
         }
-        if (result.length > 0) {
+        if (result.length > 0) { // Place exists
             pool.query(sql, par, (err, result, fields) => {
                 if(err) {
                     res.status(500).json({"success": false, "message": err.message});

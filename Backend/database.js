@@ -14,7 +14,7 @@ const config = {
 }
   
 if (!active) {
-    tunnel(config, (error) => {
+    tunnel(config, (error) => { // Connect to the uni's network so we can connect to the database through it
         if (error) {
             console.log("SSH Connection error: " + error);
         }
@@ -22,7 +22,7 @@ if (!active) {
     }).on('error', console.error.bind(console, 'SSH connection error:'));
 }
 
-const pool = mysql.createPool({
+const pool = mysql.createPool({ // Setup a connection pool so multiple requests can be done at once
     connectionLimit: 50,
     host: process.env.DB_HOST,
     user: process.env.DB_USER,

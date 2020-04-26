@@ -3,9 +3,9 @@ var pool = require('../database');
 var router = express.Router();
 var passport = require('passport');
 
-// GET all ratings for a specific place
+// GET average rating for a specific place
 router.get('/ratings/:placeId', function(req, res, next){
-    pool.query("SELECT placeId,AVG(rating) FROM UserRating WHERE placeId=?", req.params.placeId, (err, result, fields) => {
+    pool.query("SELECT placeId,AVG(rating) FROM UserRating WHERE placeId=?", req.params.placeId, (err, result, fields) => { // Get the average rating
         if(err){
             res.send({"success": false, "message": err.message});
             throw err;
@@ -24,7 +24,7 @@ router.post('/ratings/set', passport.authenticate('jwt', {session: false}), func
             res.status(500).json({"success": false, "message": err.message});
             return;
         }
-        if (result.length > 0) {
+        if (result.length > 0) { // If place exists
             pool.query(sql, par, (err, result, fields) => {
                 if(err){
                     res.send({"success": false, "message": err.message});
