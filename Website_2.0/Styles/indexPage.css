@@ -1,0 +1,135 @@
+/*OUR APP SECTION - INTRODUCTION -----------------------------------------------------------*/
+
+#intro {
+	padding: 0;
+	text-align: center;
+}
+
+#intro-icons {
+	text-align: center;
+	width: 100%;
+	padding: 0;
+}
+
+#intro-icons div {
+	text-align: center;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#intro i, #intro ion-icon {
+	padding: 0 3vw;
+	text-align: center;
+	margin: auto;
+	font-size: 5vw;
+}
+
+#app-main-image {
+	width: 50vw;
+}
+
+@media only screen and (max-width: 600px) {
+
+	#intro-icons div {
+		text-align: center;
+		display: block;
+		vertical-align: middle;
+	}
+
+	#app-main-image {
+		width: 100%;
+	}
+
+	#intro i, #intro ion-icon {
+		padding: 0 3vw;
+		text-align: center;
+		margin: auto;
+		font-size: 10vw;
+	}
+}
+
+/*OUR APP SECTION - FEATURES ---------------------------------------------------------------*/
+
+#features {
+	text-align: center;
+}
+
+.content-feature img {
+	max-height: 400px ;
+	padding: 1vw;
+}
+
+.content-feature {
+	padding: 1vw;
+	padding-bottom: 0;
+	width: 30%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+@media only screen and (max-width: 900px) {
+	.content-feature {
+		padding: 1vw;
+		/*padding-bottom: 0;*/
+		width: 70%;
+		text-align: center;
+		margin: auto;
+		display: block;
+		vertical-align: top;
+	}
+}
+
+/*FAQ SECTION ------------------------------------------------------------------------------*/
+
+#faq {
+	padding-top: 10vh;
+	padding-bottom: 5vh;
+}
+
+/*OUR TEAM SECTION -------------------------------------------------------------------------*/
+
+@media only screen and (max-width: 600px) {
+
+	.person-row .person {
+		text-align: center;
+		width: 100%;
+		display: block;
+	}
+
+	.person-row .person img {
+		width: 50%;
+	}
+}
+
+#our-team {
+	padding-top: 10vh;
+	text-align: center;
+}
+
+#our-team h5, p {
+	margin: 0;
+}
+
+.person-row, .person-council {
+	text-align: center;
+}
+
+.person-row div {
+	vertical-align: text-top;
+	width: 20%;
+	display: inline-block;
+	padding: 2vh 0;
+}
+
+.person img {
+	width: 75%;
+}
+
+.person-council div {
+	width: 100%;
+	padding: 2vh 0;
+}
+
+.person-council img {
+	height: 40vh;
+}

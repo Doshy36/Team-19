@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_menu"
+    tools:showIn="navigation_view">
+
+    <group>
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/ic_loginicon"
+            android:title="Log in" />
+        <item
+            android:id="@+id/nav_bookmarks"
+            android:icon="@drawable/ic_bookmarksicon"
+            android:title="Bookmarks" />
+        <item
+            android:id="@+id/nav_search"
+            android:icon="?android:attr/actionModeWebSearchDrawable"
+            android:title="Search" />
+    </group>
+
+</menu>

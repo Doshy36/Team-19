@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>DN: Gallery</title>
+
+	<!-- Icon -->
+	<link rel="icon" href="../Assets/DNLogo.ico" />
+
+	<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="../Styles/main.css">
+    <link rel="stylesheet" type="text/css" href="../Styles/navbar.css">
+	<link rel="stylesheet" type="text/css" href="../Styles/fonts.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<!-- JS -->
+	<script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+	<script src="../Scripts/main.js" defer></script>
+	<script src="../Scripts/otherPages.js" defer></script>
+
+</head>
+<body>
+	<div id="slideshow" >
+		<div class="slideshow-images">
+			<img class="slide" src="../Assets/slideshow1.jpg">
+			<img class="slide" src="../Assets/slideshow2.jpg">
+	  		<img class="slide" src="../Assets/slideshow3.jpg">
+	  		<img class="slide" src="../Assets/slideshow4.jpg">
+	  	</div>
+	  	<div class="slideshow-content-text">
+	  		<h1 class="display-2">Gallery</h1>
+	  		<div class="slideshow-bubbles">
+				<img class="bubble" src="../Assets/circleC1.png"/>
+				<img class="bubble" src="../Assets/circleG2.png"/>
+				<img class="bubble" src="../Assets/circleG3.png"/>
+				<img class="bubble" src="../Assets/circleG4.png"/>
+			</div>
+		</div>
+		<a id="slideshow-down-arrow" href="#navbar"><img id="slideshow-down-arrow-img" src="../Assets/arrow_down.png" height="50vw"/></a>
+	</div>
+
+	<!-- WEBSITE NAV BAR -->
+	<nav id="navbar" class="navbar navbar-expand-sm justify-content-center sticky-top">
+	  	<ul class="navbar-nav">
+		    <li class="nav-item">
+		      <a class="nav-link" href="../index.html#intro">Our App</a></li>
+		    <li class="nav-item">
+		      <a class="nav-link" href="../index.html#faq">FAQ</a></li>
+		    <li class="nav-item">
+		      <a class="nav-link" href="../index.html#our-team">Our Team</a></li>
+		    <li class="nav-item">
+		    	<a id="nav-logo" class="nav-link" href="#slideshow"><img src="../Assets/DNLogo.png" height="46px"/></a></li>
+		    <li class="nav-item">
+		      <a class="nav-link" href="#slideshow">Gallery</a></li>
+		    <li class="nav-item">
+		      <a class="nav-link" href="help.html">Help</a></li>
+		    <li class="nav-item">
+		      <a class="nav-link" href="#contact">Contact</a></li>
+	  	</ul>
+	  </nav>
+
+	<!-- Mobile Navbar -->
+	<nav class="navbar-mobile navbar-expand-sm justify-content-center sticky-top">
+		<a id="nav-logo" class="active" href="#slideshow"><img src="../Assets/DNLogo.png" height="46px"/></a>
+		<a href="javascript:void(0);" class="icon" onclick="hamburgerNavbar()">
+		    <i class="material-icons">menu</i>
+		</a>
+		<div id="myLinks">
+		    <a href="../index.html#intro">Our App</a>
+		    <a href="../index.html#faq">FAQ</a>
+		    <a href="../index.html#our-team">Our Team</a>
+	  	 	<a href="#slideshow" >Gallery</a>
+	 	   	<a href="help.html">Help</a>
+		    <a href="#contact">Contact</a>   
+		</div>
+	</nav>
+
+	<div id="background-top" class="background">
+		<img class="background-image" src="../Assets/backgroundTop.png"/>
+
+		<div class="gallery container-fluid">
+			<br>
+			<div class="holder wide">
+				<img src="../Assets/LocationImages/AlnwickCastle.png" />
+				<h4>Alnwick Castle</h4>
+				<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/4/4b/Alnwick_Castle_02.jpg"><i>Original Source</i></a>
+			</div>
+			<div class="holder wide">
+				<img src="../Assets/LocationImages/AngleOfTheNorth.png" />
+				<h4>Angle of the North</h4>
+				<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Angel_of_the_North_2-10-14.png/1920px-Angel_of_the_North_2-10-14.png"><i>Original Source</i></a>
+			</div>
+			<div class="holder wide">
+				<img src="../Assets/LocationImages/Baltic.png" />
+				<h4>Batlic Center</h4>
+				<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Newcastle_baltic.jpg/1280px-Newcastle_baltic.jpg"><i>Original Source</i></a>
+			</div>
+			<div class="holder wide">
+				<img src="../Assets/LocationImages/Blackfriars.png" />
+				<h4>Blackfriars</h4>
+				<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Blackfriars1.JPG/1280px-Blackfriars1.JPG"><i>Original Source</i></a>
+			</div>
+			<div class="holder wide">
+				<img src="../Assets/LocationImages/ChinaTown.png" />
+				<h4>China Town</h4>
+				<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Newcastle_tor_in_chinatown.jpg/1280px-Newcastle_tor_in_chinatown.jpg"><i>Original Source</i></a>
+			</div>
+			<div class="holder wide">
+				<img src="../Assets/LocationImages/Craster.png" />
+				<h4>Craster</h4>
+				<a target="_blank" href="https://lh3.googleusercontent.com/-MBFR-XnvEMo/TlT-VLzaQSI/AAAAAAAACYo/0TQOpyijcIU/s1600/Craster%2525207.JPG"><i>Original Source</i></a>
+			</div>
+		</div>
+	</div>
+
+	<div class="title-decoration">
+		<img src="../Assets/circleC1.png"/>
+		<img src="../Assets/circleC2.png"/>
+		<img src="../Assets/circleC3.png"/>
+		<img src="../Assets/circleC4.png"/>
+	</div>
+
+	<div class="gallery container-fluid">
+		<div class="holder wide">
+			<img src="../Assets/LocationImages/DiscoveryMuseum.png" />
+			<h4>The Discovery Museum</h4>
+			<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/3/37/Discovery_Museum.jpg"><i>Original Source</i></a>
+		</div>
+		<div class="holder wide">
+			<img src="../Assets/LocationImages/GatesheadInternationalStadium.png" />
+			<h4>Gateshead International Stadium</h4>
+			<a target="_blank" href="https://footballtripper.com/wp-content/uploads/2015/05/gateshead-international-stadium.jpg"><i>Original Source</i></a>
+		</div>
+		<div class="holder wide">
+			<img src="../Assets/LocationImages/GrangerMarket.png" />
+			<h4>Granger Marker</h4>
+			<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Grainger_Market%2C_Newcastle.jpg/1920px-Grainger_Market%2C_Newcastle.jpg"><i>Original Source</i></a>
+		</div>
+		<div class="holder wide">
+			<img src="../Assets/LocationImages/GreatNorthMuseum.png" />
+			<h4>Great North Museum: Hancock</h4>
+			<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/9/95/The_Hancock_Museum_Newcastle_September_2009.jpg"><i>Original Source</i></a>
+		</div>
+		<div class="holder wide">
+			<img src="../Assets/LocationImages/HadriansWall.png" />
+			<h4>Hadrians Wall</h4>
+			<a target="_blank" href=""><i>Original Source</i></a>
+		</div>
+		<div class="holder wide">
+			<img src="../Assets/LocationImages/JesmondDene.png" />
+			<h4>Jesmon Dene</h4>
+			<a target="_blank" href="https://images.immediate.co.uk/production/volatile/sites/22/2019/03/CY8JKX-786db5b.jpg?quality=90&resize=620%2C413"><i>Original Source</i></a>
+		</div>
+	</div>
+
+	<div class="title-decoration">
+		<img src="../Assets/circleC1.png"/>
+		<img src="../Assets/circleC2.png"/>
+		<img src="../Assets/circleC3.png"/>
+		<img src="../Assets/circleC4.png"/>
+	</div>
+
+	<div class="gallery container-fluid">
+		<div class="holder long">
+			<img src="../Assets/LocationImages/Amble.png" />
+			<h4>Amble</h4>
+			<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/f/f3/Amble-clock-and-flag.jpg"><i>Original Source</i></a>
+		</div>
+		<div class="holder long">
+			<img src="../Assets/LocationImages/CatPawCino.png" />
+			<h4>CatPawCino</h4>
+			<a target="_blank" href=""><i>Original Source</i></a>
+		</div>
+		<div class="holder long">
+			<img src="../Assets/LocationImages/GreysMonument.png" />
+			<h4>Greys Monument</h4>
+			<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Grey%27s_Monument_Newcastle.jpg/800px-Grey%27s_Monument_Newcastle.jpg"><i>Original Source</i></a>
+		</div>
+		<div class="holder long">
+			<img src="../Assets/LocationImages/NewcastleCathedral.png" />
+			<h4>St Nicholas Cathedral</h4>
+			<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Newcastle_upon_Tyne%2C_England.jpg/800px-Newcastle_upon_Tyne%2C_England.jpg"><i>Original Source</i></a>
+		</div>
+		<div class="holder long">
+			<img src="../Assets/LocationImages/O2Academy.png" />
+			<h4>The O2 Academy</h4>
+			<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Carling_Academy%2C_Newcastle_upon_Tyne.jpg/800px-Carling_Academy%2C_Newcastle_upon_Tyne.jpg"><i>Original Source</i></a>
+		</div>
+		<div class="holder long">
+			<img src="../Assets/LocationImages/TynesideCinema.png" />
+			<h4>Tyneside Cinema</h4>
+			<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Tyneside_Cinema%2C_Feb_2010.jpg/800px-Tyneside_Cinema%2C_Feb_2010.jpg"><i>Original Source</i></a>
+		</div>
+	</div>
+
+	<div class="title-decoration">
+		<img src="../Assets/circleC1.png"/>
+		<img src="../Assets/circleC2.png"/>
+		<img src="../Assets/circleC3.png"/>
+		<img src="../Assets/circleC4.png"/>
+	</div>
+
+	<div class="gallery container-fluid">
+		<div class="holder wide">
+			<img src="../Assets/LocationImages/KingstonParkStadium.png" />
+			<h4>Kingston Park Stadium</h4>
+			<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Kingston_Park_-_3_-_geograph-1813910.jpg/1920px-Kingston_Park_-_3_-_geograph-1813910.jpg"><i>Original Source</i></a>
+		</div>
+		<div class="holder wide">
+			<img src="../Assets/LocationImages/MillenniumBridge.png" />
+			<h4>Millennium Bridge</h4>
+			<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/9/9f/Millenniumbridge7_640.JPG"><i>Original Source</i></a>
+		</div>
+
+		<div class="holder wide">
+			<img src="../Assets/LocationImages/NewcastleRacecourse.png" />
+			<h4>Newcastle Racecourse</h4>
+			<a target="_blank" href="https://www.newcastle-racecourse.co.uk/NewcastleRacecourse/images/upload/ed0bcefa-6e8c-4b9e-8c54-4c151b1ced00.jpg"><i>Original Source</i></a>
+		</div>
+		<div class="holder wide">
+			<img src="../Assets/LocationImages/NewcastleUni.png" />
+			<h4>Newcastle University</h4>
+			<a target="_blank" href="https://www.ncl.ac.uk/media/wwwnclacuk/pressoffice/images/news/QS---Grid.jpg"><i>Original Source</i></a>
+		</div>
+		<div class="holder wide">
+			<img src="../Assets/LocationImages/SageGateshead.png" />
+			<h4>Sage Gateshead</h4>
+			<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/4/42/Tyneview.jpg"><i>Original Source</i></a>
+		</div>
+		<div class="holder wide">
+			<img src="../Assets/LocationImages/StJamesStadium.png" />
+			<h4>St James Park</h4>
+			<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/StJamesParkPanorama.jpg/1920px-StJamesParkPanorama.jpg"><i>Original Source</i></a>
+		</div>
+	</div>
+
+	<div class="title-decoration">
+		<img src="../Assets/circleC1.png"/>
+		<img src="../Assets/circleC2.png"/>
+		<img src="../Assets/circleC3.png"/>
+		<img src="../Assets/circleC4.png"/>
+	</div>
+
+	<div id="background-bottom" class="background">
+		<img class="background-image" src="../Assets/backgroundBottom.png"/>
+		<div class="gallery container-fluid">
+			<div class="holder wide">
+				<img src="../Assets/LocationImages/TheatreRoyal.png" />
+				<h4>Theatre Royal</h4>
+				<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Theatre_Royal%2C_Newcastle.jpg/1280px-Theatre_Royal%2C_Newcastle.jpg"><i>Original Source</i></a>
+			</div>
+			<div class="holder wide">
+				<img src="../Assets/LocationImages/TheGate.png" />
+				<h4>The Gate</h4>
+				<a target="_blank" href="https://thumbnails.trvl-media.com/6cOhHu_oEJMnJ3oQMCwwMdRnIRg=/768x432/images.trvl-media.com/media/content/shared/images/travelguides/destination/6084526/Newcastle-Upon-Tyne-And-Vicinity-408646.jpg"><i>Original Source</i></a>
+			</div>
+
+			<div class="holder wide">
+				<img src="../Assets/LocationImages/TyneBridge.png" />
+				<h4>Tyne Bridge</h4>
+				<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Tyne_Bridge.jpg/1280px-Tyne_Bridge.jpg"><i>Original Source</i></a>
+			</div>
+			<div class="holder wide">
+				<img src="../Assets/LocationImages/VictoriaTunnel.png" />
+				<h4>Victoria Tunnel</h4>
+				<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Victoria_Tunnel_%28Newcastle%29_near_Ouse_Street_2010-02-19.jpg/1280px-Victoria_Tunnel_%28Newcastle%29_near_Ouse_Street_2010-02-19.jpg"><i>Original Source</i></a>
+			</div>
+
+			<div class="holder wide">
+				<img src="../Assets/LocationImages/WoodhornMuseum.png" />
+				<h4>Woodhorn Museum</h4>
+				<a target="_blank" href="https://images.visitnorthumberland.com/Woodhorn-Museum-Northumberland-Archives/vn-medium-The-historic-Woodhorn-site.jpg"><i>Original Source</i></a>
+			</div>
+			<div class="holder wide">
+				<img src="../Assets/LocationImages/WarkworthCastle.png" />
+				<h4>Warkworth Castle</h4>
+				<a target="_blank" href="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Warkworth_Castle_interior%2C_2007.jpg/1200px-Warkworth_Castle_interior%2C_2007.jpg"><i>Original Source</i></a>
+			</div>
+		</div>
+	</div>
+	
+	<footer id="contact">
+		<div>
+			<a href="https://www.facebook.com" target="_blank"><img src="../Assets/facebook.png"/></a>
+			<a href="https://www.twitter.com" target="_blank"><img src="../Assets/twitter.png"/></a>
+			<a href="https://www.instagram.com" target="_blank"><img src="../Assets/instagram.png"/></a>
+			<hr>
+			<p>enquires@discovernorthumberland.com</p>
+			<p>01234 567890</p>
+		</div>
+	</footer>
+</body>
+</html>

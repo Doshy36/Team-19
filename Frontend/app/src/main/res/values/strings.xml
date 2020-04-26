@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">Discover Northumberland</string>
+    <string name="enter">Enter</string>
+    <string name="todo">TODO</string>
+    <string name="title_activity_bookmarks">Bookmarks</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="directions">Directions</string>
+    <string name="share">Share</string>
+    <string name="listen">Listen</string>
+    <string name="stop">Stop</string>
+    <string name="lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_cras_ac_consectetur_eros_sed_gravida_mauris_donec_consectetur_nibh_at_massa_vehicula_porttitor_donec_porttitor_diam_sit_amet_suscipit_blandit_nulla_neque_lobortis_erat_consequat_fringilla_nisi_ipsum_ut_tellus_nulla_et_dolor_at_purus_varius_aliquet_sed_a_ex_fusce_diam_elit_blandit_quis_posuere_a_maximus_vitae_nisl_integer_id_lorem_dignissim_vestibulum_dolor_non_tincidunt_libero_proin_congue_elit_id_nisi_rutrum_et_egestas_libero_egestas_vivamus_efficitur_magna_a_massa_placerat_euismod_quisque_placerat_varius_ipsum_pellentesque_tristique_elit_auctor_quis_quisque_luctus_at_lorem_vel_ullamcorper_mauris_nec_commodo_nisl_nam_consectetur_molestie_luctus">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ac consectetur eros, sed gravida mauris. Donec consectetur nibh at massa vehicula porttitor. Donec porttitor, diam sit amet suscipit blandit, nulla neque lobortis erat, consequat fringilla nisi ipsum ut tellus. Nulla et dolor at purus varius aliquet sed a ex. Fusce diam elit, blandit quis posuere a, maximus vitae nisl. Integer id lorem dignissim, vestibulum dolor non, tincidunt libero. Proin congue elit id nisi rutrum, et egestas libero egestas. Vivamus efficitur magna a massa placerat euismod. Quisque placerat varius ipsum, pellentesque tristique elit auctor quis. Quisque luctus at lorem vel ullamcorper. Mauris nec commodo nisl. Nam consectetur molestie luctus.</string>
+    <string name="lorem_ipsum">Lorem Ipsum</string>
+    <string name="image_of_location">Image of location</string>
+    <string name="rate">Rate</string>
+    <string name="back_button">Back Button</string>
+    <string name="title_activity_navigation">Map</string>
+    <string name="title_activity_search">Search</string>
+    <string name="_4_3">4.3</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="star_5">Star 5</string>
+    <string name="star_4">Star 4</string>
+    <string name="star_3">Star 3</string>
+    <string name="star_2">Star 2</string>
+    <string name="star_1">Star 1</string>
+
 </resources>

@@ -1,0 +1,133 @@
+body {
+  	margin: 0;
+  	padding: 0;
+  	width: 100%;
+	background-image: url(../Assets/slideshow4.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	color: #15343d;
+	color:white;
+	font-family: "ProductSans", "Tahoma", "Geneva", "sans-serif";
+}
+
+strong {
+	color: #0066ff;
+}
+
+a {
+	color: #78e2cf;
+	text-decoration: none;
+}
+
+a:hover, ion-icon:hover {
+	color: #50b1bb;
+	text-decoration: none;
+}
+
+hr {
+	border-top: 2px solid #ffffff8c;
+	
+}
+
+/*CONTACT DETAILS/FOOTER -------------------------------------------------------------------*/
+
+footer {
+	color: white;
+	background-color: rgba(3, 22, 22, 0.445);
+	text-align: center;
+	clear: both;
+	opacity: 0.95;
+	margin-top: 5vh;
+}
+
+footer div {
+	display: inline-block;
+	height: 100%;
+	padding-top: 5vh;
+	padding-bottom: 5vh;
+}
+
+footer img {
+	width: 4vw;
+}
+
+/*HEADER/BANNER ----------------------------------------------------------------------------*/
+
+#header {
+	padding-top: 5vh;
+	padding-bottom: 5vh;
+	position: relative;
+	padding: 2%;	
+	background-color: rgba(9, 66, 66, 0.329);
+	color: white;
+}
+
+#left-side {
+	margin: 0;
+	padding: 0;
+	padding-top: 2%;
+	margin-left: 10px;
+	width: fit-content;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+#left-heading{
+	margin: 0;
+	padding: 0;
+}
+
+h2.e {
+	float: right;
+	padding-left: 10px;
+}
+
+#right-side {
+	margin-right: 10px;
+	width: fit-content;
+	position: absolute;
+	right: 0;
+	padding-top: 2%;
+}
+
+header > hr {
+	margin-top: 105px;
+	padding-bottom: px;
+}
+
+/*MAIN BOXES/MAIN STRUCTURE ----------------------------------------------------------------*/
+
+.container-fluid {
+	font-family: "ProductSans";
+	padding-left: 5vw !important;
+	padding-right: 5vw !important;
+	padding-top: 5vh;
+	padding-bottom: 5vh;
+}
+
+.main-container{
+	padding: 0;
+	margin: 0;
+	background-color: rgba(0, 0, 0, 0.356);
+	width: 90%;
+	margin: auto;
+	padding-top: 5vh;
+	padding-bottom: 5vh;
+	margin-top: 2.5vh;
+	margin-bottom: 2.5vh;
+	opacity: 0.95;
+	z-index: 0;
+}
+
+/*ROW OF CIRCLE DESIGNS - DECORATION BETWEEN BOXES -----------------------------------------*/
+
+.title-decoration {
+	width: 100%;
+	margin: auto;
+	text-align: center;
+}
+
+.title-decoration img {
+	width: 2%;
+}

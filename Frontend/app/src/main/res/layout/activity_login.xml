@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:contentDescription="@string/back_button"
+        android:background="?android:attr/selectableItemBackground"
+        android:elevation="1dp"
+        android:onClick="onBackButtonOnClick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_chevron_left_black_24dp"
+        android:focusable="true" />
+
+    <ImageView
+        android:id="@+id/dnLogo"
+        android:layout_width="386dp"
+        android:layout_height="435dp"
+        android:contentDescription="@string/todo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dn_logo_text" />
+
+    <EditText
+        android:id="@+id/emailEnter"
+        android:layout_width="249dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="textPersonName"
+        android:labelFor="@id/passwordEnter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dnLogo" />
+
+    <EditText
+        android:id="@+id/passwordEnter"
+        android:layout_width="249dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPersonName|textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailEnter" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEnter">
+
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="135dp"
+            android:layout_height="72dp"
+            android:onClick="registerButtonOnClick"
+            android:text="Register" />
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="135dp"
+            android:layout_height="72dp"
+            android:onClick="loginButtonOnClick"
+            android:text="Log In" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
