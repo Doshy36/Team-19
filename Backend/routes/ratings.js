@@ -4,7 +4,7 @@ var router = express.Router();
 
 // GET all ratings for a specific place
 router.get('/ratings/:placeId', function(req, res, next){
-    index.pool.query("SELECT placeId,SUM(rating) FROM UserRating WHERE placeId=?", req.params.placeId, (err, result, fields) => {
+    index.pool.query("SELECT placeId,AVG(rating) FROM UserRating WHERE placeId=?", req.params.placeId, (err, result, fields) => {
         if(err){
             res.send({"success": false, "message": err.message});
             throw err;
