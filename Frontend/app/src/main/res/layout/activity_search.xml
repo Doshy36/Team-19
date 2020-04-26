@@ -23,6 +23,7 @@
         app:srcCompat="@drawable/ic_chevron_left_black_24dp" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/colorMainMenuBG"
@@ -30,7 +31,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/searchTitle"
@@ -42,30 +44,22 @@
             android:textSize="48sp"
             android:textStyle="bold" />
 
-        <ScrollView
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="searchViewOnClick"
+            android:queryHint='"Search for Locations"'>
+
+        </SearchView>
+
+        <ListView
+            android:id="@+id/searchListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/linearLayoutToFill"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <SearchView
-                    android:id="@+id/searchView"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                </SearchView>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerListOfLocations"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-        </ScrollView>
+        </ListView>
 
     </LinearLayout>
 

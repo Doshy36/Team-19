@@ -2,6 +2,7 @@ package com.example.discovernorthumberland;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,14 +12,20 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +35,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -69,7 +78,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     private ProgressBar progressBar;
     private TextView errorTextView;
     private Button retryButton;
-    private ClusterManager<Place> mClusterManager;
+    ArrayList<Place> placeArrayList;
 
     private LocationListener locationListener = new LocationListener() {
         @Override
@@ -109,7 +118,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.activity_main_menu, container, false);
+        final View rootView = inflater.inflate(R.layout.activity_main_menu, container, false);
         mapView = rootView.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -150,14 +159,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                 startActivity(newActivityIntent);
             }
         });
-        ImageView searchButton = rootView.findViewById(R.id.searchButtonImage);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent newActivityIntent = new Intent(getActivity(), SearchActivity.class);
-                startActivity(newActivityIntent);
-            }
-        });
+
 
         progressBarConstraintLayout = rootView.findViewById(R.id.progressBarConstraintLayout);
         progressBar = rootView.findViewById(R.id.mainPageLoadingProgressBar);
@@ -191,7 +193,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                         try {
                             JSONArray jsonArray = response.getJSONArray("message");
                             int counter = 0;
-                            ArrayList<Place> placeArrayList = new ArrayList<>();
+                            placeArrayList = new ArrayList<>();
                             Log.i("Bap", jsonArray.toString());
 
 
@@ -285,7 +287,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
 
     public void setUpCluster(ArrayList<Place> placeArrayList) {
 
-        mClusterManager = new ClusterManager<Place>(requireActivity(), mMap);
+        ClusterManager<Place> mClusterManager = new ClusterManager<Place>(requireActivity(), mMap);
         mMap.setOnCameraIdleListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
         mMap.setOnInfoWindowClickListener(mClusterManager);
