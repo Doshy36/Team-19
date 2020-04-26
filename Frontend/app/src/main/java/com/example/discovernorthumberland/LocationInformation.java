@@ -23,6 +23,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.Response.ErrorListener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -124,7 +125,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                             e.printStackTrace();
                         }
                     }
-                }, new Response.ErrorListener() {
+                }, new ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.i("RESPONSE", error.toString());
@@ -235,7 +236,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
                     }
 
-                }, new Response.ErrorListener() {
+                }, new ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.i("RESPONSE", error.toString());
@@ -246,9 +247,9 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
 
         // --- Text to Speech ---
-        title = (TextView) findViewById(R.id.locationTitleTextView);
-        mainBody = (TextView) findViewById(R.id.mainBodyText);
-        toggle = (ToggleButton) findViewById(R.id.textToSpeechToggle);
+        title = findViewById(R.id.locationTitleTextView);
+        mainBody = findViewById(R.id.mainBodyText);
+        toggle = findViewById(R.id.textToSpeechToggle);
 
         textToSpeech = new TextToSpeech(this, this);
         toggle.setOnClickListener(new View.OnClickListener() {
@@ -292,11 +293,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
     private void silence() {
         //Application to stop speaking
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            textToSpeech.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
-        } else {
-            textToSpeech.speak("", TextToSpeech.QUEUE_FLUSH, null);
-        }
+        textToSpeech.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     public void bookmarkTextViewOnClick(final View view) {
@@ -315,7 +312,6 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                int counter = 0;
                                 JSONArray jsonArray = response.getJSONArray("message");
                                 Log.i("Bookmark Check Bap", jsonArray.toString());
                                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -334,7 +330,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                                 e.printStackTrace();
                             }
                         }
-                    }, new Response.ErrorListener() {
+                    }, new ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
 
@@ -343,7 +339,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                         }
                     }) {
                 @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
+                public Map<String, String> getHeaders() {
                     HashMap<String, String> headers = new HashMap<>();
                     headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
                     Log.i("Header toString", headers.toString());
@@ -411,7 +407,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                         }
 
                     }
-                }, new Response.ErrorListener() {
+                }, new ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -478,7 +474,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                         }
 
                     }
-                }, new Response.ErrorListener() {
+                }, new ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -503,6 +499,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
     public void ratingTextViewOnClick(View view) {
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        assert layoutInflater != null;
         View popupView = layoutInflater.inflate(R.layout.popup_window_rating, null);
 
         //Setting Popup Window properties
@@ -612,7 +609,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                                 boolean ratingResponseBoolean = response.getBoolean("success");
                                 Log.d("Rating Response boolean", Boolean.toString(ratingResponseBoolean));
                                 if (ratingResponseBoolean) {
-                                    Toast.makeText(LocationInformation.this, "Successfully rated " + title.getText() + " :" + Integer.toString(USER_RATING[0]), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LocationInformation.this, "Successfully rated " + title.getText() + " :" + USER_RATING[0], Toast.LENGTH_LONG).show();
                                 } else {
                                     Toast.makeText(LocationInformation.this, "Failure rating user may have already rated this location", Toast.LENGTH_LONG).show();
                                 }
@@ -621,7 +618,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                             }
 
                         }
-                    }, new Response.ErrorListener() {
+                    }, new ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             // error
