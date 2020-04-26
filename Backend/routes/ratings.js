@@ -1,10 +1,11 @@
 var express = require('express');
-var index = require('../index');
+var pool = require('../database');
 var router = express.Router();
+var passport = require('passport');
 
 // GET all ratings for a specific place
 router.get('/ratings/:placeId', function(req, res, next){
-    index.pool.query("SELECT placeId,AVG(rating) FROM UserRating WHERE placeId=?", req.params.placeId, (err, result, fields) => {
+    pool.query("SELECT placeId,AVG(rating) FROM UserRating WHERE placeId=?", req.params.placeId, (err, result, fields) => {
         if(err){
             res.send({"success": false, "message": err.message});
             throw err;
@@ -14,17 +15,27 @@ router.get('/ratings/:placeId', function(req, res, next){
 });
 
 // POST rating entered by user for a specific place
-router.post('/ratings/set', function(req, res, next){
+router.post('/ratings/set', passport.authenticate('jwt', {session: false}), function(req, res, next){
     var sql = "INSERT INTO UserRating (userId, placeId, rating) VALUES (?, ?, ?)";
-    var par = [req.body.userId, req.body.placeId, req.body.rating];
+    var par = [req.user, req.body.placeId, req.body.rating];
 
-    index.pool.query(sql, par, (err, result, fields) => {
-        if(err){
-            res.send({"success": false, "message": err.message});
-            throw err;
+    pool.query("SELECT 1 FROM Place WHERE placeId=?", req.params.placeId, (err, result, fields) => {
+        if (err) {
+            res.status(500).json({"success": false, "message": err.message});
+            return;
         }
-        res.send({"success": true, "message": result});
-    });
+        if (result.length > 0) {
+            pool.query(sql, par, (err, result, fields) => {
+                if(err){
+                    res.send({"success": false, "message": err.message});
+                    throw err;
+                }
+                res.send({"success": true, "message": result});
+            });
+        } else {
+            res.status(400).json({"success": false, "message": "No place exists with that ID"});
+        }
+    })
 });
 
 module.exports = router;

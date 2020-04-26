@@ -1,6 +1,4 @@
-var index = require('../index');
 const { check } = require('express-validator'); 
-
 
 var passport = require('passport');
 var jwt = require('jsonwebtoken');

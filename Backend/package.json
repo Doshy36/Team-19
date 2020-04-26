@@ -2,10 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "start.js",
   "scripts": {
-    "start": "NODE_ENV=production node index",
-    "dev": "nodemon index"
+    "start": "NODE_ENV=production node start",
+    "dev": "nodemon start.js",
+    "test": "jest --maxWorkers=1 --detectOpenHandles"
   },
   "author": "",
   "license": "ISC",
@@ -30,6 +31,14 @@
     "uuid": "^7.0.3"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "jest": "^25.4.0",
+    "nodemon": "^2.0.2",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }

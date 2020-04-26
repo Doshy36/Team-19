@@ -1,4 +1,4 @@
-var index = require('../index');
+var pool = require('../database');
 
 var passport = require('passport');
 var bcrypt = require('bcrypt');
@@ -15,7 +15,7 @@ passport.use('register', new LocalStrategy(
     },
     async function(email, password, done) {
         try {
-            index.pool.query('SELECT 1 FROM `User` WHERE email=?', email, async (err, results) => {
+            pool.query('SELECT 1 FROM `User` WHERE email=?', email, async (err, results) => {
                 if (err) {
                     done(null, false, {message: err});
                 } else {
@@ -25,7 +25,7 @@ passport.use('register', new LocalStrategy(
                         const userId = uuid.v4();
                         const passwordSalt = await bcrypt.genSalt(10);
                         const passwordHash = await bcrypt.hash(password, passwordSalt);
-                        index.pool.query("INSERT INTO `User` (userId,email,passwordHash,passwordSalt) VALUES (?,?,?,?)", [userId, email, passwordHash, passwordSalt], (err) => {
+                        pool.query("INSERT INTO `User` (userId,email,passwordHash,passwordSalt) VALUES (?,?,?,?)", [userId, email, passwordHash, passwordSalt], (err) => {
                             if (err) {
                                 done(err, false, {message: err})
                             } else {
@@ -47,7 +47,7 @@ passport.use('login', new LocalStrategy(
     },
     async function(email, password, done) {
         try {
-            index.pool.query('SELECT userId,passwordHash,passwordSalt FROM `User` WHERE email=?', email, async (err, results) => {
+            pool.query('SELECT userId,passwordHash,passwordSalt FROM `User` WHERE email=?', email, async (err, results) => {
                 if (err) {
                     done(null, false, {message: err});
                 } else {
@@ -75,7 +75,7 @@ passport.use('jwt', new JwtStrategy(
     }, 
     async function(token, done) {
         try {
-            index.pool.query('SELECT 1 FROM `User` WHERE userId=?', token.id, async (err, results) => {
+            pool.query('SELECT 1 FROM `User` WHERE userId=?', token.id, async (err, results) => {
                 if (err) {
                     done(null, false, {message: err});
                 } else {
