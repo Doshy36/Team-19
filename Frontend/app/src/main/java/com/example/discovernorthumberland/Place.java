@@ -1,5 +1,6 @@
 package com.example.discovernorthumberland;
 
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 
@@ -16,7 +17,7 @@ public class Place implements Comparable<Place>, ClusterItem {
     private String[] imageUrlStringArray;
     private String[] categories;
 
-    public Place(String placeId, String locationName, String description, String latLngString, String[] imageUrlStringArray, String[] categories, LatLng userLocation) {
+    Place(String placeId, String locationName, String description, String latLngString, String[] imageUrlStringArray, String[] categories, LatLng userLocation) {
         this.placeId = placeId;
         this.locationName = locationName;
         this.description = description;
@@ -30,11 +31,11 @@ public class Place implements Comparable<Place>, ClusterItem {
     }
 
 
-    public String getPlaceId() {
+    String getPlaceId() {
         return placeId;
     }
 
-    public String getLocationName() {
+    String getLocationName() {
         return locationName;
     }
 
@@ -46,11 +47,11 @@ public class Place implements Comparable<Place>, ClusterItem {
         return imageUrlStringArray;
     }
 
-    public String[] getCategories() {
+    String[] getCategories() {
         return categories;
     }
 
-    public float[] getDistanceFromUser() {
+    float[] getDistanceFromUser() {
         return distanceFromUser;
     }
 
@@ -59,6 +60,8 @@ public class Place implements Comparable<Place>, ClusterItem {
         float[] location2Array = location.getDistanceFromUser();
         return Integer.compare(Math.round(distanceFromUser[0]), Math.round(location2Array[0]));
     }
+
+
 
     @Override
     public String toString() {

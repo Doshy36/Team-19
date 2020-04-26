@@ -1,12 +1,6 @@
 package com.example.discovernorthumberland;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +17,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -53,6 +52,7 @@ public class TopicPageActivity extends AppCompatActivity {
         //Sets text on top of the screen to show the current topic chosen
         topicTitleTextView.setText(topic);
 
+        assert topic != null;
         switch (topic) {
             case "Culture":
                 topic = "cultural";
@@ -126,9 +126,6 @@ public class TopicPageActivity extends AppCompatActivity {
                                 }
                                 //Sorts array of all locations in ascending order
                                 Collections.sort(sortedArrayOfLocations);
-                                for (Place p : sortedArrayOfLocations) {
-                                    Log.i("PLACE", place.toString());
-                                }
                             }
 
                             //Counter to keep track of how many locations are under this topic

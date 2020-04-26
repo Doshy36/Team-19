@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static String accessToken;
     private DrawerLayout drawer;
     private static boolean userLoggedIn = false;
-    private static NavigationView navViewStatic;
 
 
     @Override
@@ -33,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navViewStatic = navigationView;
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -60,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_login:
                 Intent loginIntent = new Intent(this, LoginActivity.class);
-                startActivity(loginIntent);
+                startActivityForResult(loginIntent,1);
                 break;
             case R.id.nav_bookmarks:
                 Intent bookmarksIntent = new Intent(this, BookmarksActivity.class);
@@ -87,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if(resultCode == RESULT_OK){
                 assert data != null;
                 String logStatus = data.getStringExtra("Log Status");
+                assert logStatus != null;
                 if(logStatus.equalsIgnoreCase("LoggedIn")){
 
                     NavigationView navigationView = findViewById(R.id.nav_view);
@@ -114,11 +113,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MainActivity.userId = userId;
         MainActivity.accessToken = accessToken;
         userLoggedIn = true;
-        Menu menu = navViewStatic.getMenu();
-        MenuItem menuItem = menu.findItem(R.id.nav_login);
-        menuItem.setTitle("Log Out");
-
-
     }
 
 
@@ -137,9 +131,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static void logOut() {
         userLoggedIn = false;
         userId = null;
-        Menu menu = navViewStatic.getMenu();
-        MenuItem menuItem = menu.findItem(R.id.nav_login);
-        menuItem.setTitle("Log In");
     }
 
 }

@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://jwhitehead.uk/auth/register";
 
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         EditText emailEditText = findViewById(R.id.emailEnter);
         EditText passwordEditText = findViewById(R.id.passwordEnter);
         params.put("email", emailEditText.getText().toString());
@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://jwhitehead.uk/auth/login";
 
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         EditText emailEditText = findViewById(R.id.emailEnter);
         EditText passwordEditText = findViewById(R.id.passwordEnter);
         params.put("email", emailEditText.getText().toString());

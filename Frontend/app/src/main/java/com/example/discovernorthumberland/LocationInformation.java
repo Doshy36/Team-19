@@ -1,5 +1,6 @@
 package com.example.discovernorthumberland;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -357,7 +358,8 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
     public void runBookmarkPopupWindow(View view) {
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = layoutInflater.inflate(R.layout.popup_window_bookmark, null);
+        assert layoutInflater != null;
+        @SuppressLint("InflateParams") View popupView = layoutInflater.inflate(R.layout.popup_window_bookmark, null);
 
         //Setting Popup Window properties
         final PopupWindow popupWindow = new PopupWindow(popupView, 1000, 450, true);
@@ -384,7 +386,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                 String url = "https://jwhitehead.uk/bookmarks/add";
 
 
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("userId", MainActivity.getUserID());
                 params.put("placeId", placeId);
                 JSONObject parameters = new JSONObject(params);
@@ -415,7 +417,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     }
                 }) {
                     @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
+                    public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<>();
                         headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
                         Log.i("Header toString", headers.toString());
@@ -432,7 +434,8 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
     public void runBookmarkPopupWindowDelete(View view) {
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = layoutInflater.inflate(R.layout.popup_window_bookmark_delete, null);
+        assert layoutInflater != null;
+        @SuppressLint("InflateParams") View popupView = layoutInflater.inflate(R.layout.popup_window_bookmark_delete, null);
 
         final PopupWindow popupWindow = new PopupWindow(popupView, 1000, 450, true);
         popupWindow.setElevation(20);
@@ -482,7 +485,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     }
                 }) {
                     @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
+                    public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<>();
                         headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
                         Log.i("Header toString", headers.toString());
@@ -500,7 +503,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
     public void ratingTextViewOnClick(View view) {
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         assert layoutInflater != null;
-        View popupView = layoutInflater.inflate(R.layout.popup_window_rating, null);
+        @SuppressLint("InflateParams") View popupView = layoutInflater.inflate(R.layout.popup_window_rating, null);
 
         //Setting Popup Window properties
         final PopupWindow popupWindow = new PopupWindow(popupView, 1000, 450, true);
@@ -626,7 +629,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                         }
                     }) {
                         @Override
-                        public Map<String, String> getHeaders() throws AuthFailureError {
+                        public Map<String, String> getHeaders() {
                             HashMap<String, String> headers = new HashMap<>();
                             headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
                             Log.i("Header toString", headers.toString());

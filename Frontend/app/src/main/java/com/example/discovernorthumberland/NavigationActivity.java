@@ -83,6 +83,7 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
             ActivityCompat.requestPermissions((Activity) getBaseContext(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
+        assert locationManager != null;
         Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
         mMap.getUiSettings().setMapToolbarEnabled(false);
@@ -142,15 +143,17 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
                                     for (int i = 0; i < pointsList.size(); i++) {
                                         polylineOptions.add(pointsList.get(i));
                                     }
-                                    Polyline polyline = mMap.addPolyline(polylineOptions);
+                                    mMap.addPolyline(polylineOptions);
 
                                     TextView nameTextView = findViewById(R.id.locationNameTextView);
                                     TextView etaTextView = findViewById(R.id.etaTextView);
                                     TextView distanceTextView = findViewById(R.id.distanceTextView);
 
                                     nameTextView.setText(getIntent().getStringExtra("name"));
-                                    etaTextView.setText("ETA :" + duration);
-                                    distanceTextView.setText("Distance :" + distance);
+                                    final String ETA_STRING = "ETA :" + duration;
+                                    final String DISTANCE_STRING = "Distance :" + distance;
+                                    etaTextView.setText(ETA_STRING);
+                                    distanceTextView.setText(DISTANCE_STRING);
 
 
                                 } else {
@@ -171,7 +174,7 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
             queue.add(jsonObjectRequest);
 
         } else {
-            // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(greysMonument, 16));
+            //TODO HANDLE NO LOCATION DATA FOR NAVIGATION
         }
 
 

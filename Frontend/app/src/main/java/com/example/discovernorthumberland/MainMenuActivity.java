@@ -58,7 +58,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     private ProgressBar progressBar;
     private TextView errorTextView;
     private Button retryButton;
-    ArrayList<Place> placeArrayList;
+    private ArrayList<Place> placeArrayList;
 
     private LocationListener locationListener = new LocationListener() {
         @Override
@@ -87,7 +87,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 }
             }
@@ -163,7 +163,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         try {
-            boolean success = googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.style_json));
+            boolean success = googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireActivity(), R.raw.style_json));
             if (!success) {
                 Log.e("JSON File Catch", "Style parsing failed.");
             }
@@ -172,9 +172,9 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         }
         setMap();
 
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
         //Retrieves user's last known location
@@ -194,7 +194,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
 
     private void setMap(){
         // Instantiate the RequestQueue
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        RequestQueue queue = Volley.newRequestQueue(requireActivity());
         String url = "https://jwhitehead.uk/places";
         // Initialise a new JsonObjectRequest instance
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -225,6 +225,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
 
                                 //Taker users location to send to Place Constructor
                                 locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+                                assert locationManager != null;
                                 @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                                 LatLng userLatLng;
                                 if(location != null) {
@@ -283,7 +284,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     }
 
     private void setUpCluster(ArrayList<Place> placeArrayList) {
-        ClusterManager<Place> mClusterManager = new ClusterManager<Place>(requireActivity(), mMap);
+        ClusterManager<Place> mClusterManager = new ClusterManager<>(requireActivity(), mMap);
         mMap.setOnCameraIdleListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
         mMap.setOnInfoWindowClickListener(mClusterManager);
