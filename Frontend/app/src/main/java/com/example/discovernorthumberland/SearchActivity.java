@@ -92,6 +92,7 @@ public class SearchActivity extends AppCompatActivity {
                                 LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                                 Place place = new Place(jsonObject.getString("placeId"), jsonObject.getString("name"), jsonObject.getString("description"), jsonObject.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
                                 Log.i("Array List Test", place.toString());
+                                //Adds each place into array of type Place for later use
                                 placeArrayList.add(place);
                             }
                             if (LIST_COUNTER[0] == jsonArray.length()) {
