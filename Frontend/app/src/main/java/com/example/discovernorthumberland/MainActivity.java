@@ -68,17 +68,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static String userId;
     private static String accessToken;
     private DrawerLayout drawer;
-    final static Handler HANDLER = new Handler();
     private static boolean userLoggedIn = false;
+    private static NavigationView navViewStatic;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        navViewStatic = navigationView;
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -86,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
 
 
 
@@ -158,6 +161,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MainActivity.userId = userId;
         MainActivity.accessToken = accessToken;
         userLoggedIn = true;
+        Menu menu = navViewStatic.getMenu();
+        MenuItem menuItem = menu.findItem(R.id.nav_login);
+        menuItem.setTitle("Log Out");
+
 
     }
 
@@ -177,7 +184,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static void logOut() {
         userLoggedIn = false;
         userId = null;
-        HANDLER.removeCallbacks(null);
+        Menu menu = navViewStatic.getMenu();
+        MenuItem menuItem = menu.findItem(R.id.nav_login);
+        menuItem.setTitle("Log In");
     }
 
 }
