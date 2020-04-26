@@ -69,6 +69,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
 
+/*
+Clase for the main menu and methods relating to it. This allows you to navigate around the app.
+ */
 public class MainMenuActivity extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap;
@@ -123,13 +126,13 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
-        //Starts Topic page activity depending on which topic is pressed
+        //Starts Topic page activity depending on which topic is pressed.
         ImageView heritageButton = rootView.findViewById(R.id.heritageButtonImage);
         heritageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent newActivityIntent = new Intent(getActivity(), TopicPageActivity.class);
-                //Passes arguments to signify which topic is pressed
+                //Passes arguments to signify which topic is pressed.
                 newActivityIntent.putExtra("topicId", "Heritage");
                 startActivity(newActivityIntent);
             }
@@ -169,11 +172,9 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
             }
         });
 
-
         progressBarConstraintLayout = rootView.findViewById(R.id.progressBarConstraintLayout);
         progressBar = rootView.findViewById(R.id.mainPageLoadingProgressBar);
         errorTextView = rootView.findViewById(R.id.errorTextView);
-
 
         return rootView;
     }
@@ -197,13 +198,13 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
-        //Retrieves user's last known location
+        // Retrieves user's last known location.
         Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if (lastKnownLocation != null) {
             LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
         } else {
-            //If last known location does not exist, application sets a location for them
+            // If last known location does not exist, application sets a location for them.
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(55.237914, -2.015241), 8.5f));
         }
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
@@ -224,7 +225,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                         try {
                             JSONArray jsonArray = response.getJSONArray("message");
 
-                            //Counter to keep track of how many locations are on the map currently
+                            // Counter to keep track of how many locations are on the map currently.
                             int counter = 0;
                             placeArrayList = new ArrayList<>();
                             Log.i("Bap", jsonArray.toString());
@@ -232,10 +233,10 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 counter++;
-                                //String Array of each image url from server
+                                // String Array of each image url from server.
                                 String[] imageUrlArray = jsonObject.getString("imageUrl").split(",");
 
-                                //Create ArrayList of categories of location retrieved from server & transfer to String
+                                // Create ArrayList of categories of location retrieved from server & transfer to String.
                                 ArrayList<String> categoriesArrayList = new ArrayList<>();
                                 JSONArray jsonTopicArray = jsonObject.getJSONArray("categories");
                                 for (int k = 0; k < jsonTopicArray.length(); k++) {
@@ -243,7 +244,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                                 }
                                 String[] categoriesArray = categoriesArrayList.toArray(new String[0]);
 
-                                //Taker users location to send to Place Constructor
+                                // Taker users location to send to Place Constructor.
                                 locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
                                 @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                                 LatLng userLatLng;
@@ -258,7 +259,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                                 placeArrayList.add(place);
 
                             }
-                            //Sets up a cluster to show locations in a small space in a cleaner format
+                            // Sets up a cluster to show locations in a small space in a cleaner format.
                             if (counter == jsonArray.length()) {
                                 setUpCluster(placeArrayList);
                                 progressBarConstraintLayout.setVisibility(View.GONE);
@@ -302,6 +303,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         mapView.onLowMemory();
     }
 
+    // Setup Clusters for markers for visual aid.
     private void setUpCluster(ArrayList<Place> placeArrayList) {
         ClusterManager<Place> mClusterManager = new ClusterManager<Place>(requireActivity(), mMap);
         mMap.setOnCameraIdleListener(mClusterManager);
@@ -320,7 +322,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        //Sets action to take place if the user clicks on the info window
+        // Sets action to take place if the user clicks on the info window.
         Intent newActivityIntent = new Intent(getActivity(), LocationInformation.class);
         newActivityIntent.putExtra("placeId", Objects.requireNonNull(marker.getTag()).toString());
         startActivity(newActivityIntent);

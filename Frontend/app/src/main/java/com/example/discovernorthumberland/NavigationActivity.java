@@ -40,6 +40,9 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+/*
+Class for defining the navigation screen.
+ */
 public class NavigationActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private String placeId;
@@ -62,10 +65,9 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
         mapView = findViewById(R.id.mapViewNav);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-
     }
 
-
+    // Displaying and setting up Main Map.
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -88,7 +90,7 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
         mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.setMyLocationEnabled(true);
 
-        // Add a marker in location and move the camera
+        // Add a marker in location and move the camera.
         mMap.addMarker(new MarkerOptions().position(latLng).title(placeId));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
 
@@ -152,7 +154,6 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
                                     etaTextView.setText("ETA :" + duration);
                                     distanceTextView.setText("Distance :" + distance);
 
-
                                 } else {
                                     Toast.makeText(getBaseContext(), "ERROR", Toast.LENGTH_LONG).show();
                                 }
@@ -166,10 +167,8 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
                             Toast.makeText(getBaseContext(), "ERROR CONNECTION TO SERVER FAILURE", Toast.LENGTH_LONG).show();
                         }
                     });
-
             // Add the request to the RequestQueue.
             queue.add(jsonObjectRequest);
-
         } else {
             // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(greysMonument, 16));
         }

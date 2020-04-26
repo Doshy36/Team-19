@@ -38,6 +38,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+Class used to implement methods for the Bookmark Page and methods relating to the Bookmark feature.
+ */
 public class BookmarksActivity extends AppCompatActivity {
 
     final ArrayList<String> PLACE_ID_ARRAY_LIST = new ArrayList<>();
@@ -49,22 +52,24 @@ public class BookmarksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookmarks);
 
-        //Check if user is logged in before sending request
+        // Check if user is logged in before sending request
         if (MainActivity.getUserLoggedIn()) {
             RequestQueue queue = Volley.newRequestQueue(this);
             String url = "https://jwhitehead.uk/bookmarks";
-            //Send JSON Request to server to get a list of PlaceId's relating to the UserID logged in
+
+            // Send JSON Request to server to get a list of PlaceId's relating to the UserID logged in
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                //responseLength used to check once the array of place Ids is completed
+                                // responseLength used to check once the array of place Ids is completed
                                 int responseLength = 0;
                                 //Take array of JSON OBJECT OF ALL LOCATIONS
                                 JSONArray jsonArrayOfLocations = response.getJSONArray("message");
                                 Log.i("Bookmark Main Message", jsonArrayOfLocations.toString());
-                                //Loop through arrayList
+
+                                // Loop through arrayList
                                 for (int i = 0; i < jsonArrayOfLocations.length(); i++) {
                                     JSONObject jsonObjectOfBookmark = jsonArrayOfLocations.getJSONObject(i); //Create JSONObject for each JSONObject in JSONArray retrieved from Server
                                     PLACE_ID_ARRAY_LIST.add(jsonObjectOfBookmark.getString("placeId")); // Add placeId String to Array List
@@ -87,7 +92,7 @@ public class BookmarksActivity extends AppCompatActivity {
                     }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    //Pass through Authorization through the HTTP header
+                    // Pass through Authorization through the HTTP header
                     HashMap<String, String> headers = new HashMap<>();
                     headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
                     Log.i("Header toString", headers.toString());
@@ -97,13 +102,13 @@ public class BookmarksActivity extends AppCompatActivity {
             // Add the request to the RequestQueue.
             queue.add(jsonObjectRequest);
         } else {
-            //Create new Constraint Layout for Button
+            // Create new Constraint Layout for Button.
             ConstraintLayout parentConstraintLayout = findViewById(R.id.bookmarkParentConstraintLayout);
             parentConstraintLayout.setId(View.generateViewId());
 
             ConstraintLayout constraintLayout = findViewById(R.id.errorUserNotLoggedInConstraintLayout);
 
-            //Create Text View notifying user that they are not logged in and cannot view bookmarks
+            // Create Text View notifying user that they are not logged in and cannot view bookmarks.
             TextView notLoggedInErrorTextView = new TextView(getBaseContext());
             String text = "Not Logged In Please Log in before viewing bookmarks.";
             notLoggedInErrorTextView.setText(text);
@@ -113,7 +118,7 @@ public class BookmarksActivity extends AppCompatActivity {
 
             constraintLayout.addView(notLoggedInErrorTextView);
 
-            //Set Constraint to properly present views to user
+            // Set Constraint to properly present views to user.
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(constraintLayout);
 
@@ -124,7 +129,7 @@ public class BookmarksActivity extends AppCompatActivity {
 
             constraintSet.applyTo(constraintLayout);
 
-            //reload Constraint Layout
+            // reload Constraint Layout.
             parentConstraintLayout.removeView(constraintLayout);
             parentConstraintLayout.addView(constraintLayout);
 
@@ -133,7 +138,8 @@ public class BookmarksActivity extends AppCompatActivity {
 
     public void createListOfBookmarks() {
         final int[] LOCATION_COUNTER = {0};
-        //For each in Place Id bookmark array List retrieve Place data from Server
+
+        // For each in Place Id bookmark array List retrieve Place data from Server.
         for (int i = 0; i < PLACE_ID_ARRAY_LIST.size(); i++) {
             Log.w("Bookmark :" + i, PLACE_ID_ARRAY_LIST.get(i));
             RequestQueue queue = Volley.newRequestQueue(this);
@@ -147,9 +153,11 @@ public class BookmarksActivity extends AppCompatActivity {
                                 JSONObject bookmarkLocationJsonObject = response.getJSONObject("message");
                                 Log.i("Bookmark response.Message", bookmarkLocationJsonObject.toString());
                                 LOCATION_COUNTER[0]++;
-                                String[] imageUrlArray = bookmarkLocationJsonObject.getString("imageUrl").split(","); //String Array of each image url from server
 
-                                //Create ArrayList of categories of location retrieved from server & transfer to String
+                                //String Array of each image url from server.
+                                String[] imageUrlArray = bookmarkLocationJsonObject.getString("imageUrl").split(",");
+
+                                // Create ArrayList of categories of location retrieved from server & transfer to String.
                                 ArrayList<String> categoriesArrayList = new ArrayList<>();
                                 JSONArray jsonTopicArray = bookmarkLocationJsonObject.getJSONArray("categories");
                                 for (int k = 0; k < jsonTopicArray.length(); k++) {
@@ -157,7 +165,7 @@ public class BookmarksActivity extends AppCompatActivity {
                                 }
                                 String[] categoriesArray = categoriesArrayList.toArray(new String[0]);
 
-                                //Taker users location to send to Place Constructor
+                                // Taker users location to send to Place Constructor.
                                 LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                                 @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                                 LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -183,31 +191,31 @@ public class BookmarksActivity extends AppCompatActivity {
     }
 
     public void drawBookmarkButtons() {
-        //Used to give each bookmark a different button background
+        // Used to give each bookmark a different button background.
         int locationCounter = 0;
         Collections.sort(SORTED_ARRAY_OF_LOCATIONS);
 
-        //Creates a button for each bookmark
+        // Creates a button for each bookmark
         for (int i = 0; i < SORTED_ARRAY_OF_LOCATIONS.size(); i++) {
             Log.i("Bookmark Sorted :" + i, SORTED_ARRAY_OF_LOCATIONS.get(i).toString());
             final Place PLACE = SORTED_ARRAY_OF_LOCATIONS.get(i);
 
             locationCounter++;
 
-            //Create new Linear and Constraint layouts for bookmarks
+            // Create new Linear and Constraint layouts for bookmarks.
             LinearLayout buttonLinearLayout = findViewById(R.id.bookmarksButtonsLinearLayout);
             ConstraintLayout constraintLayout = new ConstraintLayout(getBaseContext());
 
-            //Create Text Views presenting the name of the location and distance from user
+            // Create Text Views presenting the name of the location and distance from user.
             TextView locationTextView = new TextView(getBaseContext());
             TextView locationDistanceFromUserTextView = new TextView(getBaseContext());
 
-            //Calculating distance from the user
+            // Calculating distance from the user.
             float[] distanceFromUser = PLACE.getDistanceFromUser();
             String distanceFromUserString = Integer.toString(Math.round(distanceFromUser[0]));
             String locationDistanceFromUserTextViewString = distanceFromUserString + "m away";
 
-            //Setting name text in the Text View for the location
+            // Setting name text in the Text View for the location.
             locationTextView.setText(PLACE.getLocationName());
             locationTextView.setId(View.generateViewId());
             if (PLACE.getLocationName().length() > 30) {
@@ -222,19 +230,19 @@ public class BookmarksActivity extends AppCompatActivity {
             locationTextView.setTypeface(Typeface.SERIF);
             locationTextView.setGravity(Gravity.CENTER);
 
-            //Setting distance text in Text View
+            // Setting distance text in Text View.
             locationDistanceFromUserTextView.setText(locationDistanceFromUserTextViewString);
             locationDistanceFromUserTextView.setId(View.generateViewId());
             locationDistanceFromUserTextView.setTextSize(12);
             locationDistanceFromUserTextView.setTypeface(Typeface.SERIF);
             locationDistanceFromUserTextView.setGravity(Gravity.CENTER);
 
-            //Creating background button for the location Text Views
+            // Creating background button for the location Text Views.
             ImageView locationButton = new ImageView(getBaseContext());
             float factor = getBaseContext().getResources().getDisplayMetrics().density;
             locationButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, (int) (130 * factor)));
 
-            //Setting background button image for each bookmark, ensuring each image is different
+            // Setting background button image for each bookmark, ensuring each image is different.
             switch (locationCounter % 4) {
                 case 0:
                     locationButton.setImageDrawable(getDrawable(R.drawable.ic_buttonimagevector1));
@@ -250,7 +258,7 @@ public class BookmarksActivity extends AppCompatActivity {
                     break;
             }
 
-            //Setting bookmark's onClick to open the location information for that location
+            // Setting bookmark's onClick to open the location information for that location.
             TypedValue outValue = new TypedValue();
             getBaseContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
             locationButton.setBackgroundResource(outValue.resourceId);
@@ -266,12 +274,12 @@ public class BookmarksActivity extends AppCompatActivity {
             });
             locationButton.setId(View.generateViewId());
 
-            //Add bookmark button to the Constraint layout
+            // Add bookmark button to the Constraint layout.
             constraintLayout.addView(locationButton);
             constraintLayout.addView(locationTextView);
             constraintLayout.addView(locationDistanceFromUserTextView);
 
-            //Set Constraint to properly present views to user
+            // Set Constraint to properly present views to user.
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(constraintLayout);
 
@@ -291,12 +299,10 @@ public class BookmarksActivity extends AppCompatActivity {
 
             constraintSet.applyTo(constraintLayout);
 
-            //Add complete Constraint Layout for current bookmark onto Linear Layout
+            // Add complete Constraint Layout for current bookmark onto Linear Layout.
             buttonLinearLayout.addView(constraintLayout);
-
         }
     }
-
 
     public void onBackButtonOnClick(View view) {
         this.finish();

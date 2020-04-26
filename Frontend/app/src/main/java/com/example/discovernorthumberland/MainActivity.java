@@ -62,15 +62,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+Class for the main/default screen. This is the main hub of information.
+ */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
 
     private static String userId;
     private static String accessToken;
     private DrawerLayout drawer;
     final static Handler HANDLER = new Handler();
     private static boolean userLoggedIn = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,22 +82,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-
-
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuActivity()).commit();
-
 
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        //Sets action depending on which navigation item is selected
+        // Sets action depending on which navigation item is selected.
         switch (menuItem.getItemId()) {
             case R.id.nav_search:
                 Intent intent = new Intent(this,SearchActivity.class);
@@ -144,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Menu menu = navigationView.getMenu();
                     MenuItem menuItem = menu.findItem(R.id.nav_login);
                     menuItem.setTitle("Log In");
-
                 }
             }
         }
@@ -158,9 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MainActivity.userId = userId;
         MainActivity.accessToken = accessToken;
         userLoggedIn = true;
-
     }
-
 
     public static String getUserID() {
         return userId;

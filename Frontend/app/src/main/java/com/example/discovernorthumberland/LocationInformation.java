@@ -51,6 +51,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+/*
+Implements methods for the information relating to Loctions including:
+    - Text to speach for information.
+    - Bookmarking the location.
+    - Sharing the location Data.
+    - Navigating to location.
+*/
 public class LocationInformation extends AppCompatActivity implements TextToSpeech.OnInitListener {
     private ToggleButton toggle;
     private TextView title, mainBody;
@@ -58,7 +65,6 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
     private ProgressBar progressBar;
     private String placeId;
     private LatLng locationLatLng;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +80,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         mainBodyLinearLayout.setVisibility(View.GONE);
         progressBar = findViewById(R.id.progressBar);
 
-        //Retrieves information from DB to create a customised location information page
+        // Retrieves information from DB to create a customised location information page.
 
         // Instantiate the RequestQueue
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -88,25 +94,26 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                             JSONObject jsonObject = response.getJSONObject("message");
                             Log.i("BAP2", jsonObject.toString());
 
-                            //Sets title and description for current location
+                            // Sets title and description for current location.
                             titleTextView.setText(jsonObject.getString("name"));
                             mainBodyTextView.setText(jsonObject.getString("description"));
 
-                            //Retrieves location coordinates and places in an array
+                            // Retrieves location coordinates and places in an array.
                             String[] locationDataArray = jsonObject.getString("locationData").split(",");
                             locationLatLng = new LatLng(Double.parseDouble(locationDataArray[0]), Double.parseDouble(locationDataArray[1]));
 
-                            //String Array of each image url from server
+                            // String Array of each image url from server.
                             String[] imageArray = jsonObject.getString("imageUrl").split(",");
 
-                            //Going through each image in the imageArray
+                            // Going through each image in the imageArray.
                             for (int i = 0; i < imageArray.length; i++) {
-                                //Creates Image View to hold the current image in the array
+                                //Creates Image View to hold the current image in the array.
                                 ImageView imageView = new ImageView(getBaseContext());
-                                //Create new Linear Layout to hold all the images later
+
+                                // Create new Linear Layout to hold all the images later.
                                 LinearLayout imageLinearLayout = findViewById(R.id.imageLinearLayout);
                                 if (i != 0) {
-                                    //If there is more than 1 image in the array for the current location, creates a View to add to the Linear Layout
+                                    //If there is more than 1 image in the array for the current location, creates a View to add to the Linear Layout.
                                     View view = new View(getBaseContext());
                                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                                     layoutParams.setMargins(5, 0, 5, 0);
@@ -114,7 +121,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                                     imageLinearLayout.addView(view);
 
                                 }
-                                //Adds images to Linear Layout, ensuring it is properly presented to the user
+                                // Adds images to Linear Layout, ensuring it is properly presented to the user.
                                 imageLinearLayout.addView(imageView);
                                 imageView.setScaleType(ImageView.ScaleType.CENTER);
                                 imageView.setAdjustViewBounds(true);
@@ -148,7 +155,8 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         queue.add(jsonObjectRequest);
 
         String url2 = "https://jwhitehead.uk/ratings/" + placeId;
-        // Initialise a new JsonObjectRequest instance
+
+        // Initialise a new JsonObjectRequest instance.
         JsonObjectRequest jsonObjectRatingRequest = new JsonObjectRequest
                 (Request.Method.GET, url2, null, new Response.Listener<JSONObject>() {
                     @Override
@@ -161,22 +169,23 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                             Log.i("Rating of location", responseJSONObject.getString("AVG(rating)"));
                             TextView ratingTextView = findViewById(R.id.previewRatingAverageTextView);
 
-                            //If there exists a rating for the location
+                            // If there exists a rating for the location.
                             if (!responseJSONObject.getString("AVG(rating)").equalsIgnoreCase("null")) {
                                 //Retrieves rating and displays it to the user
                                 ratingTextView.setText(responseJSONObject.getString("AVG(rating)"));
-                                //Stores the rating in a variable, used to show rating in star format
+
+                                // Stores the rating in a variable, used to show rating in star format.
                                 float ratingFloat = Float.parseFloat(responseJSONObject.getString("AVG(rating)"));
                                 Log.i("Rating of location as Float", Float.toString(ratingFloat));
 
-                                //Creating the Image Views of all the stars for rating purposes
+                                //Creating the Image Views of all the stars for rating purposes.
                                 final ImageView starImageButton1 = findViewById(R.id.previewStarRatingImageView1);
                                 final ImageView starImageButton2 = findViewById(R.id.previewStarRatingImageView2);
                                 final ImageView starImageButton3 = findViewById(R.id.previewStarRatingImageView3);
                                 final ImageView starImageButton4 = findViewById(R.id.previewStarRatingImageView4);
                                 final ImageView starImageButton5 = findViewById(R.id.previewStarRatingImageView5);
 
-                                //Setting how the stars are presented in relation to the rating of the location
+                                //Setting how the stars are presented in relation to the rating of the location.
                                 if (ratingFloat > 0 && ratingFloat < 0.75) {
                                     starImageButton1.setImageDrawable(getDrawable(R.drawable.ic_star_half_gold_24dp));
                                     starImageButton2.setImageDrawable(getDrawable(R.drawable.ic_star_border_grey_24dp));
@@ -239,7 +248,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                                     starImageButton5.setImageDrawable(getDrawable(R.drawable.ic_star_gold_24dp));
                                 }
                             } else {
-                                //If not previously rated, show no stars and 0.0
+                                //If not previously rated, show no stars and 0.0.
                                 ratingTextView.setText("0.0");
                             }
 
@@ -259,7 +268,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         queue.add(jsonObjectRatingRequest);
 
 
-        // --- Text to Speech ---
+        // Text to Speech
         title = (TextView) findViewById(R.id.locationTitleTextView);
         mainBody = (TextView) findViewById(R.id.mainBodyText);
         toggle = (ToggleButton) findViewById(R.id.textToSpeechToggle);
@@ -299,13 +308,13 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
     }
 
     private void textToSpeak() {
-        //Application to speak the title, a pause, and then the description
+        // Application to speak the title, a pause, and then the description.
         String text = title.getText().toString() + "." + mainBody.getText().toString();
         textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     private void silence() {
-        //Application to stop speaking
+        // Application to stop speaking.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             textToSpeech.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
         } else {
@@ -314,16 +323,16 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
     }
 
     public void bookmarkTextViewOnClick(final View view) {
-        //Ensuring user is logged in to add bookmarks
+        // Ensuring user is logged in to add bookmarks.
         if (MainActivity.getUserLoggedIn()) {
-            // Instantiate the RequestQueue
+            // Instantiate the RequestQueue.
             final RequestQueue queue = Volley.newRequestQueue(getBaseContext());
 
             final boolean[] locationIsBookmarked = {false};
 
             String url = "https://jwhitehead.uk/bookmarks";
 
-            // Initialise a new JsonObjectRequest instance
+            // Initialise a new JsonObjectRequest instance.
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                         @Override
@@ -377,7 +386,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = layoutInflater.inflate(R.layout.popup_window_bookmark, null);
 
-        //Setting Popup Window properties
+        // Setting Popup Window properties.
         final PopupWindow popupWindow = new PopupWindow(popupView, 1000, 450, true);
         popupWindow.setElevation(20);
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
@@ -385,7 +394,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         final Button cancelButton = popupView.findViewById(R.id.bookmarkCancelButton);
         final Button bookmarkSubmitButton = popupView.findViewById(R.id.bookmarkSubmitButton);
 
-        //Setting cancel button onClick action
+        // Setting cancel button onClick action.
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -393,11 +402,11 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
             }
         });
 
-        //Setting submit button onClick action
+        // Setting submit button onClick action.
         bookmarkSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Instantiate the RequestQueue
+                // Instantiate the RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(getBaseContext());
                 String url = "https://jwhitehead.uk/bookmarks/add";
 
@@ -407,7 +416,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                 params.put("placeId", placeId);
                 JSONObject parameters = new JSONObject(params);
 
-                // Initialise a new JsonObjectRequest instance
+                // Initialise a new JsonObjectRequest instance.
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,parameters, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -428,7 +437,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // error
+                        // error.
                         Log.d("Rating.Error.Response", error.toString());
                     }
                 }) {
@@ -473,7 +482,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                 String url = "https://jwhitehead.uk/bookmarks/delete/" + placeId;
 
 
-                // Initialise a new JsonObjectRequest instance
+                // Initialise a new JsonObjectRequest instance.
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -519,7 +528,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = layoutInflater.inflate(R.layout.popup_window_rating, null);
 
-        //Setting Popup Window properties
+        // Setting Popup Window properties.
         final PopupWindow popupWindow = new PopupWindow(popupView, 1000, 450, true);
         popupWindow.setElevation(20);
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
@@ -533,7 +542,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         final Button cancelButton = popupView.findViewById(R.id.cancelButton);
         final Button submitButton = popupView.findViewById(R.id.submitButton);
 
-        //Sets rating depending on which star is clicked on
+        // Sets rating depending on which star is clicked on.
         starImageButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -602,7 +611,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
             }
         });
 
-        //Setting submit button onClick action
+        // Setting submit button onClick action.
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -617,7 +626,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     params.put("rating", USER_RATING[0]);
                     JSONObject parameters = new JSONObject(params);
 
-                    // Initialise a new JsonObjectRequest instance
+                    // Initialise a new JsonObjectRequest instance.
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -660,6 +669,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         });
     }
 
+    // Navigates to location on map.
     public void onNavigationButtonClick(View view) {
         Intent newActivityIntent = new Intent(getBaseContext(), NavigationActivity.class);
         newActivityIntent.putExtra("placeId", placeId);
@@ -673,7 +683,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         this.finish();
     }
 
-    // Sending or Sharing data. Sends locations currently as text. May change in the future.
+    // Sending or Sharing data. Sends locations currently as text.
     public void sendLocation() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);

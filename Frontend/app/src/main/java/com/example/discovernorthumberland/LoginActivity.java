@@ -34,8 +34,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+Class for the Login page and relating methods.
+ */
 public class LoginActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void logOutButtonOnClick(View view) {
-
         MainActivity.logOut();
         Intent intent = new Intent();
         intent.putExtra("Log Status", "LoggedOut");
@@ -69,7 +70,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void registerButtonOnClick(View view) {
-
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://jwhitehead.uk/auth/register";
@@ -107,9 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), "Error, Please try again", Toast.LENGTH_LONG).show();
             }
         });
-
         queue.add(jsonObjectRequest);
-
     }
 
     public void loginButtonOnClick(View view) {
@@ -144,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // error
+                // error.
                 Log.d("Error.Response", error.toString());
                 if (error.toString().equalsIgnoreCase("com.android.volley.AuthFailureError")) {
                     Toast.makeText(getBaseContext(), "Incorrect email or password, Please try again", Toast.LENGTH_LONG).show();
@@ -153,10 +151,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
         queue.add(jsonObjectRequest);
-
-
     }
 }
 

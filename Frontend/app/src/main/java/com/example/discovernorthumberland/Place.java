@@ -6,8 +6,10 @@ import com.google.maps.android.clustering.ClusterItem;
 import java.io.Serializable;
 import java.util.Arrays;
 
+/*
+Class for creating and defining Places/Locations.
+ */
 public class Place implements Comparable<Place>, ClusterItem {
-
 
     private LatLng mPosition;
     private float[] distanceFromUser = new float[3];
@@ -17,6 +19,7 @@ public class Place implements Comparable<Place>, ClusterItem {
     private String[] imageUrlStringArray;
     private String[] categories;
 
+    // Setting up Place object.
     public Place(String placeId, String locationName, String description, String latLngString, String[] imageUrlStringArray, String[] categories, LatLng userLocation) {
         this.placeId = placeId;
         this.locationName = locationName;
@@ -80,5 +83,4 @@ public class Place implements Comparable<Place>, ClusterItem {
     public String getSnippet() {
         return null;
     }
-
 }
