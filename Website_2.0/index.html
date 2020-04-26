@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Discover Northumberland</title>
+
+	<!-- Icon -->
+	<link rel="icon" href="Assets/DNLogo.ico" />
+
+	<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="Styles/indexPage.css">
+    <link rel="stylesheet" type="text/css" href="Styles/slideshow.css">
+    <link rel="stylesheet" type="text/css" href="Styles/navbar.css">
+	<link rel="stylesheet" type="text/css" href="Styles/fonts.css">
+	<link rel="stylesheet" type="text/css" href="Styles/template.css">
+	<link rel="stylesheet" type="text/css" href="Styles/dropdowns.css">
+
+	<!-- CSS Icons -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<!-- JS -->
+	<script src="Scripts/main.js" defer></script>
+	<script src="Scripts/navbar.js" defer></script>
+	<script src="Scripts/dropdowns.js" defer></script>
+
+	<!-- JS Icons -->
+	<script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js" defer></script>
+</head>
+<body>
+
+	<!-- SLIDESHOW -->
+	<div id="body">
+		<div class="intro">
+			<div class="intro-slideshow">
+				<img src="./Assets/slideshow1.jpg">
+				<img src="./Assets/slideshow2.jpg">
+				<img src="./Assets/slideshow3.jpg">
+				<img src="./Assets/slideshow4.jpg">
+			</div>
+			<div class="intro-header">
+			  	<h1>Discover Northumberland</h1>
+			  	<img id="slideshow-logo" src="Assets/DNLogoShadow.png" height="120"/>
+			  	<div id="slideshow-img-bubbles">
+					<img class="bubble" src="Assets/circleC1.png"/>
+					<img class="bubble" src="Assets/circleG2.png"/>
+					<img class="bubble" src="Assets/circleG3.png"/>
+					<img class="bubble" src="Assets/circleG4.png"/>
+				</div>
+			</div>
+			<a id="slideshow-down-arrow" href="#navbar"><img id="slideshow-down-arrow-img" src="Assets/arrow_down.png" height=""/></a>
+		</div>
+	</div>
+
+	<!-- WEBSITE NAV BAR - DEFAULT: VISIBLE-->
+	<nav id="navbar" class="navbar navbar-expand-sm justify-content-center sticky-top">
+	  	<ul class="navbar-nav">
+		    <li class="nav-item">
+		      <a class="nav-link" href="#our-app">Our App</a></li>
+		    <li class="nav-item">
+		      <a class="nav-link" href="#faq">FAQ</a></li>
+		    <li class="nav-item">
+		      <a class="nav-link" href="#our-team">Our Team</a></li>
+		    <li class="nav-item">
+		    	<a id="nav-logo" class="nav-link" href="#body"><img src="Assets/DNLogo.png" height="46px"/></a></li>
+		    <li class="nav-item">
+		      <a class="nav-link" href="Pages/gallery.html">Gallery</a></li>
+		    <li class="nav-item">
+		      <a class="nav-link" href="Pages/help.html">Help</a></li>
+		    <li class="nav-item">
+		      <a class="nav-link" href="#contact">Contact</a></li>
+	  	</ul>
+	  </nav>
+
+	<!-- MOBILE NAVBAR - DEFAULT: HIDDEN -->
+	<nav class="navbar-mobile navbar-expand-sm justify-content-center sticky-top">
+		<a id="nav-logo" class="active" href="#body"><img src="Assets/DNLogo.png" height="46px"/></a>
+		<a href="javascript:void(0);" class="icon" onclick="hamburgerNavbar()">
+		    <i class="material-icons">menu</i>
+		</a>
+		<div id="myLinks">
+		    <a href="#our-app">Our App</a>
+		    <a href="#faq">FAQ</a>
+		    <a href="#our-team">Our Team</a>
+	  	 	<a href="Pages/gallery.html">Gallery</a>
+	 	   	<a href="Pages/help.html">Help</a>
+		    <a href="#contact">Contact</a>   
+		</div>
+	</nav>
+
+	<!-- BANNER -->
+	<header id="header">
+		<div id="left-side">
+			<div id="left-heading">
+				<img class="e" src="./Assets/DNLogo.ico" height="80" alt="">
+				<h2 class="e">Discover<br>Northumberland</h2>
+			</div>
+		</div>
+		<h2 id="right-side">Team 19</h2>
+		<hr>
+	</header>
+
+	<!-- APP CONTENT SECTION -->
+	<div id="our-app" class="main-container">
+		<div id="intro" class="container-fluid">
+			<br>
+			<div id="intro-icons">
+				<div>
+					<i class="material-icons">explore</i>
+					<h3>Explore</h3>
+				</div>
+				<div>
+					<img id="app-main-image" src="Assets/ourApp.png"/>
+				</div>
+				<div>
+					<i class="material-icons">school</i>
+					<h3>Learn</h3>
+				</div>
+			</div>
+			<h1>GO DISCOVER</h1>
+			<br>
+			<p> Discover for yourself the wonderful county that is Northumberland, with our simple and handy app</p>
+			<p> The app is designed to help you get most out of your visit by easing the process of finding locations of interest close to you!</p>
+			<p> From well known historical landmarks to niche cultural locations, the app has places for everyone</p>
+			<br>
+			<h4><a href="https://play.google.com/store" target="_blank">Download in the Play Store</a></h4>
+			<a href="https://play.google.com/store" target="_blank">
+				<ion-icon name="logo-google-playstore"></ion-icon>
+			</a>
+		</div>
+
+		<div id="features" class="container-fluid">
+			<div class="content-feature">
+				<img src="Assets/PhoneRoute.png"/>
+				<h3>Navigate</h3>
+				<h5>Explore Northumberland with helpful directions to anywhere you fancy or free roam the map</h5>
+			</div>
+
+			<div class="content-feature">
+				<img src="Assets/Filter.png"/>
+				<h3>Filter</h3>
+				<h5>Choose a theme of locations to visit, whether it be heritage, cultural, sport or cuisine</h5>
+			</div>
+
+			<div class="content-feature">
+				<img src="Assets/PhoneRead.png"/>
+				<h3>Learn</h3>
+				<h5>Listen or read about the history of each attraction with our personal audio tour</h5>
+			</div>
+
+			<div class="content-feature">
+				<img src="Assets/PhoneBookmarkPage2.png"/>
+				<h3>Bookmark</h3>
+				<h5>Save locations as a favourite or a place you would like to visit again</h5>
+			</div>
+
+			<div class="content-feature">
+				<img src="Assets/PhoneLightAndDark_ComingSoon_.png"/>
+				<h3>Dark Mode</h3>
+				<h5>Switch to "dark mode" so you can rest your eyes</h5>
+			</div>
+
+			<div class="content-feature">
+				<img src="Assets/PhoneReview.png"/>
+				<h3>Rate</h3>
+				<h5>Rate a location to let others know how you found the visit</h5>
+			</div>			
+		</div>
+	</div>
+
+	<!-- FOR DECORATION -->
+	<div class="title-decoration">
+		<img src="Assets/circleC1.png"/>
+		<img src="Assets/circleC2.png"/>
+		<img src="Assets/circleC3.png"/>
+		<img src="Assets/circleC4.png"/>
+	</div>
+
+	<!-- FREQUENTLY ASKED QUESTIONS SECTION -->
+	<div class="main-container">
+		<div id="faq">
+			<h2>FAQ</h2>
+			<div class="question">
+				<h4>Will the app run on IOS or other devices?</h4>
+				<ion-icon name="chevron-down-outline"></ion-icon>
+			</div>
+			<div class="answer">
+			  <p>No. Unfortuently at the moment the app will only run on devices that use Android operating systems. Specifically Andriod ver.7 upwards.</p>
+			</div>
+			<hr>
+			<div class="question">
+				<h4>What versions of Android does the app work on?</h4>
+				<ion-icon name="chevron-down-outline"></ion-icon>
+			</div>
+			<div class="answer">
+			  <p> It will work on version 7 upwards. This includes:
+				  <br> - Android Nougat  (ver  7.0)
+				  <br> - Android Nougat  (ver  7.1)
+				  <br> - Android Oreo    (ver  8.0)
+				  <br> - Android Oreo    (ver  8.1)
+				  <br> - Android Pie     (ver  9.0)
+				  <br> - Android 10      (ver 10.0)
+				  <br> - Android 11      (ver 11.0)
+			  </p>
+			</div>
+			<hr>
+			<div class="question">
+				<h4>What area does the app cover?</h4>
+				<ion-icon name="chevron-down-outline"></ion-icon>
+			</div>
+			<div class="answer">
+			  <p> The app covers locations within the county of Northumberland, Newcastle Upon Tyne, and also ventures into the Tyne and Wear area.</p>
+			</div>
+			<hr>
+			<div class="question">
+				<h4>What kind of locations are in the app?</h4>
+				<ion-icon name="chevron-down-outline"></ion-icon>
+			</div>
+			<div class="answer">
+				<p>The app separates locations by 4 categories:
+				  	<br> - Historical
+				  	<br> - Cultural
+				  	<br> - Sports
+				  	<br> - Cuisine
+				  	<br> These locations range from castles to harbours, statues to stadiums, restaurants to filming locations, and so on. There is something for everyone.</p>
+			</div>
+			<hr>
+			<div class="question">
+				<h4>Do you need to create an account/log in to use the app?</h4>
+				<ion-icon name="chevron-down-outline"></ion-icon>
+			</div>
+			<div class="answer">
+			  	<p> No. You can view information about locations around you without having to create an account/log in. However, if you wish to rate/review a location or bookmark it, you are required to log in. </p>
+			</div>
+			<hr>
+			<div class="question">
+				<h4>Does the app work without mobile data/wifi?</h4>
+				<ion-icon name="chevron-down-outline"></ion-icon>
+			</div>
+			<div class="answer">
+			  	<p>No</p>
+			</div>
+			<hr>
+			<div class="question">
+				<h4>Why does the app need to know my location?</h4>
+				<ion-icon name="chevron-down-outline"></ion-icon>
+			</div>
+			<div class="answer">
+			  <p> A main feature of the app is that it displays locations that are near to you (within Northumberland). Therefore for the app to be able to show recommended places and details such as travelling distance, the app needs to know where you currently are. It uses your devices built in GPS. Your location is not shared with anyone. </p>
+			</div>
+			<br>
+			<p>Still have questions?? <a href="#contact">Contact us</a> and we will try our best to help</p>
+		</div>
+	</div>
+
+	<!-- FOR DECORATION -->
+	<div class="title-decoration">
+		<img src="Assets/circleC1.png"/>
+		<img src="Assets/circleC2.png"/>
+		<img src="Assets/circleC3.png"/>
+		<img src="Assets/circleC4.png"/>
+	</div>
+
+	<!-- OUR TEAM SECTINON -->
+	<div class="main-container">	
+		<div id="our-team" class="container-fluid">
+			<h2>Meet the people who made it happen</h2>
+			<br>
+
+			<!-- CLIENT DETAILS -->
+			<div class="person-council">
+				<div>
+					<img src="Assets/CountyCouncilCircle.png"/>
+				</div>
+			</div>
+			<br>
+			
+			<h4>... The Developers ...</h4>
+			
+			<!-- DEVELOPERS ROW 1 -->
+			<div class="person-row">
+				<div class="person">
+					<img src="Assets/James.png"/>
+					<h5>James Ellis</h5>
+					<p>Team Leader </p>
+					<p><i>Senior Programmer</i></p>
+				</div>
+				<div class="person">
+					<img src="Assets/Jack.png"/>
+					<h5>Jack Hopkins </h5>
+					<p>Deputy Team Leader</p>
+					<p><i>Designer</i></p>
+				</div>
+			</div>
+
+			<!-- DEVELOPERS ROW 2 -->
+			<div class="person-row">
+				<div class="person">
+					<img src="Assets/Lyle.png"/>
+					<h5>Lyle Dotingco</h5>
+					<p><i>Junior Programmer</i></p>
+				</div>
+				<div class="person">
+					<img src="Assets/Freya.png"/>
+					<h5>Freya Myers</h5>
+					<p><i>Designer</i></p>
+				</div>	
+				<div class="person">
+					<img src="Assets/Chloe.png"/>
+					<h5>Chloe Sunter</h5>
+					<p><i>Junior Programmer</i></p>
+				</div>
+			</div>
+
+			<!-- DEVELOPERS ROW 3 -->
+			<div class="person-row">
+				<div class="person">
+					<img src="Assets/Dami.png"/>
+					<h5>Dami Ijiwola</h5>
+					<p><i>Junior Programmer</i></p>
+				</div>
+				<div class="person">
+					<img src="Assets/Josh.png"/>
+					<h5>Josh Whitehead</h5>
+					<p><i>Senior Programmer</i></p>
+				</div>
+				<div class="person">
+					<img src="Assets/Eigminas.png"/>
+					<h5>Eigminas Slavinskas</h5>
+					<p><i>Designer</i></p>
+				</div>
+				<div class="person">
+					<img src="Assets/Ethan.png"/>
+					<h5>Ethan Welsh</h5>
+					<p><i>Junior Programmer</i></p>
+				</div>	
+			</div>
+		</div>
+	</div>
+
+	<!-- FOOTER/CONTACT SECTION -->
+	<footer id="contact">
+		<div>
+			<!-- SOCIAL MEDIA ICONS -->
+			<a href="https://www.facebook.com" target="_blank">
+				<img src="Assets/facebook.png"/>
+			</a>
+			<a href="https://www.twitter.com" target="_blank">
+				<img src="Assets/twitter.png"/>
+			</a>
+			<a href="https://www.instagram.com" target="_blank">
+				<img src="Assets/instagram.png"/>
+			</a>
+
+			<!-- CONTACT INFO -->
+			<hr>
+			<p>enquires@discovernorthumberland.com</p>
+			<p>01234 567890</p>
+		</div>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,19 @@
+@font-face {
+	font-family: "ProductSans";
+	src: url("Fonts/ProductSans/ProductSans.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "ProductSansBold";
+	src: url("Fonts/ProductSans/ProductSansBold.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "ProductSansItalic";
+	src: url("Fonts/ProductSans/ProductSansItalic.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "ProductSansBoldItalic";
+	src: url("Fonts/ProductSans/ProductSansBoldItalic.ttf") format("truetype");
+}
