@@ -19,7 +19,7 @@ router.post('/ratings/set', passport.authenticate('jwt', {session: false}), func
     var sql = "INSERT INTO UserRating (userId, placeId, rating) VALUES (?, ?, ?)";
     var par = [req.user, req.body.placeId, req.body.rating];
 
-    pool.query("SELECT 1 FROM Place WHERE placeId=?", req.params.placeId, (err, result, fields) => {
+    pool.query("SELECT 1 FROM Place WHERE placeId=?", req.body.placeId, (err, result, fields) => {
         if (err) {
             res.status(500).json({"success": false, "message": err.message});
             return;

@@ -96,13 +96,13 @@ describe('DELETE /bookmarks/delete/:placeId', () => {
         request(app)
             .delete(`/bookmarks/delete/${placeId}`)
             .set('Authorization', `Bearer ${token}`)
-            .expect(204, done);
+            .expect(200, done);
     });
     it('Delete the same bookmark', done => {
         request(app)
             .delete(`/bookmarks/delete/${placeId}`)
             .set('Authorization', `Bearer ${token}`)
-            .expect(204, done); // idempotent
+            .expect(200, done); // idempotent
     });
     it('Delete a non-existant bookmark', done => {
         request(app)
