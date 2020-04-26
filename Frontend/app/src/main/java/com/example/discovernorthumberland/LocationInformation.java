@@ -2,6 +2,7 @@ package com.example.discovernorthumberland;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -301,11 +302,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
     private void textToSpeak() {
         //Application to speak the title, a pause, and then the description
         String text = title.getText().toString() + "." + mainBody.getText().toString();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
-        } else {
-            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-        }
+        textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     private void silence() {

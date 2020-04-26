@@ -87,7 +87,7 @@ public class SearchActivity extends AppCompatActivity {
                                 }
                                 String[] categoriesArray = categoriesArrayList.toArray(new String[0]);
                                 //Take users location to send to Place Constructor
-                                locationManager = (LocationManager) Objects.requireNonNull(SearchActivity.this).getSystemService(Context.LOCATION_SERVICE);
+                                locationManager = (LocationManager) SearchActivity.this.getSystemService(Context.LOCATION_SERVICE);
                                 @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                                 LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                                 Place place = new Place(jsonObject.getString("placeId"), jsonObject.getString("name"), jsonObject.getString("description"), jsonObject.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);

@@ -82,7 +82,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/tab_indicator_text"
+        android:background="@color/cardview_dark_background"
         app:layout_constraintBottom_toTopOf="@+id/popupRatingButtonsLinearLayout"
         app:layout_constraintTop_toBottomOf="@+id/questionTextView"
         app:layout_constraintVertical_bias="1.0" />
@@ -104,9 +104,9 @@
             android:text="Cancel" />
 
         <View
-            android:layout_height="match_parent"
             android:layout_width="1dp"
-            android:background="@android:color/tab_indicator_text"/>
+            android:layout_height="match_parent"
+            android:background="@color/cardview_dark_background" />
 
         <Button
             android:id="@+id/submitButton"
