@@ -51,9 +51,9 @@ import java.util.Map;
 import java.util.Objects;
 
 public class LocationInformation extends AppCompatActivity implements TextToSpeech.OnInitListener {
-    ToggleButton toggle;
-    TextView title, mainBody;
-    TextToSpeech textToSpeech;
+    private ToggleButton toggle;
+    private TextView title, mainBody;
+    private TextToSpeech textToSpeech;
     private ProgressBar progressBar;
     private String placeId;
     private LatLng locationLatLng;
@@ -61,8 +61,6 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_information);
         placeId = getIntent().getStringExtra("placeId");
