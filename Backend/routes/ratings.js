@@ -22,7 +22,7 @@ router.post('/ratings/set', passport.authenticate('jwt', {session: false}), func
     pool.query("SELECT 1 FROM Place WHERE placeId=?", req.body.placeId, (err, result, fields) => {
         if (err) {
             res.status(500).json({"success": false, "message": err.message});
-            return;
+            throw err;
         }
         if (result.length > 0) { // If place exists
             pool.query(sql, par, (err, result, fields) => {
