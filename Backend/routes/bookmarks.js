@@ -59,7 +59,7 @@ router.delete('/delete/:placeId', function(req, res, next) {
                     res.status(500).json({"success": false, "message": err.message});
                     return;
                 }
-                res.status(204).json({"success": true});
+                res.status(200).json({"success": true, "message": "Removed bookmark from user"});
             });
         } else {
             res.status(400).json({"success": false, "message": "No place exists with that ID"});
