@@ -16,8 +16,8 @@ router.get('/ratings/:placeId', function(req, res, next){
 
 // POST rating entered by user for a specific place
 router.post('/ratings/set', passport.authenticate('jwt', {session: false}), function(req, res, next){
-    var sql = "INSERT INTO UserRating (userId, placeId, rating) VALUES (?, ?, ?)";
-    var par = [req.user, req.body.placeId, req.body.rating];
+    var sql = "INSERT INTO UserRating (userId, placeId, rating) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE UserRating SET rating=? WHERE userId=? AND placeId=?";
+    var par = [req.user, req.body.placeId, req.body.rating, req.body.rating, req.user, req.body.placeId];
 
     pool.query("SELECT 1 FROM Place WHERE placeId=?", req.body.placeId, (err, result, fields) => {
         if (err) {
