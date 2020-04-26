@@ -92,13 +92,13 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
                             String[] imageArray = jsonObject.getString("imageUrl").split(",");
 
-                            for(int i = 0;i<imageArray.length;i++){
+                            for (int i = 0; i < imageArray.length; i++) {
                                 ImageView imageView = new ImageView(getBaseContext());
                                 LinearLayout imageLinearLayout = findViewById(R.id.imageLinearLayout);
-                                if(i!=0){
+                                if (i != 0) {
                                     View view = new View(getBaseContext());
-                                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
-                                    layoutParams.setMargins(5,0,5,0);
+                                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                                    layoutParams.setMargins(5, 0, 5, 0);
                                     view.setLayoutParams(layoutParams);
                                     imageLinearLayout.addView(view);
 
@@ -106,7 +106,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                                 imageLinearLayout.addView(imageView);
                                 imageView.setScaleType(ImageView.ScaleType.CENTER);
                                 imageView.setAdjustViewBounds(true);
-                                imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.MATCH_PARENT));
+                                imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
                                 Picasso.get().load(imageArray[i]).into(imageView, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {
@@ -641,6 +641,17 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
     public void onBackButtonOnClick(View view) {
         this.finish();
+    }
+
+    // Sending or Sharing data. Sends locations currently as text. May change in the future.
+    public void sendLoction() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+        sendIntent.setType("text/plain");
+
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
     }
 }
 
