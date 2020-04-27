@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 // error
                 Log.d("Error.Response", error.toString());
-                Toast.makeText(getBaseContext(), "Error, Please try again", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Connection Error, Please try again", Toast.LENGTH_LONG).show();
             }
         });
 

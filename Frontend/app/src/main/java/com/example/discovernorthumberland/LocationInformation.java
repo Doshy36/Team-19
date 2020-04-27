@@ -583,7 +583,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (MainActivity.getUserLoggedIn()) {
+                if (MainActivity.getUserLoggedIn() && USER_RATING[0]>0 && USER_RATING[0]<6) {
                     // Instantiate the RequestQueue.
                     RequestQueue queue = Volley.newRequestQueue(getBaseContext());
                     String url = "https://jwhitehead.uk/ratings/set";
@@ -615,6 +615,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             // error
+                            Toast.makeText(getBaseContext(), "ERROR CONNECTION TO SERVER FAILURE", Toast.LENGTH_LONG).show();
                             Log.d("Rating.Error.Response", error.toString());
                         }
                     }) {
@@ -628,7 +629,10 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     };
                     queue.add(jsonObjectRequest);
                     popupWindow.dismiss();
-                } else {
+                } else if(USER_RATING[0] == 0) {
+                    Toast.makeText(LocationInformation.this, "Please select a star to make a rating", Toast.LENGTH_LONG).show();
+                } else
+                 {
                     Toast.makeText(LocationInformation.this, "Not Logged in please log in before rating the location", Toast.LENGTH_LONG).show();
                     popupWindow.dismiss();
                 }

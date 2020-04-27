@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.material.navigation.NavigationView;
 import com.google.maps.android.PolyUtil;
 
 import org.json.JSONArray;
@@ -175,6 +176,7 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Toast.makeText(getBaseContext(), "ERROR CONNECTION TO SERVER FAILURE", Toast.LENGTH_LONG).show();
+                            NavigationActivity.super.finish();
                         }
                     });
 
@@ -182,7 +184,8 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
             queue.add(jsonObjectRequest);
 
         } else {
-            //TODO HANDLE NO LOCATION DATA FOR NAVIGATION
+            Toast.makeText(getBaseContext(), "Location Services not enabled, please enable before accessing Directions", Toast.LENGTH_LONG).show();
+            NavigationActivity.super.finish();
         }
 
 

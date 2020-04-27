@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -247,6 +248,8 @@ public class TopicPageActivity extends AppCompatActivity {
 
                                 //Add complete Constraint Layout for current bookmark onto Linear Layout
                                 buttonLinearLayout.addView(constraintLayout);
+                                ProgressBar progressBar = findViewById(R.id.progressBarTopicPage);
+                                progressBar.setVisibility(View.GONE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -256,6 +259,8 @@ public class TopicPageActivity extends AppCompatActivity {
                         , new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        ProgressBar progressBar = findViewById(R.id.progressBarTopicPage);
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), "ERROR CONNECTION TO SERVER FAILURE", Toast.LENGTH_LONG).show();
                         Log.i("RESPONSE", error.toString());
                     }

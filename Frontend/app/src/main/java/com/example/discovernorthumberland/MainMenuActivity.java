@@ -141,19 +141,22 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                 startActivity(newActivityIntent);
             }
         });
-        retryButton = rootView.findViewById(R.id.retryButton);
-        retryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setMap();
-            }
-        });
-
 
         progressBarConstraintLayout = rootView.findViewById(R.id.progressBarConstraintLayout);
         progressBar = rootView.findViewById(R.id.mainPageLoadingProgressBar);
         errorTextView = rootView.findViewById(R.id.errorTextView);
 
+        retryButton = rootView.findViewById(R.id.retryButton);
+        retryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setMap();
+                progressBar.setVisibility(View.VISIBLE);
+                errorTextView.setVisibility(View.GONE);
+                retryButton.setVisibility(View.GONE);
+
+            }
+        });
 
         return rootView;
     }
@@ -305,5 +308,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         newActivityIntent.putExtra("placeId", Objects.requireNonNull(marker.getTag()).toString());
         startActivity(newActivityIntent);
     }
+
+
 }
 

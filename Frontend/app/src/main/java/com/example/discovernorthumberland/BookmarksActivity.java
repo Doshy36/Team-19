@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -99,6 +100,7 @@ public class BookmarksActivity extends AppCompatActivity {
             // Add the request to the RequestQueue.
             queue.add(jsonObjectRequest);
         } else {
+
             //Create new Constraint Layout for Button
             ConstraintLayout parentConstraintLayout = findViewById(R.id.bookmarkParentConstraintLayout);
             parentConstraintLayout.setId(View.generateViewId());
@@ -129,6 +131,8 @@ public class BookmarksActivity extends AppCompatActivity {
             //reload Constraint Layout
             parentConstraintLayout.removeView(constraintLayout);
             parentConstraintLayout.addView(constraintLayout);
+            ProgressBar progressBar = findViewById(R.id.progressBarBookmarks);
+            progressBar.setVisibility(View.GONE);
 
         }
     }
@@ -320,6 +324,8 @@ public class BookmarksActivity extends AppCompatActivity {
             //Add complete Constraint Layout for current bookmark onto Linear Layout
             buttonLinearLayout.addView(constraintLayout);
 
+            ProgressBar progressBar = findViewById(R.id.progressBarBookmarks);
+            progressBar.setVisibility(View.GONE);
         }
     }
 
