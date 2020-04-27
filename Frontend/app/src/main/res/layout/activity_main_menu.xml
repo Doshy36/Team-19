@@ -125,7 +125,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/heritageButtonTextView"
                         app:layout_constraintStart_toStartOf="@+id/heritageButtonImage"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.24000001" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
