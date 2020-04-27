@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:contentDescription="@string/_1_star"
+            android:contentDescription="@string/_star_1"
             app:srcCompat="@drawable/ic_star_border_grey_24dp" />
 
         <ImageView
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:contentDescription="@string/_2_star"
+            android:contentDescription="@string/_star_2"
             app:srcCompat="@drawable/ic_star_border_grey_24dp" />
 
 
@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:contentDescription="@string/_3_star"
+            android:contentDescription="@string/_star_3"
             app:srcCompat="@drawable/ic_star_border_grey_24dp" />
 
         <ImageView
@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:contentDescription="@string/_4_star"
+            android:contentDescription="@string/_star_4"
             app:srcCompat="@drawable/ic_star_border_grey_24dp" />
 
 
@@ -70,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:contentDescription="@string/_5_star"
+            android:contentDescription="@string/_star_5"
             app:srcCompat="@drawable/ic_star_border_grey_24dp" />
     </LinearLayout>
 
