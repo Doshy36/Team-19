@@ -267,6 +267,7 @@
                         android:src="@drawable/sports_icon"
                         app:layout_constraintBottom_toBottomOf="@+id/sportsButtonImage"
                         app:layout_constraintEnd_toStartOf="@+id/sportsButtonTextView"
+                        app:layout_constraintHorizontal_bias="0.45"
                         app:layout_constraintStart_toStartOf="@+id/sportsButtonImage"
                         app:layout_constraintTop_toTopOf="@+id/sportsButtonImage" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
