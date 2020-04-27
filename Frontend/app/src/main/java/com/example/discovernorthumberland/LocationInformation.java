@@ -1,26 +1,14 @@
 package com.example.discovernorthumberland;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
-import android.content.DialogInterface;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.speech.tts.TextToSpeech;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -29,17 +17,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.android.volley.AuthFailureError;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.Response.ErrorListener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -49,7 +36,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 /*
 Implements methods for the information relating to Loctions including:
@@ -145,7 +131,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                             e.printStackTrace();
                         }
                     }
-                }, new Response.ErrorListener() {
+                }, new ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.i("RESPONSE", error.toString());
@@ -258,7 +244,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
                     }
 
-                }, new Response.ErrorListener() {
+                }, new ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.i("RESPONSE", error.toString());
@@ -268,10 +254,11 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         queue.add(jsonObjectRatingRequest);
 
 
-        // Text to Speech
-        title = (TextView) findViewById(R.id.locationTitleTextView);
-        mainBody = (TextView) findViewById(R.id.mainBodyText);
-        toggle = (ToggleButton) findViewById(R.id.textToSpeechToggle);
+
+        // --- Text to Speech ---
+        title = findViewById(R.id.locationTitleTextView);
+        mainBody = findViewById(R.id.mainBodyText);
+        toggle = findViewById(R.id.textToSpeechToggle);
 
         textToSpeech = new TextToSpeech(this, this);
         toggle.setOnClickListener(new View.OnClickListener() {
@@ -314,12 +301,8 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
     }
 
     private void silence() {
-        // Application to stop speaking.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            textToSpeech.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
-        } else {
-            textToSpeech.speak("", TextToSpeech.QUEUE_FLUSH, null);
-        }
+        //Application to stop speaking
+        textToSpeech.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     public void bookmarkTextViewOnClick(final View view) {
@@ -338,7 +321,6 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                int counter = 0;
                                 JSONArray jsonArray = response.getJSONArray("message");
                                 Log.i("Bookmark Check Bap", jsonArray.toString());
                                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -357,7 +339,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                                 e.printStackTrace();
                             }
                         }
-                    }, new Response.ErrorListener() {
+                    }, new ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
 
@@ -366,7 +348,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                         }
                     }) {
                 @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
+                public Map<String, String> getHeaders() {
                     HashMap<String, String> headers = new HashMap<>();
                     headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
                     Log.i("Header toString", headers.toString());
@@ -384,7 +366,8 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
     public void runBookmarkPopupWindow(View view) {
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = layoutInflater.inflate(R.layout.popup_window_bookmark, null);
+        assert layoutInflater != null;
+        @SuppressLint("InflateParams") View popupView = layoutInflater.inflate(R.layout.popup_window_bookmark, null);
 
         // Setting Popup Window properties.
         final PopupWindow popupWindow = new PopupWindow(popupView, 1000, 450, true);
@@ -411,7 +394,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                 String url = "https://jwhitehead.uk/bookmarks/add";
 
 
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("userId", MainActivity.getUserID());
                 params.put("placeId", placeId);
                 JSONObject parameters = new JSONObject(params);
@@ -434,7 +417,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                         }
 
                     }
-                }, new Response.ErrorListener() {
+                }, new ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error.
@@ -442,7 +425,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     }
                 }) {
                     @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
+                    public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<>();
                         headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
                         Log.i("Header toString", headers.toString());
@@ -459,7 +442,8 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
     public void runBookmarkPopupWindowDelete(View view) {
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = layoutInflater.inflate(R.layout.popup_window_bookmark_delete, null);
+        assert layoutInflater != null;
+        @SuppressLint("InflateParams") View popupView = layoutInflater.inflate(R.layout.popup_window_bookmark_delete, null);
 
         final PopupWindow popupWindow = new PopupWindow(popupView, 1000, 450, true);
         popupWindow.setElevation(20);
@@ -501,7 +485,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                         }
 
                     }
-                }, new Response.ErrorListener() {
+                }, new ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
@@ -509,7 +493,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     }
                 }) {
                     @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
+                    public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<>();
                         headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
                         Log.i("Header toString", headers.toString());
@@ -526,7 +510,8 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
     public void ratingTextViewOnClick(View view) {
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = layoutInflater.inflate(R.layout.popup_window_rating, null);
+        assert layoutInflater != null;
+        @SuppressLint("InflateParams") View popupView = layoutInflater.inflate(R.layout.popup_window_rating, null);
 
         // Setting Popup Window properties.
         final PopupWindow popupWindow = new PopupWindow(popupView, 1000, 450, true);
@@ -635,7 +620,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                                 boolean ratingResponseBoolean = response.getBoolean("success");
                                 Log.d("Rating Response boolean", Boolean.toString(ratingResponseBoolean));
                                 if (ratingResponseBoolean) {
-                                    Toast.makeText(LocationInformation.this, "Successfully rated " + title.getText() + " :" + Integer.toString(USER_RATING[0]), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LocationInformation.this, "Successfully rated " + title.getText() + " :" + USER_RATING[0], Toast.LENGTH_LONG).show();
                                 } else {
                                     Toast.makeText(LocationInformation.this, "Failure rating user may have already rated this location", Toast.LENGTH_LONG).show();
                                 }
@@ -644,7 +629,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                             }
 
                         }
-                    }, new Response.ErrorListener() {
+                    }, new ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             // error
@@ -652,7 +637,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                         }
                     }) {
                         @Override
-                        public Map<String, String> getHeaders() throws AuthFailureError {
+                        public Map<String, String> getHeaders() {
                             HashMap<String, String> headers = new HashMap<>();
                             headers.put("Authorization", "Bearer " + MainActivity.getAccessToken());
                             Log.i("Header toString", headers.toString());
@@ -683,11 +668,12 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         this.finish();
     }
 
-    // Sending or Sharing data. Sends locations currently as text.
-    public void sendLocation() {
+    // Sending or Sharing data. Sends locations currently as text. May change in the future.
+    public void onShareButtonClick(View view) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+        sendIntent.putExtra(Intent.EXTRA_TEXT,title.getText()+"\n");
+        sendIntent.putExtra(Intent.EXTRA_TEXT,mainBody.getText());
         sendIntent.setType("text/plain");
 
         Intent shareIntent = Intent.createChooser(sendIntent, null);

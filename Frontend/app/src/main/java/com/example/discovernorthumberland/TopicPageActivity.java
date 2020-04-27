@@ -1,12 +1,10 @@
 package com.example.discovernorthumberland;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-
-import android.annotation.SuppressLint;
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
@@ -19,6 +17,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -49,6 +52,7 @@ public class TopicPageActivity extends AppCompatActivity {
         //Sets text on top of the screen to show the current topic chosen
         topicTitleTextView.setText(topic);
 
+        assert topic != null;
         switch (topic) {
             case "Culture":
                 topic = "cultural";
@@ -97,8 +101,22 @@ public class TopicPageActivity extends AppCompatActivity {
 
                                 //Taker users location to send to Place Constructor
                                 LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                                @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                                LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                if (ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                    ActivityCompat.requestPermissions((Activity) getBaseContext(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                                    return;
+                                }
+                                LatLng userLatLng;
+                                if(locationManager != null) {
+                                    Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                                    if (location != null) {
+                                        userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                    } else {
+                                        userLatLng = null;
+                                    }
+                                }
+                                else {
+                                    userLatLng= null;
+                                }
                                 Place place = new Place(jsonObjectOfLocation.getString("placeId"), jsonObjectOfLocation.getString("name"), jsonObjectOfLocation.getString("description"), jsonObjectOfLocation.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
                                 for (String s : place.getCategories()) {
                                     //If place is in the category which the user has selected add to array
@@ -108,15 +126,12 @@ public class TopicPageActivity extends AppCompatActivity {
                                 }
                                 //Sorts array of all locations in ascending order
                                 Collections.sort(sortedArrayOfLocations);
-                                for (Place p : sortedArrayOfLocations) {
-                                    Log.i("PLACE", place.toString());
-                                }
                             }
 
                             //Counter to keep track of how many locations are under this topic
                             int locationCounter = 0;
                             for (int i = 0; i < sortedArrayOfLocations.size(); i++) {
-                                final Place place = sortedArrayOfLocations.get(i);
+                                final Place PLACE = sortedArrayOfLocations.get(i);
 
                                 locationCounter++;
 
@@ -130,18 +145,30 @@ public class TopicPageActivity extends AppCompatActivity {
                                 TextView locationDistanceFromUserTextView = new TextView(getBaseContext());
 
                                 //Calculating distance from the user
-                                float[] distanceFromUser = place.getDistanceFromUser();
-                                String distanceFromUserString = Integer.toString(Math.round(distanceFromUser[0]));
-                                String locationDistanceFromUserTextViewString = distanceFromUserString + "m away";
+                                float[] distanceFromUser = PLACE.getDistanceFromUser();
+                                int distanceFromUserInt = Math.round(distanceFromUser[0]);
+                                String locationDistanceFromUserTextViewString;
+                                if(distanceFromUserInt>1000){
+                                    distanceFromUserInt = distanceFromUserInt/1000;
+                                    String distanceFromUserString = Integer.toString(distanceFromUserInt);
+                                    locationDistanceFromUserTextViewString = distanceFromUserString + "km away";
+                                }else {
+                                    String distanceFromUserString = Integer.toString(distanceFromUserInt);
+                                    if (distanceFromUserString.equalsIgnoreCase("0")) {
+                                        locationDistanceFromUserTextViewString = "";
+                                    } else {
+                                        locationDistanceFromUserTextViewString = distanceFromUserString + "m away";
+                                    }
+                                }
 
                                 //Setting name text in the Text View for the location
-                                locationTextView.setText(place.getLocationName());
+                                locationTextView.setText(PLACE.getLocationName());
                                 locationTextView.setId(View.generateViewId());
-                                if(place.getLocationName().length()>30) {
+                                if(PLACE.getLocationName().length()>30) {
                                     locationTextView.setTextSize(26);
-                                }else if(place.getLocationName().length()>22){
+                                }else if(PLACE.getLocationName().length()>22){
                                     locationTextView.setTextSize(30);
-                                }else if(place.getLocationName().length()>15){
+                                }else if(PLACE.getLocationName().length()>15){
                                     locationTextView.setTextSize(33);
                                 }else {
                                     locationTextView.setTextSize(36);
@@ -187,7 +214,7 @@ public class TopicPageActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(View view) {
                                         Intent newActivityIntent = new Intent(getBaseContext(), LocationInformation.class);
-                                        newActivityIntent.putExtra("placeId", place.getPlaceId());
+                                        newActivityIntent.putExtra("placeId", PLACE.getPlaceId());
                                         startActivity(newActivityIntent);
                                     }
                                 });

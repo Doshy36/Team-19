@@ -39,7 +39,7 @@
         android:layout_marginTop="8dp"
         android:autofillHints=""
         android:ems="10"
-        android:hint="Username"
+        android:hint="@string/username"
         android:inputType="textPersonName"
         android:labelFor="@id/passwordEnter"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,8 +53,9 @@
         android:layout_marginTop="16dp"
         android:autofillHints=""
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPersonName|textPassword"
+        android:text="@string/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailEnter" />
@@ -69,17 +70,20 @@
 
         <Button
             android:id="@+id/registerButton"
+            style='tyle="?android:attr/buttonBarButtonStyle"'
             android:layout_width="135dp"
             android:layout_height="72dp"
             android:onClick="registerButtonOnClick"
-            android:text="Register" />
+            android:text="@string/register" />
 
         <Button
             android:id="@+id/loginButton"
+            style='tyle="?android:attr/buttonBarButtonStyle"'
             android:layout_width="135dp"
             android:layout_height="72dp"
+            android:contentDescription="@string/log_in"
             android:onClick="loginButtonOnClick"
-            android:text="Log In" />
+            android:text="@string/log_in" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

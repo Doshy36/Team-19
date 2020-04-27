@@ -168,6 +168,7 @@
                     android:clickable="true"
                     android:drawableTop="@drawable/ic_share_black_24dp"
                     android:focusable="true"
+                    android:onClick="onShareButtonClick"
                     android:text="@string/share"
                     android:textAlignment="center" />
 

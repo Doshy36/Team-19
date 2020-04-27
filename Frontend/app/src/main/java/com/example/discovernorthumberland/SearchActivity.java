@@ -1,25 +1,23 @@
 package com.example.discovernorthumberland;
 
-import android.annotation.SuppressLint;
-import android.content.ClipData;
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,15 +34,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Objects;
 
 /*
 Class defining the searching screen.
  */
 public class SearchActivity extends AppCompatActivity {
 
-    private SearchView searchView;
-    private LocationManager locationManager;
     private ArrayList<Place> placeArrayList;
 
     @Override
@@ -72,7 +67,6 @@ public class SearchActivity extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 LIST_COUNTER[0]++;
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                JSONArray topicArray = jsonObject.getJSONArray("categories");
 
                                 Log.i("Response :" + i, jsonObject.getString("placeId"));
                                 Log.i("Response :" + i, jsonObject.getString("name"));
@@ -88,10 +82,25 @@ public class SearchActivity extends AppCompatActivity {
                                     categoriesArrayList.add(jsonTopicArray.getString(k));
                                 }
                                 String[] categoriesArray = categoriesArrayList.toArray(new String[0]);
-                                // Take users location to send to Place Constructor.
-                                locationManager = (LocationManager) SearchActivity.this.getSystemService(Context.LOCATION_SERVICE);
-                                @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                                LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+                                //Taker users location to send to Place Constructor
+                                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                                if (ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                    ActivityCompat.requestPermissions((Activity) getBaseContext(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                                    return;
+                                }
+                                LatLng userLatLng;
+                                if(locationManager != null) {
+                                    Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                                    if (location != null) {
+                                        userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                    } else {
+                                        userLatLng = null;
+                                    }
+                                }
+                                else {
+                                    userLatLng= null;
+                                }
                                 Place place = new Place(jsonObject.getString("placeId"), jsonObject.getString("name"), jsonObject.getString("description"), jsonObject.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
                                 Log.i("Array List Test", place.toString());
                                 // Adds each place into array of type Place for later use.
@@ -123,9 +132,10 @@ public class SearchActivity extends AppCompatActivity {
         // Sorts all of the locations in ascending order.
         Collections.sort(placeArrayList);
 
-        // Creates key, value pairs for each location.
-        final HashMap<String,String> placeHashMap = new HashMap<String,String>();
-        // An array of type String (instead of Place) to store just the names of the places in ascending order.
+
+        //Creates key, value pairs for each location
+        final HashMap<String,String> placeHashMap = new HashMap<>();
+        //An array of type String (instead of Place) to store just the names of the places in ascending order
         ArrayList<String> arrayListOfLocationNames = new ArrayList<>();
 
         // Loops through all the places and populates Hash Map with key = Location Name, and value = Place ID.
