@@ -2,7 +2,6 @@ package com.example.discovernorthumberland;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -20,7 +19,6 @@ import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -660,10 +658,11 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
     }
 
     // Sending or Sharing data. Sends locations currently as text. May change in the future.
-    public void sendLocation() {
+    public void onShareButtonClick(View view) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+        sendIntent.putExtra(Intent.EXTRA_TEXT,title.getText()+"\n");
+        sendIntent.putExtra(Intent.EXTRA_TEXT,mainBody.getText());
         sendIntent.setType("text/plain");
 
         Intent shareIntent = Intent.createChooser(sendIntent, null);
