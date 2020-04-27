@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorMainMenuBG"
-        android:elevation="100dp"
+        android:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,146 +84,162 @@
                 android:orientation="vertical"
                 android:paddingBottom="15dp">
 
-                <LinearLayout
-                    android:id="@+id/mainMenuTopicButtonsLinearLayout"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <ImageView
+                        android:id="@+id/heritageButtonImage"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="130dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:elevation="20dp"
+                        android:focusable="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_buttonimagevector2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <ImageView
-                            android:id="@+id/heritageButtonImage"
-                            android:layout_width="match_parent"
-                            android:layout_height="130dp"
-                            android:background="?android:attr/selectableItemBackground"
-                            android:clickable="true"
-                            android:elevation="20dp"
-                            android:focusable="true"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/ic_buttonimagevector2"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/heritageButtonTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="25dp"
+                        android:fontFamily="serif"
+                        android:text="Heritage"
+                        android:textSize="36sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/heritageButtonImage"
+                        app:layout_constraintEnd_toEndOf="@+id/heritageButtonImage"
+                        app:layout_constraintStart_toStartOf="@+id/heritageButtonImage"
+                        app:layout_constraintTop_toTopOf="@+id/heritageButtonImage" />
 
-                        <TextView
-                            android:id="@+id/heritageButtonTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:elevation="25dp"
-                            android:fontFamily="serif"
-                            android:text="Heritage"
-                            android:textSize="36sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/heritageButtonImage"
-                            app:layout_constraintEnd_toEndOf="@+id/heritageButtonImage"
-                            app:layout_constraintStart_toStartOf="@+id/heritageButtonImage"
-                            app:layout_constraintTop_toTopOf="@+id/heritageButtonImage" />
+                    <ImageView
+                        android:id="@+id/heritageIcon"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:elevation="25dp"
+                        android:src="@drawable/cuisine_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/heritageButtonTextView"
+                        app:layout_constraintStart_toStartOf="@+id/heritageButtonImage"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/cultureButtonImage"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="130dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:elevation="20dp"
+                        android:focusable="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_buttonimagevector3"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <ImageView
-                            android:id="@+id/cultureButtonImage"
-                            android:layout_width="match_parent"
-                            android:layout_height="130dp"
-                            android:background="?android:attr/selectableItemBackground"
-                            android:clickable="true"
-                            android:elevation="20dp"
-                            android:focusable="true"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/ic_buttonimagevector3"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/CultureButtonTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="25dp"
+                        android:fontFamily="serif"
+                        android:text="Culture"
+                        android:textSize="36sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/CultureButtonTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:elevation="25dp"
-                            android:fontFamily="serif"
-                            android:text="Culture"
-                            android:textSize="36sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <ImageView
+                        android:id="@+id/cuisineButtonImage"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="130dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:elevation="20dp"
+                        android:focusable="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_buttonimagevector4"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
 
-                        <ImageView
-                            android:id="@+id/cuisineButtonImage"
-                            android:layout_width="match_parent"
-                            android:layout_height="130dp"
-                            android:background="?android:attr/selectableItemBackground"
-                            android:clickable="true"
-                            android:elevation="20dp"
-                            android:focusable="true"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/ic_buttonimagevector4"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/cultureButtonTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="25dp"
+                        android:fontFamily="serif"
+                        android:text="Cuisine"
+                        android:textSize="36sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/cultureButtonTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:elevation="25dp"
-                            android:fontFamily="serif"
-                            android:text="Cuisine"
-                            android:textSize="36sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <ImageView
+                        android:id="@+id/cuisineIcon"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:elevation="25dp"
+                        android:src="@drawable/cuisine_icon"
+                        app:layout_constraintBottom_toBottomOf="@+id/cuisineButtonImage"
+                        app:layout_constraintEnd_toStartOf="@+id/cultureButtonTextView"
+                        app:layout_constraintStart_toStartOf="@+id/cuisineButtonImage"
+                        app:layout_constraintTop_toTopOf="@+id/cuisineButtonImage" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                        <ImageView
-                            android:id="@+id/sportsButtonImage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="130dp"
-                            android:background="?android:attr/selectableItemBackground"
-                            android:clickable="true"
-                            android:elevation="20dp"
-                            android:focusable="true"
-                            android:src="@drawable/ic_buttonimagevector1"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <ImageView
+                        android:id="@+id/sportsButtonImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="130dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:elevation="20dp"
+                        android:focusable="true"
+                        android:src="@drawable/ic_buttonimagevector1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/cultureButtonTextView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:elevation="25dp"
-                            android:fontFamily="serif"
-                            android:text="Sport "
-                            android:textSize="36sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/cultureButtonTextView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="25dp"
+                        android:fontFamily="serif"
+                        android:text="Sport "
+                        android:textSize="36sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
         </ScrollView>
