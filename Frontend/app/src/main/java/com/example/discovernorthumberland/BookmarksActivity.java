@@ -42,8 +42,8 @@ import java.util.Map;
 
 public class BookmarksActivity extends AppCompatActivity {
 
-    final ArrayList<String> PLACE_ID_ARRAY_LIST = new ArrayList<>();
-    final ArrayList<Place> SORTED_ARRAY_OF_LOCATIONS = new ArrayList<>();
+    private final ArrayList<String> PLACE_ID_ARRAY_LIST = new ArrayList<>();
+    private final ArrayList<Place> SORTED_ARRAY_OF_LOCATIONS = new ArrayList<>();
 
 
     @Override
@@ -54,10 +54,10 @@ public class BookmarksActivity extends AppCompatActivity {
         //Check if user is logged in before sending request
         if (MainActivity.getUserLoggedIn()) {
             RequestQueue queue = Volley.newRequestQueue(this);
-            String url = "https://jwhitehead.uk/bookmarks";
+            final String URL = "https://jwhitehead.uk/bookmarks";
             //Send JSON Request to server to get a list of PlaceId's relating to the UserID logged in
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    (Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
@@ -133,7 +133,7 @@ public class BookmarksActivity extends AppCompatActivity {
         }
     }
 
-    public void createListOfBookmarks() {
+    private void createListOfBookmarks() {
         final int[] LOCATION_COUNTER = {0};
         //For each in Place Id bookmark array List retrieve Place data from Server
         for (int i = 0; i < PLACE_ID_ARRAY_LIST.size(); i++) {
@@ -147,7 +147,6 @@ public class BookmarksActivity extends AppCompatActivity {
                             try {
                                 Log.i("Bookmark response", response.toString());
                                 JSONObject bookmarkLocationJsonObject = response.getJSONObject("message");
-                                Log.i("Bookmark response.Message", bookmarkLocationJsonObject.toString());
                                 LOCATION_COUNTER[0]++;
                                 String[] imageUrlArray = bookmarkLocationJsonObject.getString("imageUrl").split(","); //String Array of each image url from server
 
@@ -198,14 +197,13 @@ public class BookmarksActivity extends AppCompatActivity {
         }
     }
 
-    public void drawBookmarkButtons() {
+    private void drawBookmarkButtons() {
         //Used to give each bookmark a different button background
         int locationCounter = 0;
         Collections.sort(SORTED_ARRAY_OF_LOCATIONS);
 
         //Creates a button for each bookmark
         for (int i = 0; i < SORTED_ARRAY_OF_LOCATIONS.size(); i++) {
-            Log.i("Bookmark Sorted :" + i, SORTED_ARRAY_OF_LOCATIONS.get(i).toString());
             final Place PLACE = SORTED_ARRAY_OF_LOCATIONS.get(i);
 
             locationCounter++;
@@ -219,7 +217,7 @@ public class BookmarksActivity extends AppCompatActivity {
             TextView locationDistanceFromUserTextView = new TextView(getBaseContext());
 
             //Calculating distance from the user
-            float[] distanceFromUser = PLACE.getDistanceFromUser();
+            float[] distanceFromUser = PLACE.getDISTANCE_FROM_USER();
             int distanceFromUserInt = Math.round(distanceFromUser[0]);
             String locationDistanceFromUserTextViewString;
             if(distanceFromUserInt>1000){

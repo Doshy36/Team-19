@@ -118,7 +118,7 @@ public class TopicPageActivity extends AppCompatActivity {
                                     userLatLng= null;
                                 }
                                 Place place = new Place(jsonObjectOfLocation.getString("placeId"), jsonObjectOfLocation.getString("name"), jsonObjectOfLocation.getString("description"), jsonObjectOfLocation.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
-                                for (String s : place.getCategories()) {
+                                for (String s : place.getCATEGORIES()) {
                                     //If place is in the category which the user has selected add to array
                                     if (s.equalsIgnoreCase(FINAL_TOPIC)) {
                                         sortedArrayOfLocations.add(place);
@@ -145,7 +145,7 @@ public class TopicPageActivity extends AppCompatActivity {
                                 TextView locationDistanceFromUserTextView = new TextView(getBaseContext());
 
                                 //Calculating distance from the user
-                                float[] distanceFromUser = PLACE.getDistanceFromUser();
+                                float[] distanceFromUser = PLACE.getDISTANCE_FROM_USER();
                                 int distanceFromUserInt = Math.round(distanceFromUser[0]);
                                 String locationDistanceFromUserTextViewString;
                                 if(distanceFromUserInt>1000){

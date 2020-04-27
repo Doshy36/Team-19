@@ -70,9 +70,8 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Log.i("BAP", response.toString());
+                            Log.i("Get Place from placeId response", response.toString());
                             JSONObject jsonObject = response.getJSONObject("message");
-                            Log.i("BAP2", jsonObject.toString());
 
                             //Sets title and description for current location
                             titleTextView.setText(jsonObject.getString("name"));
@@ -140,11 +139,9 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Log.i("Rating BAP", response.toString());
+                            Log.i("Rating response", response.toString());
                             JSONArray responseJSONArray = response.getJSONArray("message");
-                            Log.i("Rating BAP2", responseJSONArray.toString());
                             JSONObject responseJSONObject = responseJSONArray.getJSONObject(0);
-                            Log.i("Rating of location", responseJSONObject.getString("AVG(rating)"));
                             TextView ratingTextView = findViewById(R.id.previewRatingAverageTextView);
 
                             //If there exists a rating for the location
@@ -153,7 +150,6 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                                 ratingTextView.setText(responseJSONObject.getString("AVG(rating)"));
                                 //Stores the rating in a variable, used to show rating in star format
                                 float ratingFloat = Float.parseFloat(responseJSONObject.getString("AVG(rating)"));
-                                Log.i("Rating of location as Float", Float.toString(ratingFloat));
 
                                 //Creating the Image Views of all the stars for rating purposes
                                 final ImageView starImageButton1 = findViewById(R.id.previewStarRatingImageView1);
@@ -312,10 +308,9 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                         public void onResponse(JSONObject response) {
                             try {
                                 JSONArray jsonArray = response.getJSONArray("message");
-                                Log.i("Bookmark Check Bap", jsonArray.toString());
+                                Log.i("Bookmark Check Response", jsonArray.toString());
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                    Log.i("Bookmark Check Bap :" + i, jsonObject.toString());
                                     if (jsonObject.getString("placeId").equalsIgnoreCase(placeId)) {
                                         locationIsBookmarked[0] = true;
                                     }
@@ -354,7 +349,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
         }
     }
 
-    public void runBookmarkPopupWindow(View view) {
+    private void runBookmarkPopupWindow(View view) {
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         assert layoutInflater != null;
         @SuppressLint("InflateParams") View popupView = layoutInflater.inflate(R.layout.popup_window_bookmark, null);
@@ -394,9 +389,8 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Log.d("Bookmark creation.Response", response.toString());
+                            Log.d("Bookmark creation Response", response.toString());
                             boolean ratingResponseBoolean = response.getBoolean("success");
-                            Log.d("Bookmark Response boolean", Boolean.toString(ratingResponseBoolean));
                             if (ratingResponseBoolean) {
                                 Toast.makeText(LocationInformation.this, "Successfully Bookmarked " + title.getText(), Toast.LENGTH_LONG).show();
                             } else {
@@ -430,7 +424,7 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
 
     }
 
-    public void runBookmarkPopupWindowDelete(View view) {
+    private void runBookmarkPopupWindowDelete(View view) {
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         assert layoutInflater != null;
         @SuppressLint("InflateParams") View popupView = layoutInflater.inflate(R.layout.popup_window_bookmark_delete, null);
@@ -461,9 +455,8 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Log.d("Delete book mark Response", response.toString());
+                            Log.d("Delete bookmark Response", response.toString());
                             boolean ratingResponseBoolean = response.getBoolean("success");
-                            Log.d("Delete Bookmark response boolean", Boolean.toString(ratingResponseBoolean));
                             if (ratingResponseBoolean) {
                                 Toast.makeText(LocationInformation.this, "Successfully deleted bookmark " + title.getText(), Toast.LENGTH_LONG).show();
                             } else {
@@ -608,7 +601,6 @@ public class LocationInformation extends AppCompatActivity implements TextToSpee
                             try {
                                 Log.d("Rating Response", response.toString());
                                 boolean ratingResponseBoolean = response.getBoolean("success");
-                                Log.d("Rating Response boolean", Boolean.toString(ratingResponseBoolean));
                                 if (ratingResponseBoolean) {
                                     Toast.makeText(LocationInformation.this, "Successfully rated " + title.getText() + " :" + USER_RATING[0], Toast.LENGTH_LONG).show();
                                 } else {

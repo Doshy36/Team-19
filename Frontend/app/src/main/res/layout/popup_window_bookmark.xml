@@ -33,7 +33,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/cardview_dark_background"
+        android:background="#FF424242"
         app:layout_constraintBottom_toTopOf="@+id/popupRatingButtonsLinearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,13 +53,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
+            android:background="#FFFFFF"
             android:text="@string/cancel" />
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/cardview_dark_background" />
+            android:background="#FF424242" />
 
         <Button
             android:id="@+id/bookmarkSubmitButton"

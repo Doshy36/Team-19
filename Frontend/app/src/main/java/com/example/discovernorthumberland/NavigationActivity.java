@@ -1,8 +1,5 @@
 package com.example.discovernorthumberland;
 
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -15,6 +12,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,7 +31,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.PolyUtil;
 
@@ -53,13 +52,16 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
+        //Get place ID from Intent
         Bundle bundle = getIntent().getExtras();
         assert bundle != null;
         placeId = bundle.getString(placeId);
+        //Get Lat Lng from Intent
         double lat = bundle.getDouble("lat");
         double lng = bundle.getDouble("lng");
         latLng = new LatLng(lat, lng);
 
+        //Set up Map
         mapView = findViewById(R.id.mapViewNav);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -70,6 +72,7 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        //Style App
         try {
             boolean success = googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getBaseContext(), R.raw.style_json));
             if (!success) {
@@ -79,6 +82,7 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
             Log.e("JASON File Catch", "Can't find style. Error: ", e);
         }
 
+        //Get users Location
         LocationManager locationManager = (LocationManager) getBaseContext().getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) getBaseContext(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -86,6 +90,7 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
         }
         assert locationManager != null;
         Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        //Set up Map ui Settings
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
         mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.setMyLocationEnabled(true);
@@ -97,6 +102,7 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
         if (lastKnownLocation != null) {
             LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
 
+            //Zoom map out to view both user and location
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             builder.include(userLocation);
             builder.include(latLng);
@@ -105,6 +111,7 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
             CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
             mMap.animateCamera(cu);
 
+            //Fetch data from google directions API
             String apiKey = getResources().getString(R.string.google_maps_key);
             String directionsURL = "https://maps.googleapis.com/maps/api/directions/json?" +
                     "origin=" + userLocation.latitude + "," + userLocation.longitude +
@@ -112,6 +119,7 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
                     "&key=" + apiKey;
             Log.i("Directions URL", directionsURL);
             RequestQueue queue = Volley.newRequestQueue(getBaseContext());
+            //Parse Data
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                     (Request.Method.GET, directionsURL, null, new Response.Listener<JSONObject>() {
                         @Override
@@ -119,33 +127,31 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
                             try {
                                 Log.i("Directions Response", response.toString());
                                 String responseStatus = response.getString("status");
-                                Log.i("Directions Status", responseStatus);
-                                if (responseStatus.equalsIgnoreCase("OK")) {
+                                if (responseStatus.equalsIgnoreCase("OK")) { //IF Response is positive
                                     JSONArray routesJSONArray = response.getJSONArray("routes");
-                                    Log.i("Directions routes", routesJSONArray.toString());
                                     JSONObject routeJSONObject = routesJSONArray.getJSONObject(0);
-                                    Log.i("Directions route 1", routeJSONObject.toString());
+                                    //Get Distance and Duration from user
                                     JSONArray legsJSONArray = routeJSONObject.getJSONArray("legs");
                                     JSONObject legJSONObject = legsJSONArray.getJSONObject(0);
                                     JSONObject distanceJSONObject = legJSONObject.getJSONObject("distance");
                                     JSONObject durationJSONObject = legJSONObject.getJSONObject("duration");
+                                    //Convert to String
                                     String distance = distanceJSONObject.getString("text");
-                                    Log.i("Directions distance:", distance);
                                     String duration = durationJSONObject.getString("text");
-                                    Log.i("Directions duration:", duration);
-
+                                    //Retrieve Encoded PolyLine
                                     JSONObject overviewPolyLineJSONObject = routeJSONObject.getJSONObject("overview_polyline");
                                     String overviewPolylineEncodedPolyline = overviewPolyLineJSONObject.getString("points");
-                                    Log.i("Overview Polyline Encoded", overviewPolylineEncodedPolyline);
 
+                                    //Decode poly line and add lines to map
                                     List<LatLng> pointsList = PolyUtil.decode(overviewPolylineEncodedPolyline);
-                                    Log.i("Points List", pointsList.toString());
                                     PolylineOptions polylineOptions = new PolylineOptions();
                                     for (int i = 0; i < pointsList.size(); i++) {
                                         polylineOptions.add(pointsList.get(i));
                                     }
                                     mMap.addPolyline(polylineOptions);
 
+
+                                    //Present Duration and Distance to user via Text View
                                     TextView nameTextView = findViewById(R.id.locationNameTextView);
                                     TextView etaTextView = findViewById(R.id.etaTextView);
                                     TextView distanceTextView = findViewById(R.id.distanceTextView);
@@ -158,6 +164,7 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
 
 
                                 } else {
+                                    //IF error present to user
                                     Toast.makeText(getBaseContext(), "ERROR", Toast.LENGTH_LONG).show();
                                 }
                             } catch (JSONException e) {

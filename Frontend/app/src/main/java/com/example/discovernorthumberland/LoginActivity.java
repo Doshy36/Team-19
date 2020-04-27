@@ -79,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
                     String userId = response.getString("userId");
                     Log.d("ACCESS TOKEN", accessToken);
                     Log.d("USER ID", userId);
-
                     MainActivity.logUserIn(accessToken, userId);
                     setContentView(R.layout.activity_loggedin);
 

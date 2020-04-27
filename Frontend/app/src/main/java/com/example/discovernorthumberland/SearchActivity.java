@@ -47,7 +47,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
-    public void getArray() {
+    private void getArray() {
         //Dynamic array to place all places into
         placeArrayList = new ArrayList<>();
         final int[] LIST_COUNTER = {0};
@@ -66,11 +66,6 @@ public class SearchActivity extends AppCompatActivity {
                                 LIST_COUNTER[0]++;
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                                Log.i("Response :" + i, jsonObject.getString("placeId"));
-                                Log.i("Response :" + i, jsonObject.getString("name"));
-                                Log.i("Response :" + i, jsonObject.getString("description"));
-                                Log.i("Response :" + i, jsonObject.getString("locationData"));
-                                Log.i("Response :" + i, jsonObject.getString("imageUrl"));
                                 //String Array of each image url from server
                                 String[] imageUrlArray = jsonObject.getString("imageUrl").split(",");
                                 //Create ArrayList of categories of location retrieved from server & transfer to String
@@ -99,7 +94,6 @@ public class SearchActivity extends AppCompatActivity {
                                     userLatLng= null;
                                 }
                                 Place place = new Place(jsonObject.getString("placeId"), jsonObject.getString("name"), jsonObject.getString("description"), jsonObject.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
-                                Log.i("Array List Test", place.toString());
                                 //Adds each place into array of type Place for later use
                                 placeArrayList.add(place);
                             }
@@ -122,7 +116,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
-    public void setUpSearch(){
+    private void setUpSearch(){
         SearchView searchView = findViewById(R.id.searchView);
         searchView.setIconified(false);
 

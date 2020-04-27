@@ -60,7 +60,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     private Button retryButton;
     private ArrayList<Place> placeArrayList;
 
-    private LocationListener locationListener = new LocationListener() {
+    private final LocationListener LOCATION_LISTENER = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
 
@@ -88,7 +88,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         if (requestCode == 1) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, LOCATION_LISTENER);
                 }
             }
         }
@@ -207,7 +207,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                             //Counter to keep track of how many locations are on the map currently
                             int counter = 0;
                             placeArrayList = new ArrayList<>();
-                            Log.i("Bap", jsonArray.toString());
+                            Log.i("GET PLACES RESPONSE", jsonArray.toString());
 
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -235,7 +235,6 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                                     userLatLng = null;
                                 }
                                 Place place = new Place(jsonObject.getString("placeId"), jsonObject.getString("name"), jsonObject.getString("description"), jsonObject.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
-                                Log.i("place." + place.getLocationName(), place.toString());
                                 placeArrayList.add(place);
 
                             }
