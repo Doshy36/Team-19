@@ -146,12 +146,19 @@ public class TopicPageActivity extends AppCompatActivity {
 
                                 //Calculating distance from the user
                                 float[] distanceFromUser = PLACE.getDistanceFromUser();
-                                String distanceFromUserString = Integer.toString(Math.round(distanceFromUser[0]));
+                                int distanceFromUserInt = Math.round(distanceFromUser[0]);
                                 String locationDistanceFromUserTextViewString;
-                                if(distanceFromUserString.equalsIgnoreCase("0")){
-                                    locationDistanceFromUserTextViewString= "";
+                                if(distanceFromUserInt>1000){
+                                    distanceFromUserInt = distanceFromUserInt/1000;
+                                    String distanceFromUserString = Integer.toString(distanceFromUserInt);
+                                    locationDistanceFromUserTextViewString = distanceFromUserString + "km away";
                                 }else {
-                                    locationDistanceFromUserTextViewString = distanceFromUserString + "m away";
+                                    String distanceFromUserString = Integer.toString(distanceFromUserInt);
+                                    if (distanceFromUserString.equalsIgnoreCase("0")) {
+                                        locationDistanceFromUserTextViewString = "";
+                                    } else {
+                                        locationDistanceFromUserTextViewString = distanceFromUserString + "m away";
+                                    }
                                 }
 
                                 //Setting name text in the Text View for the location
