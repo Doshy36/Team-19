@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -180,6 +181,7 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
 
     }
 
+
     @Override
     public void onResume() {
         mapView.onResume();
@@ -196,6 +198,10 @@ public class NavigationActivity extends FragmentActivity implements OnMapReadyCa
     public void onLowMemory() {
         super.onLowMemory();
         mapView.onLowMemory();
+    }
+
+    public void onBackButtonOnClick(View view) {
+        this.finish();
     }
 
 }
