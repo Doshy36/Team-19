@@ -35,9 +35,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-/*
-Class defining the searching screen.
- */
 public class SearchActivity extends AppCompatActivity {
 
     private ArrayList<Place> placeArrayList;
@@ -49,14 +46,15 @@ public class SearchActivity extends AppCompatActivity {
         getArray();
     }
 
+
     public void getArray() {
-        // Dynamic array to place all places into.
+        //Dynamic array to place all places into
         placeArrayList = new ArrayList<>();
         final int[] LIST_COUNTER = {0};
-        // Instantiate the RequestQueue.
+        // Instantiate the RequestQueue
         RequestQueue queue = Volley.newRequestQueue(SearchActivity.this);
         String url = "https://jwhitehead.uk/places";
-        // Initialise a new JsonObjectRequest instance.
+        // Initialise a new JsonObjectRequest instance
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
@@ -73,16 +71,15 @@ public class SearchActivity extends AppCompatActivity {
                                 Log.i("Response :" + i, jsonObject.getString("description"));
                                 Log.i("Response :" + i, jsonObject.getString("locationData"));
                                 Log.i("Response :" + i, jsonObject.getString("imageUrl"));
-                                // String Array of each image url from server.
+                                //String Array of each image url from server
                                 String[] imageUrlArray = jsonObject.getString("imageUrl").split(",");
-                                // Create ArrayList of categories of location retrieved from server & transfer to String.
+                                //Create ArrayList of categories of location retrieved from server & transfer to String
                                 ArrayList<String> categoriesArrayList = new ArrayList<>();
                                 JSONArray jsonTopicArray = jsonObject.getJSONArray("categories");
                                 for (int k = 0; k < jsonTopicArray.length(); k++) {
                                     categoriesArrayList.add(jsonTopicArray.getString(k));
                                 }
                                 String[] categoriesArray = categoriesArrayList.toArray(new String[0]);
-
                                 //Taker users location to send to Place Constructor
                                 LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                                 if (ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -103,7 +100,7 @@ public class SearchActivity extends AppCompatActivity {
                                 }
                                 Place place = new Place(jsonObject.getString("placeId"), jsonObject.getString("name"), jsonObject.getString("description"), jsonObject.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
                                 Log.i("Array List Test", place.toString());
-                                // Adds each place into array of type Place for later use.
+                                //Adds each place into array of type Place for later use
                                 placeArrayList.add(place);
                             }
                             if (LIST_COUNTER[0] == jsonArray.length()) {
@@ -124,22 +121,22 @@ public class SearchActivity extends AppCompatActivity {
         queue.add(jsonObjectRequest);
     }
 
+
     public void setUpSearch(){
         SearchView searchView = findViewById(R.id.searchView);
         searchView.setIconified(false);
 
         ListView searchListView = findViewById(R.id.searchListView);
-        // Sorts all of the locations in ascending order.
+        //Sorts all of the locations in ascending order
         Collections.sort(placeArrayList);
-
 
         //Creates key, value pairs for each location
         final HashMap<String,String> placeHashMap = new HashMap<>();
         //An array of type String (instead of Place) to store just the names of the places in ascending order
         ArrayList<String> arrayListOfLocationNames = new ArrayList<>();
 
-        // Loops through all the places and populates Hash Map with key = Location Name, and value = Place ID.
-        // also populates String array of location names.
+        //Loops through all the places and populates Hash Map with key = Location Name, and value = Place ID
+        //also populates String array of location names
         for(int i =0;i<placeArrayList.size();i++){
             placeHashMap.put(placeArrayList.get(i).getLocationName(),placeArrayList.get(i).getPlaceId());
             arrayListOfLocationNames.add(placeArrayList.get(i).getLocationName());
@@ -150,7 +147,7 @@ public class SearchActivity extends AppCompatActivity {
                 arrayListOfLocationNames
         );
 
-        // Sets up Search View to filter through the String array of location names.
+        //Sets up Search View to filter through the String array of location names
         searchListView.setAdapter(arrayAdapter);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -165,7 +162,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        // Sets onClick action to open Location Information class for that location when pressed.
+        //Sets onClick action to open Location Information class for that location when pressed
         searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -181,6 +178,7 @@ public class SearchActivity extends AppCompatActivity {
     public void searchViewOnClick(View view){
         SearchView searchView = findViewById(R.id.searchView);
         searchView.setIconified(false);
+
     }
 
     public void onBackButtonOnClick(View view) {
