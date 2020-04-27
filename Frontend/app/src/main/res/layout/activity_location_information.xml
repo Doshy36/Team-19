@@ -78,13 +78,14 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
-                    android:text="4.3" />
+                    android:text="@string/_4_3" />
 
                 <ImageView
                     android:id="@+id/previewStarRatingImageView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="@string/_1_star"
                     app:srcCompat="@drawable/ic_star_border_grey_24dp" />
 
                 <ImageView
@@ -92,6 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="@string/_2_star"
                     app:srcCompat="@drawable/ic_star_border_grey_24dp" />
 
                 <ImageView
@@ -99,6 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="@string/_3_star"
                     app:srcCompat="@drawable/ic_star_border_grey_24dp" />
 
                 <ImageView
@@ -106,6 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="@string/_4_star"
                     app:srcCompat="@drawable/ic_star_border_grey_24dp" />
 
                 <ImageView
@@ -113,6 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="@string/_5_star"
                     app:srcCompat="@drawable/ic_star_border_grey_24dp" />
 
             </LinearLayout>
@@ -190,7 +195,7 @@
                     android:drawableTop="@drawable/ic_bookmarksicon"
                     android:focusable="true"
                     android:onClick="bookmarkTextViewOnClick"
-                    android:text="Bookmark "
+                    android:text="@string/bookmark"
                     android:textAlignment="center" />
 
                 <ToggleButton

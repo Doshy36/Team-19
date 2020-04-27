@@ -35,8 +35,9 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
 
-            android:onClick="onNavBarButtonClick"
             android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/navigation_drawer_open"
+            android:onClick="onNavBarButtonClick"
             android:outlineProvider="none"
             android:scaleX="1.25"
             android:scaleY="1.25"
@@ -74,9 +75,9 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="Produced for"
+                android:text="@string/produced_for"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <LinearLayout
@@ -90,6 +91,7 @@
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
+                    android:contentDescription="@string/newcatle_logo"
                     app:srcCompat="@drawable/newcastle_university_logo" />
 
                 <ImageView
@@ -98,6 +100,7 @@
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
+                    android:contentDescription="@string/northumberland_concil_logo"
                     app:srcCompat="@drawable/northumberland_county_council_logo_2" />
             </LinearLayout>
 
