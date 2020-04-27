@@ -1,12 +1,10 @@
 package com.example.discovernorthumberland;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-
-import android.annotation.SuppressLint;
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
@@ -19,6 +17,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -42,13 +45,14 @@ public class TopicPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_page);
 
+        //Retrieves topic chosen into a String variable
         String topic = getIntent().getStringExtra("topicId");
 
-
         TextView topicTitleTextView = findViewById(R.id.topicTitle);
+        //Sets text on top of the screen to show the current topic chosen
         topicTitleTextView.setText(topic);
 
-
+        assert topic != null;
         switch (topic) {
             case "Culture":
                 topic = "cultural";
@@ -60,11 +64,14 @@ public class TopicPageActivity extends AppCompatActivity {
                 topic = "historical";
                 break;
         }
-        final String finalTopic = topic;
 
+        //Sets variable to be final for later use
+        final String FINAL_TOPIC = topic;
+
+        // Instantiate the RequestQueue
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://jwhitehead.uk/places";
-
+        // Initialise a new JsonObjectRequest instance
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
@@ -78,9 +85,11 @@ public class TopicPageActivity extends AppCompatActivity {
 
                             //Loop through arrayList
                             for (int i = 0; i < jsonArrayOfLocations.length(); i++) {
-                                JSONObject jsonObjectOfLocation = jsonArrayOfLocations.getJSONObject(i); //Create JSONObject for each JSONObject in JSONArray retrieved from Server
+                                //Create JSONObject for each JSONObject in JSONArray retrieved from Server
+                                JSONObject jsonObjectOfLocation = jsonArrayOfLocations.getJSONObject(i);
 
-                                String[] imageUrlArray = jsonObjectOfLocation.getString("imageUrl").split(","); //String Array of each image url from server
+                                //String Array of each image url from server
+                                String[] imageUrlArray = jsonObjectOfLocation.getString("imageUrl").split(",");
 
                                 //Create ArrayList of categories of location retrieved from server & transfer to String
                                 ArrayList<String> categoriesArrayList = new ArrayList<>();
@@ -92,46 +101,74 @@ public class TopicPageActivity extends AppCompatActivity {
 
                                 //Taker users location to send to Place Constructor
                                 LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                                @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                                LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                if (ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                    ActivityCompat.requestPermissions((Activity) getBaseContext(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                                    return;
+                                }
+                                LatLng userLatLng;
+                                if(locationManager != null) {
+                                    Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                                    if (location != null) {
+                                        userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                    } else {
+                                        userLatLng = null;
+                                    }
+                                }
+                                else {
+                                    userLatLng= null;
+                                }
                                 Place place = new Place(jsonObjectOfLocation.getString("placeId"), jsonObjectOfLocation.getString("name"), jsonObjectOfLocation.getString("description"), jsonObjectOfLocation.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
                                 for (String s : place.getCategories()) {
                                     //If place is in the category which the user has selected add to array
-                                    if (s.equalsIgnoreCase(finalTopic)) {
+                                    if (s.equalsIgnoreCase(FINAL_TOPIC)) {
                                         sortedArrayOfLocations.add(place);
                                     }
                                 }
-
+                                //Sorts array of all locations in ascending order
                                 Collections.sort(sortedArrayOfLocations);
-                                for (Place p : sortedArrayOfLocations) {
-                                    Log.i("PLACE", place.toString());
-                                }
                             }
 
+                            //Counter to keep track of how many locations are under this topic
                             int locationCounter = 0;
                             for (int i = 0; i < sortedArrayOfLocations.size(); i++) {
-                                final Place place = sortedArrayOfLocations.get(i);
+                                final Place PLACE = sortedArrayOfLocations.get(i);
 
                                 locationCounter++;
 
                                 LinearLayout buttonLinearLayout = findViewById(R.id.locationByTopicButtonsLinearLayout);
 
+                                //Create new Constraint layouts for topic buttons
                                 ConstraintLayout constraintLayout = new ConstraintLayout(getBaseContext());
 
+                                //Sets Text Views presenting the name of the location and distance from the user
                                 TextView locationTextView = new TextView(getBaseContext());
                                 TextView locationDistanceFromUserTextView = new TextView(getBaseContext());
 
-                                float[] distanceFromUser = place.getDistanceFromUser();
-                                String distanceFromUserString = Integer.toString(Math.round(distanceFromUser[0]));
-                                String locationDistanceFromUserTextViewString = distanceFromUserString + "m away";
+                                //Calculating distance from the user
+                                float[] distanceFromUser = PLACE.getDistanceFromUser();
+                                int distanceFromUserInt = Math.round(distanceFromUser[0]);
+                                String locationDistanceFromUserTextViewString;
+                                if(distanceFromUserInt>1000){
+                                    distanceFromUserInt = distanceFromUserInt/1000;
+                                    String distanceFromUserString = Integer.toString(distanceFromUserInt);
+                                    locationDistanceFromUserTextViewString = distanceFromUserString + "km away";
+                                }else {
+                                    String distanceFromUserString = Integer.toString(distanceFromUserInt);
+                                    if (distanceFromUserString.equalsIgnoreCase("0")) {
+                                        locationDistanceFromUserTextViewString = "";
+                                    } else {
+                                        locationDistanceFromUserTextViewString = distanceFromUserString + "m away";
+                                    }
+                                }
 
-                                locationTextView.setText(place.getLocationName());
+                                //Setting name text in the Text View for the location
+                                locationTextView.setText(PLACE.getLocationName());
                                 locationTextView.setId(View.generateViewId());
-                                if(place.getLocationName().length()>30) {
+                                if(PLACE.getLocationName().length()>30) {
                                     locationTextView.setTextSize(26);
-                                }else if(place.getLocationName().length()>22){
+                                }else if(PLACE.getLocationName().length()>22){
                                     locationTextView.setTextSize(30);
-                                }else if(place.getLocationName().length()>15){
+                                }else if(PLACE.getLocationName().length()>15){
                                     locationTextView.setTextSize(33);
                                 }else {
                                     locationTextView.setTextSize(36);
@@ -139,16 +176,19 @@ public class TopicPageActivity extends AppCompatActivity {
                                 locationTextView.setTypeface(Typeface.SERIF);
                                 locationTextView.setGravity(Gravity.CENTER);
 
+                                //Setting distance text in Text View
                                 locationDistanceFromUserTextView.setText(locationDistanceFromUserTextViewString);
                                 locationDistanceFromUserTextView.setId(View.generateViewId());
                                 locationDistanceFromUserTextView.setTextSize(12);
                                 locationDistanceFromUserTextView.setTypeface(Typeface.SERIF);
                                 locationDistanceFromUserTextView.setGravity(Gravity.CENTER);
 
-
+                                //Creating background button for the location Text Views
                                 ImageView locationButton = new ImageView(getBaseContext());
                                 float factor = getBaseContext().getResources().getDisplayMetrics().density;
                                 locationButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, (int) (130 * factor)));
+
+                                //Setting background button image for each location, ensuring each image is different
                                 switch (locationCounter % 4) {
                                     case 0:
                                         locationButton.setImageDrawable(getDrawable(R.drawable.ic_buttonimagevector1));
@@ -164,6 +204,7 @@ public class TopicPageActivity extends AppCompatActivity {
                                         break;
                                 }
 
+                                //Setting location's onClick to open the location information for that location
                                 TypedValue outValue = new TypedValue();
                                 getBaseContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
                                 locationButton.setBackgroundResource(outValue.resourceId);
@@ -173,16 +214,18 @@ public class TopicPageActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(View view) {
                                         Intent newActivityIntent = new Intent(getBaseContext(), LocationInformation.class);
-                                        newActivityIntent.putExtra("placeId", place.getPlaceId());
+                                        newActivityIntent.putExtra("placeId", PLACE.getPlaceId());
                                         startActivity(newActivityIntent);
                                     }
                                 });
                                 locationButton.setId(View.generateViewId());
 
+                                //Adds each location button to the Constraint layout
                                 constraintLayout.addView(locationButton);
                                 constraintLayout.addView(locationTextView);
                                 constraintLayout.addView(locationDistanceFromUserTextView);
 
+                                //Set Constraint to properly present views to user
                                 ConstraintSet constraintSet = new ConstraintSet();
                                 constraintSet.clone(constraintLayout);
 
@@ -202,12 +245,9 @@ public class TopicPageActivity extends AppCompatActivity {
 
                                 constraintSet.applyTo(constraintLayout);
 
+                                //Add complete Constraint Layout for current bookmark onto Linear Layout
                                 buttonLinearLayout.addView(constraintLayout);
-
-
                             }
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -220,7 +260,6 @@ public class TopicPageActivity extends AppCompatActivity {
                         Log.i("RESPONSE", error.toString());
                     }
                 });
-
         // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest);
 

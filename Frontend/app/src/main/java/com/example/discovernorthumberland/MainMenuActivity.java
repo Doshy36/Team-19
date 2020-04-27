@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -39,18 +37,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.maps.android.clustering.Cluster;
-import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
-import com.google.maps.android.clustering.algo.AbstractAlgorithm;
-import com.google.maps.android.clustering.view.ClusterRenderer;
-import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +48,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Set;
 
 public class MainMenuActivity extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
@@ -69,7 +58,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     private ProgressBar progressBar;
     private TextView errorTextView;
     private Button retryButton;
-    private ClusterManager<Place> mClusterManager;
+    private ArrayList<Place> placeArrayList;
 
     private LocationListener locationListener = new LocationListener() {
         @Override
@@ -98,7 +87,7 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 }
             }
@@ -109,16 +98,18 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.activity_main_menu, container, false);
+        final View rootView = inflater.inflate(R.layout.activity_main_menu, container, false);
         mapView = rootView.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
+        //Starts Topic page activity depending on which topic is pressed
         ImageView heritageButton = rootView.findViewById(R.id.heritageButtonImage);
         heritageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent newActivityIntent = new Intent(getActivity(), TopicPageActivity.class);
+                //Passes arguments to signify which topic is pressed
                 newActivityIntent.putExtra("topicId", "Heritage");
                 startActivity(newActivityIntent);
             }
@@ -150,19 +141,18 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
                 startActivity(newActivityIntent);
             }
         });
-        ImageView searchButton = rootView.findViewById(R.id.searchButtonImage);
-        searchButton.setOnClickListener(new View.OnClickListener() {
+        retryButton = rootView.findViewById(R.id.retryButton);
+        retryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent newActivityIntent = new Intent(getActivity(), SearchActivity.class);
-                startActivity(newActivityIntent);
+                setMap();
             }
         });
+
 
         progressBarConstraintLayout = rootView.findViewById(R.id.progressBarConstraintLayout);
         progressBar = rootView.findViewById(R.id.mainPageLoadingProgressBar);
         errorTextView = rootView.findViewById(R.id.errorTextView);
-        retryButton = rootView.findViewById(R.id.retryButton);
 
 
         return rootView;
@@ -173,34 +163,59 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         try {
-            boolean success = googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.style_json));
+            boolean success = googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireActivity(), R.raw.style_json));
             if (!success) {
                 Log.e("JSON File Catch", "Style parsing failed.");
             }
         } catch (Resources.NotFoundException e) {
             Log.e("JASON File Catch", "Can't find style. Error: ", e);
         }
+        setMap();
 
+        locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+        //Retrieves user's last known location
+        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (lastKnownLocation != null) {
+            LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
+        } else {
+            //If last known location does not exist, application sets a location for them
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(55.237914, -2.015241), 8.5f));
+        }
+        mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
+        mMap.getUiSettings().setMapToolbarEnabled(false);
+        mMap.setMyLocationEnabled(true);
+        mMap.setOnInfoWindowClickListener(this);
+    }
 
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
+    private void setMap(){
+        // Instantiate the RequestQueue
+        RequestQueue queue = Volley.newRequestQueue(requireActivity());
         String url = "https://jwhitehead.uk/places";
+        // Initialise a new JsonObjectRequest instance
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray jsonArray = response.getJSONArray("message");
-                            int counter = 0;
-                            ArrayList<Place> placeArrayList = new ArrayList<>();
-                            Log.i("Bap", jsonArray.toString());
 
+                            //Counter to keep track of how many locations are on the map currently
+                            int counter = 0;
+                            placeArrayList = new ArrayList<>();
+                            Log.i("Bap", jsonArray.toString());
 
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 counter++;
-                                String[] imageUrlArray = jsonObject.getString("imageUrl").split(","); //String Array of each image url from server
-                                //Create ArrayList of categories of location retrieved from server & transfer to String
+                                //String Array of each image url from server
+                                String[] imageUrlArray = jsonObject.getString("imageUrl").split(",");
 
+                                //Create ArrayList of categories of location retrieved from server & transfer to String
                                 ArrayList<String> categoriesArrayList = new ArrayList<>();
                                 JSONArray jsonTopicArray = jsonObject.getJSONArray("categories");
                                 for (int k = 0; k < jsonTopicArray.length(); k++) {
@@ -210,21 +225,25 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
 
                                 //Taker users location to send to Place Constructor
                                 locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+                                assert locationManager != null;
                                 @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                                LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-
+                                LatLng userLatLng;
+                                if(location != null) {
+                                    userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                }
+                                else{
+                                    userLatLng = null;
+                                }
                                 Place place = new Place(jsonObject.getString("placeId"), jsonObject.getString("name"), jsonObject.getString("description"), jsonObject.getString("locationData"), imageUrlArray, categoriesArray, userLatLng);
                                 Log.i("place." + place.getLocationName(), place.toString());
-
                                 placeArrayList.add(place);
 
-
-
                             }
+                            //Sets up a cluster to show locations in a small space in a cleaner format
                             if (counter == jsonArray.length()) {
                                 setUpCluster(placeArrayList);
+                                progressBarConstraintLayout.setVisibility(View.GONE);
                             }
-                            progressBarConstraintLayout.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -244,24 +263,6 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
 
         // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest);
-
-
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            return;
-        }
-        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (lastKnownLocation != null) {
-            LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
-        } else {
-            // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(greysMonument, 16));
-        }
-        mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
-        mMap.getUiSettings().setMapToolbarEnabled(false);
-        mMap.setMyLocationEnabled(true);
-        mMap.setOnInfoWindowClickListener(this);
     }
 
     @Override
@@ -282,10 +283,8 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         mapView.onLowMemory();
     }
 
-
-    public void setUpCluster(ArrayList<Place> placeArrayList) {
-
-        mClusterManager = new ClusterManager<Place>(requireActivity(), mMap);
+    private void setUpCluster(ArrayList<Place> placeArrayList) {
+        ClusterManager<Place> mClusterManager = new ClusterManager<>(requireActivity(), mMap);
         mMap.setOnCameraIdleListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
         mMap.setOnInfoWindowClickListener(mClusterManager);
@@ -300,14 +299,12 @@ public class MainMenuActivity extends Fragment implements OnMapReadyCallback, Go
         });
     }
 
-
     @Override
     public void onInfoWindowClick(Marker marker) {
+        //Sets action to take place if the user clicks on the info window
         Intent newActivityIntent = new Intent(getActivity(), LocationInformation.class);
         newActivityIntent.putExtra("placeId", Objects.requireNonNull(marker.getTag()).toString());
         startActivity(newActivityIntent);
     }
-
-
 }
 
