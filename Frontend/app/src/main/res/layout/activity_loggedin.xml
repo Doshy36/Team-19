@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Succesfully Logged In"
+        android:text="@string/succesfully_logged_in"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,17 +54,19 @@
 
         <Button
             android:id="@+id/logOutButton"
+            style='style="?android:attr/buttonBarButtonStyle'
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="logOutButtonOnClick"
-            android:text="Log Out" />
+            android:text="@string/log_out" />
 
         <Button
             android:id="@+id/okButton"
+            style='style="?android:attr/buttonBarButtonStyle'
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onOkButtonOnClick"
-            android:text="OK" />
+            android:text="@string/ok" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

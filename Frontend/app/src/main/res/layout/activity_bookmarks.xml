@@ -25,7 +25,7 @@
         android:layout_marginTop="8dp"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
-        android:contentDescription="Back Button"
+        android:contentDescription="@string/back_button"
         android:elevation="1dp"
         android:focusable="true"
         android:onClick="onBackButtonOnClick"
